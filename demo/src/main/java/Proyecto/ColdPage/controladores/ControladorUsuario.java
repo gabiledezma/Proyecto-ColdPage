@@ -25,10 +25,10 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/registro")
-    public String guardarUsuario(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2) {
+    public String guardarUsuario(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String nombre, @RequestParam Integer contacto) {
         try {
 
-            Usuario u = su.crearUsuario(email, pw1, pw2);
+            Usuario u = su.crearUsuario(email, pw1, pw2, nombre, contacto);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -48,9 +48,9 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/editar")
-    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, RedirectAttributes redirectAttributes, ModelMap model) {
+    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String nombre, @RequestParam Integer contacto, RedirectAttributes redirectAttributes, ModelMap model) {
         try {
-            Usuario u = su.modificarUsuario(id, email, pw1, pw2);
+            Usuario u = su.modificarUsuario(id, email, pw1, pw2, nombre, contacto);
             model.put("exito", "Usuario modificado con exito");
             redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
         } catch (Exception e) {

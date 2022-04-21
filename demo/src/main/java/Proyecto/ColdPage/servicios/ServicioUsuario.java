@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-
 @Service
 public class ServicioUsuario implements UserDetailsService {
 
@@ -28,21 +27,23 @@ public class ServicioUsuario implements UserDetailsService {
     private RepositorioUsuario ru;
 
     @Transactional
-    public Usuario crearUsuario(String email, String pw1, String pw2) throws Exception {
+    public Usuario crearUsuario(String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
 
-        validar(email, pw1, pw2);
+        validar(email, pw1, pw2, nombre, contacto);
         Usuario usuario = new Usuario();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         usuario.setEmail(email);
         usuario.setPassword(encoder.encode(pw1));
         usuario.setRole(Role.USER);
+        usuario.setNombre(nombre);
+        usuario.setContacto(contacto);
         return ru.save(usuario);
 
     }
 
     @Transactional
-    public Usuario modificarUsuario(String id, String email, String pw1, String pw2) throws Exception {
-        validarModificacion(email, pw1, pw2);
+    public Usuario modificarUsuario(String id, String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
+        validarModificacion(email, pw1, pw2, nombre, contacto);
         Usuario u = getOne(id);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (u == null) {
@@ -51,7 +52,8 @@ public class ServicioUsuario implements UserDetailsService {
         u.setEmail(email);
         u.setPassword(encoder.encode(pw1));
         u.setRole(u.getRole());
-
+        u.setNombre(nombre);
+        u.setContacto(contacto);
         return ru.save(u);
     }
 
@@ -95,7 +97,7 @@ public class ServicioUsuario implements UserDetailsService {
         }
     }
 
-    public void validar(String email, String pw1, String pw2) throws Exception {
+    public void validar(String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
         }
@@ -108,10 +110,15 @@ public class ServicioUsuario implements UserDetailsService {
         if (!pw1.equals(pw2)) {
             throw new Exception("Las contraseñas no coinciden");
         }
-
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new Exception("El nombre no puede estar vacio");
+        }
+        if (contacto == null || contacto <= 0) {
+            throw new Exception("El contacto no puede estar vacio");
+        }
     }
 
-    public void validarModificacion(String email, String pw1, String pw2) throws Exception {
+    public void validarModificacion(String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
         }
@@ -120,6 +127,12 @@ public class ServicioUsuario implements UserDetailsService {
         }
         if (!pw1.equals(pw2)) {
             throw new Exception("Las contraseñas no coinciden");
+        }
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new Exception("El nombre no puede estar vacio");
+        }
+        if (contacto == null || contacto <= 0) {
+            throw new Exception("El contacto no puede estar vacio");
         }
     }
 
@@ -146,4 +159,3 @@ public class ServicioUsuario implements UserDetailsService {
     }
 
 }
-
