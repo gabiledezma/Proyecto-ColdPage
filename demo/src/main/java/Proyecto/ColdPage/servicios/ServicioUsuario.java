@@ -27,20 +27,24 @@ public class ServicioUsuario implements UserDetailsService {
     private RepositorioUsuario ru;
 
     @Transactional
-    public Usuario crearUsuario(String email, String pw1, String pw2, String nombre, Integer contacto, Role role) throws Exception {
+    public Usuario crearUsuario(String email, String pw1, String pw2, String role) throws Exception {
 
         validar(email, pw1, pw2, role);
         Usuario usuario = new Usuario();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         usuario.setEmail(email);
         usuario.setPassword(encoder.encode(pw1));
-        usuario.setRole(role);
+        if (role.equalsIgnoreCase("CLIENTE")) {
+            usuario.setRole(Role.CLIENTE);
+        } else {
+            usuario.setRole(Role.PROFESIONAL);
+        }
         return ru.save(usuario);
 
     }
 
     @Transactional
-    public Usuario modificarUsuario(String id, String email, String pw1, String pw2, Role role) throws Exception {
+    public Usuario modificarUsuario(String id, String email, String pw1, String pw2, String role) throws Exception {
         validarModificacion(email, pw1, pw2, role);
         Usuario u = getOne(id);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -49,7 +53,11 @@ public class ServicioUsuario implements UserDetailsService {
         }
         u.setEmail(email);
         u.setPassword(encoder.encode(pw1));
-        u.setRole(u.getRole());
+        if (role.equalsIgnoreCase("CLIENTE")) {
+            u.setRole(Role.CLIENTE);
+        } else {
+            u.setRole(Role.PROFESIONAL);
+        }
         return ru.save(u);
     }
 
@@ -93,7 +101,7 @@ public class ServicioUsuario implements UserDetailsService {
         }
     }
 
-    public void validar(String email, String pw1, String pw2, Role role) throws Exception {
+    public void validar(String email, String pw1, String pw2, String role) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
         }
@@ -106,13 +114,13 @@ public class ServicioUsuario implements UserDetailsService {
         if (!pw1.equals(pw2)) {
             throw new Exception("Las contraseñas no coinciden");
         }
-        if (role == null) {
+        if (role == null || role.trim().isEmpty()) {
             throw new Exception("El role no puede estar vacio");
         }
 
     }
 
-    public void validarModificacion(String email, String pw1, String pw2, Role role) throws Exception {
+    public void validarModificacion(String email, String pw1, String pw2, String role) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
         }
@@ -122,7 +130,7 @@ public class ServicioUsuario implements UserDetailsService {
         if (!pw1.equals(pw2)) {
             throw new Exception("Las contraseñas no coinciden");
         }
-        if (role == null) {
+        if (role == null || role.trim().isEmpty()) {
             throw new Exception("El role no puede estar vacio");
         }
     }
