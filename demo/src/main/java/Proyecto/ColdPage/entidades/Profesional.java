@@ -17,14 +17,14 @@ public class Profesional {
     private String zonaDeTrabajo;
     private Double promedioCalificacion;
     private String nombre;
-    private Integer contacto;
+    private Long contacto;
     @OneToOne
     private Usuario usuario;
 
     public Profesional() {
     }
 
-    public Profesional(String id, String profesion, String zonaDeTrabajo, Double promedioCalificacion, String nombre, Integer contacto, Usuario usuario) {
+    public Profesional(String id, String profesion, String zonaDeTrabajo, Double promedioCalificacion, String nombre, Long contacto, Usuario usuario) {
         this.id = id;
         this.profesion = profesion;
         this.zonaDeTrabajo = zonaDeTrabajo;
@@ -74,11 +74,11 @@ public class Profesional {
         this.nombre = nombre;
     }
 
-    public Integer getContacto() {
+    public Long getContacto() {
         return contacto;
     }
 
-    public void setContacto(Integer contacto) {
+    public void setContacto(Long contacto) {
         this.contacto = contacto;
     }
 

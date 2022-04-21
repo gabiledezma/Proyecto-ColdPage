@@ -15,7 +15,7 @@ public class Cliente {
     private String id;
     private String zonaDeResidencia;
     private String nombre;
-    private Integer contacto;
+    private Long contacto;
     @OneToOne
     private Usuario usuario;
 
@@ -23,7 +23,7 @@ public class Cliente {
 
     }
 
-    public Cliente(String id, String zonaDeResidencia, String nombre, Integer contacto, Usuario usuario) {
+    public Cliente(String id, String zonaDeResidencia, String nombre, Long contacto, Usuario usuario) {
         this.id = id;
         this.zonaDeResidencia = zonaDeResidencia;
         this.nombre = nombre;
@@ -55,11 +55,11 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public Integer getContacto() {
+    public Long getContacto() {
         return contacto;
     }
 
-    public void setContacto(Integer contacto) {
+    public void setContacto(Long contacto) {
         this.contacto = contacto;
     }
 
