@@ -1,13 +1,13 @@
 package Proyecto.ColdPage.entidades;
 
-import Proyecto.ColdPage.enums.Role;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Profesional extends Usuario {
+public class Profesional {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -16,16 +16,22 @@ public class Profesional extends Usuario {
     private String profesion;
     private String zonaDeTrabajo;
     private Double promedioCalificacion;
+    private String nombre;
+    private Integer contacto;
+    @OneToOne
+    private Usuario usuario;
 
     public Profesional() {
-        super();
     }
 
-    public Profesional(String profesion, String zonaDeTrabajo, Double promedioCalificacion, String email, String password, Role role, String nombre, Integer contacto) {
-        super(email, password, role, nombre, contacto);
+    public Profesional(String id, String profesion, String zonaDeTrabajo, Double promedioCalificacion, String nombre, Integer contacto, Usuario usuario) {
+        this.id = id;
         this.profesion = profesion;
         this.zonaDeTrabajo = zonaDeTrabajo;
         this.promedioCalificacion = promedioCalificacion;
+        this.nombre = nombre;
+        this.contacto = contacto;
+        this.usuario = usuario;
     }
 
     public String getId() {
@@ -58,6 +64,30 @@ public class Profesional extends Usuario {
 
     public void setPromedioCalificacion(Double promedioCalificacion) {
         this.promedioCalificacion = promedioCalificacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(Integer contacto) {
+        this.contacto = contacto;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

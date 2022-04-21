@@ -27,23 +27,21 @@ public class ServicioUsuario implements UserDetailsService {
     private RepositorioUsuario ru;
 
     @Transactional
-    public Usuario crearUsuario(String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
+    public Usuario crearUsuario(String email, String pw1, String pw2, String nombre, Integer contacto, Role role) throws Exception {
 
-        validar(email, pw1, pw2, nombre, contacto);
+        validar(email, pw1, pw2, role);
         Usuario usuario = new Usuario();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         usuario.setEmail(email);
         usuario.setPassword(encoder.encode(pw1));
-        usuario.setRole(Role.USER);
-        usuario.setNombre(nombre);
-        usuario.setContacto(contacto);
+        usuario.setRole(role);
         return ru.save(usuario);
 
     }
 
     @Transactional
-    public Usuario modificarUsuario(String id, String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
-        validarModificacion(email, pw1, pw2, nombre, contacto);
+    public Usuario modificarUsuario(String id, String email, String pw1, String pw2, Role role) throws Exception {
+        validarModificacion(email, pw1, pw2, role);
         Usuario u = getOne(id);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (u == null) {
@@ -52,8 +50,6 @@ public class ServicioUsuario implements UserDetailsService {
         u.setEmail(email);
         u.setPassword(encoder.encode(pw1));
         u.setRole(u.getRole());
-        u.setNombre(nombre);
-        u.setContacto(contacto);
         return ru.save(u);
     }
 
@@ -87,17 +83,17 @@ public class ServicioUsuario implements UserDetailsService {
 
             Usuario usuario = respuesta.get();
 
-            if (usuario.getRole().equals(Role.USER)) {
+            if (usuario.getRole().equals(Role.CLIENTE)) {
 
-                usuario.setRole(Role.ADMIN);
+                usuario.setRole(Role.PROFESIONAL);
 
-            } else if (usuario.getRole().equals(Role.ADMIN)) {
-                usuario.setRole(Role.USER);
+            } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
+                usuario.setRole(Role.CLIENTE);
             }
         }
     }
 
-    public void validar(String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
+    public void validar(String email, String pw1, String pw2, Role role) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
         }
@@ -110,15 +106,13 @@ public class ServicioUsuario implements UserDetailsService {
         if (!pw1.equals(pw2)) {
             throw new Exception("Las contraseñas no coinciden");
         }
-        if (nombre == null || nombre.trim().isEmpty()) {
-            throw new Exception("El nombre no puede estar vacio");
+        if (role == null) {
+            throw new Exception("El role no puede estar vacio");
         }
-        if (contacto == null || contacto <= 0) {
-            throw new Exception("El contacto no puede estar vacio");
-        }
+
     }
 
-    public void validarModificacion(String email, String pw1, String pw2, String nombre, Integer contacto) throws Exception {
+    public void validarModificacion(String email, String pw1, String pw2, Role role) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
         }
@@ -128,11 +122,8 @@ public class ServicioUsuario implements UserDetailsService {
         if (!pw1.equals(pw2)) {
             throw new Exception("Las contraseñas no coinciden");
         }
-        if (nombre == null || nombre.trim().isEmpty()) {
-            throw new Exception("El nombre no puede estar vacio");
-        }
-        if (contacto == null || contacto <= 0) {
-            throw new Exception("El contacto no puede estar vacio");
+        if (role == null) {
+            throw new Exception("El role no puede estar vacio");
         }
     }
 

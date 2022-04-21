@@ -16,18 +16,15 @@ public class Usuario {
     private String email;
     private String password;
     private Role role;
-    protected String nombre;
-    protected Integer contacto;
 
     public Usuario() {
     }
 
-    public Usuario(String email, String password, Role role, String nombre, Integer contacto) {
+    public Usuario(String email, String password, Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.nombre = nombre;
-        this.contacto = contacto;
+
     }
 
     public String getId() {
@@ -60,22 +57,6 @@ public class Usuario {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Integer getContacto() {
-        return contacto;
-    }
-
-    public void setContacto(Integer contacto) {
-        this.contacto = contacto;
     }
 
 }
