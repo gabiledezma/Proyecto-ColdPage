@@ -1,8 +1,10 @@
 package Proyecto.ColdPage.entidades;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,6 +20,10 @@ public class Cliente {
     private Long contacto;
     @OneToOne
     private Usuario usuario;
+    @OneToMany
+    private List<Publicacion> publicaciones;
+    @OneToMany
+    private List<Trabajo> trabajos;
 
     public Cliente() {
 
@@ -69,6 +75,22 @@ public class Cliente {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(List<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
+    }
+
+    public List<Trabajo> getTrabajos() {
+        return trabajos;
+    }
+
+    public void setTrabajos(List<Trabajo> trabajos) {
+        this.trabajos = trabajos;
     }
 
 }

@@ -24,6 +24,9 @@ public class Trabajo {
     private String titulo; //trabajo a realizar
     private Integer costo;
     private Date fecha;
+    private Boolean estado;
+    
+    // en caso del profesional si necesita ayuda puede generar alertas de trabajo
 
     public Trabajo() {
     }
