@@ -36,7 +36,7 @@ public class ServicioUsuario implements UserDetailsService {
         usuario.setPassword(encoder.encode(pw1));
         if (role.equalsIgnoreCase("CLIENTE")) {
             usuario.setRole(Role.CLIENTE);
-        } else {
+        } else if (role.equalsIgnoreCase("PROFESIONAL")) {
             usuario.setRole(Role.PROFESIONAL);
         }
         return ru.save(usuario);
@@ -55,7 +55,7 @@ public class ServicioUsuario implements UserDetailsService {
         u.setPassword(encoder.encode(pw1));
         if (role.equalsIgnoreCase("CLIENTE")) {
             u.setRole(Role.CLIENTE);
-        } else {
+        } else if (role.equalsIgnoreCase("PROFESIONAL")) {
             u.setRole(Role.PROFESIONAL);
         }
         return ru.save(u);
@@ -97,6 +97,25 @@ public class ServicioUsuario implements UserDetailsService {
 
             } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
                 usuario.setRole(Role.CLIENTE);
+            }
+        }
+    }
+
+    @Transactional
+    public void hacerAdmin(String id) throws Exception {
+
+        Optional<Usuario> respuesta = ru.findById(id);
+
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+
+            if (usuario.getRole().equals(Role.CLIENTE)) {
+
+                usuario.setRole(Role.ADMIN);
+
+            } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
+                usuario.setRole(Role.ADMIN);
             }
         }
     }
