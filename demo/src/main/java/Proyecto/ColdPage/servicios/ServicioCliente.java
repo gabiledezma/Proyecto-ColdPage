@@ -57,8 +57,8 @@ public class ServicioCliente {
     }
 
     @Transactional
-    public Cliente buscarPorEmail(String email) {
-        return rc.findByEmail(email);
+    public Cliente buscarPorEmail(String id) {
+        return rc.buscarClientePorUsuario(id);
     }
 
     public void validar(String zonaDeResidencia, String nombre, Long contacto, Usuario usuario) throws Exception {

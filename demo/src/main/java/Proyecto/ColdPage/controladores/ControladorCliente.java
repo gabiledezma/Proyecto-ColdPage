@@ -56,26 +56,15 @@ public class ControladorCliente {
         }
     }
 
-//    @GetMapping("/baja/{id}")
-//    public String baja(@PathVariable String id) {
-//
-//        try {
-//            sl.baja(id);
-//            return "redirect:/libro/lista";
-//        } catch (Exception e) {
-//            return "redirect:/";
-//        }
-//
-//    }
-//
-//    @GetMapping("/alta/{id}")
-//    public String alta(@PathVariable String id) {
-//
-//        try {
-//            sl.alta(id);
-//            return "redirect:/libro/lista";
-//        } catch (Exception e) {
-//            return "redirect:/";
-//        }
-//    }
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable String id) {
+        try {
+            sc.eliminarCliente(id);
+            return "redirect:/index";
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
+    }
+
 }
