@@ -57,7 +57,7 @@ public class ServicioCliente {
     }
 
     @Transactional
-    public Cliente buscarPorEmail(String id) {
+    public Cliente buscarPorUsuario(String id) {
         return rc.buscarClientePorUsuario(id);
     }
 

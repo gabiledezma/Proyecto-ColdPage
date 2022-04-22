@@ -31,11 +31,9 @@ public class Profesional {
     public Profesional() {
     }
 
-    public Profesional(String id, String profesion, String zonaDeTrabajo, Double promedioCalificacion, String nombre, Long contacto, Usuario usuario) {
-        this.id = id;
+    public Profesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Usuario usuario) {
         this.profesion = profesion;
         this.zonaDeTrabajo = zonaDeTrabajo;
-        this.promedioCalificacion = promedioCalificacion;
         this.nombre = nombre;
         this.contacto = contacto;
         this.usuario = usuario;

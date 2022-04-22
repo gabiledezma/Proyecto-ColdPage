@@ -30,8 +30,7 @@ public class Cliente {
 
     }
 
-    public Cliente(String id, String zonaDeResidencia, String nombre, Long contacto, Usuario usuario) {
-        this.id = id;
+    public Cliente(String zonaDeResidencia, String nombre, Long contacto, Usuario usuario) {
         this.zonaDeResidencia = zonaDeResidencia;
         this.nombre = nombre;
         this.contacto = contacto;

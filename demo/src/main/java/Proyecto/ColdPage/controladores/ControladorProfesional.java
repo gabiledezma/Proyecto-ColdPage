@@ -1,0 +1,69 @@
+package Proyecto.ColdPage.controladores;
+
+import Proyecto.ColdPage.entidades.Usuario;
+import Proyecto.ColdPage.servicios.ServicioProfesional;
+import Proyecto.ColdPage.servicios.ServicioUsuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/profesional")
+public class ControladorProfesional {
+
+    @Autowired
+    private ServicioProfesional sp;
+    @Autowired
+    private ServicioUsuario su;
+
+    @GetMapping("/registro")
+    public String formulario(ModelMap modelo) {
+        return "form-profesional";
+    }
+
+    @PostMapping("/registro")
+    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Usuario usuario) {
+        try {
+            sp.crearProfesional(profesion, zonaDeTrabajo, nombre, contacto, usuario);
+            modelo.put("exito", "Registro exitoso.");
+            return "form-profesional";
+        } catch (Exception e) {
+            modelo.put("error", "Faltó algún dato.");
+            return "form-profesional";
+        }
+    }
+
+    @GetMapping("/modificar/{id}") //PATHVARIABLE
+    public String modificar(@PathVariable String id, ModelMap modelo) {
+        modelo.put("profesional", sp.getOne(id));
+        return "form-profesional-modif";
+    }
+
+    @PostMapping("/modificar/{id}")
+    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Usuario usuario) {
+        try {
+            sp.modificarProfesional(id, profesion, zonaDeTrabajo, nombre, contacto, usuario);
+            return "redirect:/profesional";
+        } catch (Exception e) {
+            modelo.put("profesional", sp.getOne(id));
+            modelo.put("error", "Faltó algún dato.");
+            return "form-profesional-modif";
+        }
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable String id) {
+        try {
+            sp.eliminarProfesional(id);
+            return "redirect:/index";
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
+    }
+}
