@@ -1,5 +1,6 @@
 package Proyecto.ColdPage.entidades;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,15 +20,19 @@ public class Publicacion {
     private String titulo;
     private String texto;
     private List<String> comentarios;
+    private Date fecha;
+    private List<String> fotos;
 
     public Publicacion() {
     }
 
-    public Publicacion(Usuario usuario, String titulo, String texto, List<String> comentarios) {
+    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<String> comentarios, Date fecha) {
+        this.id = id;
         this.usuario = usuario;
         this.titulo = titulo;
         this.texto = texto;
         this.comentarios = comentarios;
+        this.fecha = fecha;
     }
 
     public Usuario getUsuario() {
@@ -60,6 +65,22 @@ public class Publicacion {
 
     public void setComentarios(List<String> comentarios) {
         this.comentarios = comentarios;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
 }
