@@ -21,6 +21,7 @@ public class Publicacion {
     private String texto;
     private List<String> comentarios;
     private Date fecha;
+    private List<String> fotos;
 
     public Publicacion() {
     }
@@ -33,8 +34,6 @@ public class Publicacion {
         this.comentarios = comentarios;
         this.fecha = fecha;
     }
-
-    
 
     public Usuario getUsuario() {
         return usuario;

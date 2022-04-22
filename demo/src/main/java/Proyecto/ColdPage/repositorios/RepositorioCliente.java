@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RepositorioCliente extends JpaRepository<Cliente, String> {
-// buscar cliente por email dentro de usuario usando inner join
-    //@Query("SELECT c FROM Cliente c WHERE c.u.email = :email")
-    public Cliente findByEmail(@Param("email") String email);
+    @Query("SELECT c FROM Cliente c WHERE c.usuario.id = :id")
+    public Cliente buscarClientePorUsuario(@Param("id") String id);
 }

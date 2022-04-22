@@ -24,6 +24,7 @@ public class Cliente {
     private List<Publicacion> publicaciones;
     @OneToMany
     private List<Trabajo> trabajos;
+    private String foto;
 
     public Cliente() {
 
@@ -91,6 +92,14 @@ public class Cliente {
 
     public void setTrabajos(List<Trabajo> trabajos) {
         this.trabajos = trabajos;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
 }

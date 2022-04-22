@@ -26,6 +26,7 @@ public class Profesional {
     private List<Publicacion> publicaciones;
     @OneToMany
     private List<Trabajo> trabajos;
+    private String foto;
 
     public Profesional() {
     }
@@ -110,6 +111,14 @@ public class Profesional {
 
     public void setTrabajos(List<Trabajo> trabajos) {
         this.trabajos = trabajos;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
 }
