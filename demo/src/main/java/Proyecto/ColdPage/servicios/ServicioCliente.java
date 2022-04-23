@@ -58,7 +58,7 @@ public class ServicioCliente {
 
     @Transactional
     public Cliente buscarPorUsuario(String id) {
-        return rc.buscarClientePorUsuario(id);
+        return rc.buscarPorUsuario(id);
     }
 
     public void validar(String zonaDeResidencia, String nombre, Long contacto, Usuario usuario) throws Exception {

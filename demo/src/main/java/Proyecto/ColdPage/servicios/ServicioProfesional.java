@@ -59,7 +59,7 @@ public class ServicioProfesional {
 
     @Transactional
     public Profesional buscarPorUsuario(String id) {
-        return rp.buscarProfesionalPorUsuario(id);
+        return rp.buscarPorUsuario(id);
     }
 
     public void validar(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Usuario usuario) throws Exception {
