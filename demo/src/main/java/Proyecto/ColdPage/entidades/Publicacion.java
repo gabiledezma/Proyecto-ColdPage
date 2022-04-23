@@ -19,16 +19,20 @@ public class Publicacion {
     private String titulo;
     private String texto;
     private List<String> comentarios;
+    private List<String> imagen;
 
     public Publicacion() {
     }
 
-    public Publicacion(Usuario usuario, String titulo, String texto, List<String> comentarios) {
+    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<String> comentarios, List<String> imagen) {
+        this.id = id;
         this.usuario = usuario;
         this.titulo = titulo;
         this.texto = texto;
         this.comentarios = comentarios;
+        this.imagen = imagen;
     }
+
 
     public Usuario getUsuario() {
         return usuario;
@@ -62,4 +66,21 @@ public class Publicacion {
         this.comentarios = comentarios;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(List<String> imagen) {
+        this.imagen = imagen;
+    }
+    
+    
 }
