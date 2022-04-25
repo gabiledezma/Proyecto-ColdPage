@@ -3,6 +3,7 @@ package Proyecto.ColdPage.controladores;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioProfesional;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,9 +28,9 @@ public class ControladorProfesional {
     }
 
     @PostMapping("/registro")
-    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Usuario usuario) {
+    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
         try {
-            sp.crearProfesional(profesion, zonaDeTrabajo, nombre, contacto, usuario);
+            sp.crearProfesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
             modelo.put("exito", "Registro exitoso.");
             return "form-profesional";
         } catch (Exception e) {
@@ -45,9 +46,9 @@ public class ControladorProfesional {
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Usuario usuario) {
+    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
         try {
-            sp.modificarProfesional(id, profesion, zonaDeTrabajo, nombre, contacto, usuario);
+            sp.modificarProfesional(id, profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
             return "redirect:/profesional";
         } catch (Exception e) {
             modelo.put("profesional", sp.getOne(id));

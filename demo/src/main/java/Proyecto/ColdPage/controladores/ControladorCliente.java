@@ -3,6 +3,7 @@ package Proyecto.ColdPage.controladores;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioCliente;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,9 +28,9 @@ public class ControladorCliente {
     }
 
     @PostMapping("/registro")
-    public String guardar(ModelMap modelo, @RequestParam String zonaDeResidencia, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Usuario usuario) {
+    public String guardar(ModelMap modelo, @RequestParam String zonaDeResidencia, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
         try {
-            sc.crearCliente(zonaDeResidencia, nombre, contacto, usuario);
+            sc.crearCliente(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, usuario);
             modelo.put("exito", "Registro exitoso.");
             return "form-cliente";
         } catch (Exception e) {
@@ -45,9 +46,9 @@ public class ControladorCliente {
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String zonaDeResidencia, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Usuario usuario) {
+    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String zonaDeResidencia, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
         try {
-            sc.modificarCliente(id, zonaDeResidencia, nombre, contacto, usuario);
+            sc.modificarCliente(id, zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
             return "redirect:/cliente";
         } catch (Exception e) {
             modelo.put("cliente", sc.getOne(id));

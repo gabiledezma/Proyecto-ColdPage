@@ -84,17 +84,11 @@ public class ServicioUsuario implements UserDetailsService {
 
     @Transactional
     public void cambiarRol(String id) throws Exception {
-
         Optional<Usuario> respuesta = ru.findById(id);
-
         if (respuesta.isPresent()) {
-
             Usuario usuario = respuesta.get();
-
             if (usuario.getRole().equals(Role.CLIENTE)) {
-
                 usuario.setRole(Role.PROFESIONAL);
-
             } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
                 usuario.setRole(Role.CLIENTE);
             }
@@ -103,17 +97,11 @@ public class ServicioUsuario implements UserDetailsService {
 
     @Transactional
     public void hacerAdmin(String id) throws Exception {
-
         Optional<Usuario> respuesta = ru.findById(id);
-
         if (respuesta.isPresent()) {
-
             Usuario usuario = respuesta.get();
-
             if (usuario.getRole().equals(Role.CLIENTE)) {
-
                 usuario.setRole(Role.ADMIN);
-
             } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
                 usuario.setRole(Role.ADMIN);
             }
@@ -159,18 +147,14 @@ public class ServicioUsuario implements UserDetailsService {
         Usuario usuario = ru.findByEmail(email);
         if (usuario != null) {
             List<GrantedAuthority> permisos = new ArrayList<>();
-
             GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_" + usuario.getRole());//ROLE_ADMIN O ROLE_USER
             permisos.add(p1);
-
             //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", usuario);
-
             User user = new User(usuario.getEmail(), usuario.getPassword(), permisos);
             return user;
-
         } else {
             return null;
         }
