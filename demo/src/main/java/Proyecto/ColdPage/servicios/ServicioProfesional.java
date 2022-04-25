@@ -29,7 +29,7 @@ public class ServicioProfesional {
         validarModificacion(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
         Profesional p = getOne(id);
         if (p == null) {
-            throw new Exception("No existe un profesional con esa ID");
+            throw new Exception("No existe un profesional con ese ID");
         }
         p.setProfesion(profesion);
         p.setZonaDeTrabajo(zonaDeTrabajo);
