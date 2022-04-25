@@ -56,10 +56,6 @@ public class ServicioCliente {
         return rc.getOne(id);
     }
 
-    @Transactional
-    public Cliente buscarPorEmail(String email) {
-        return rc.findByEmail(email);
-    }
 
     public void validar(String zonaDeResidencia, String nombre, Long contacto, Usuario usuario) throws Exception {
         if (zonaDeResidencia == null || zonaDeResidencia.trim().isEmpty()) {
