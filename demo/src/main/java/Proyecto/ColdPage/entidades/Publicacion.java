@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -20,20 +22,26 @@ public class Publicacion {
     private String titulo;
     private String texto;
     private List<String> comentarios;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    private List<String> fotos;
+    private List<String> imagen;
+
 
     public Publicacion() {
     }
 
-    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<String> comentarios, Date fecha) {
+    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<String> comentarios, Date fecha, List<String> imagen) {
         this.id = id;
         this.usuario = usuario;
         this.titulo = titulo;
         this.texto = texto;
         this.comentarios = comentarios;
         this.fecha = fecha;
+        this.imagen = imagen;
     }
+
+    
+
 
     public Usuario getUsuario() {
         return usuario;
@@ -75,6 +83,14 @@ public class Publicacion {
         this.id = id;
     }
 
+    public List<String> getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(List<String> imagen) {
+        this.imagen = imagen;
+    }
+
     public Date getFecha() {
         return fecha;
     }
@@ -82,5 +98,4 @@ public class Publicacion {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
 }

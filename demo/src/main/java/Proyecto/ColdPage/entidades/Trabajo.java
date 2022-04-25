@@ -32,7 +32,7 @@ public class Trabajo {
     public Trabajo() {
     }
 
-    public Trabajo(Cliente cliente, Profesional profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha) {
+    public Trabajo(Cliente cliente, Profesional profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado) {
         this.cliente = cliente;
         this.profesional = profesional;
         this.calificacion = calificacion;
@@ -41,6 +41,23 @@ public class Trabajo {
         this.titulo = titulo;
         this.costo = costo;
         this.fecha = fecha;
+        this.estado = estado;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public Cliente getCliente() {
