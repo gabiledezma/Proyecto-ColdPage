@@ -26,6 +26,7 @@ public class Publicacion {
     private Date fecha;
     private List<String> imagen;
 
+
     public Publicacion() {
     }
 
@@ -97,6 +98,4 @@ public class Publicacion {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
-    
 }

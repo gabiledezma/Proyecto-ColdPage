@@ -176,4 +176,13 @@ public class ServicioUsuario implements UserDetailsService {
         }
     }
 
+    @Transactional
+    public Usuario buscarUsuario(String Email) {
+        try {
+            return ru.findByEmail(Email);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

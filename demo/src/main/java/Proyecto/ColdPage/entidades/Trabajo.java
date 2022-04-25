@@ -1,6 +1,7 @@
 package Proyecto.ColdPage.entidades;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,6 +26,8 @@ public class Trabajo {
     private Integer costo;
     private Date fecha;
     private Boolean estado;
+    private List <String> fotos;
+    // en caso del profesional si necesita ayuda puede generar alertas de trabajo
 
     public Trabajo() {
     }
