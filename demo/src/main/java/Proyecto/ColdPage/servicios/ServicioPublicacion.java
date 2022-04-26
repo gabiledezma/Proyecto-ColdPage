@@ -1,5 +1,6 @@
 package Proyecto.ColdPage.servicios;
 
+import Proyecto.ColdPage.entidades.Comentario;
 import Proyecto.ColdPage.entidades.Publicacion;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.repositorios.RepositorioPublicacion;
@@ -52,9 +53,20 @@ public class ServicioPublicacion {
 
         rp.delete(p);
     }
+    
+    @Transactional
+    public Publicacion recibirComentarios(Comentario comentario, String id) throws Exception{
+        validarID(id);
+        Publicacion p = rp.getById(id);
+        List<Comentario> c = p.getComentarios();
+        c.add(comentario);
+        p.setComentarios(c);
+        return rp.save(p);
+    }
+    
+    public void validarID(String id)throws Exception{
+        if(id == null){
 
-    public void validarID(String id) throws Exception {
-        if (id == null) {
             throw new Exception("No existe un usuario con ese ID");
         }
     }
