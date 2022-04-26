@@ -33,7 +33,7 @@ public class ControladorAdmin {
         return "redirect:/admin/";
     }
 
-    @GetMapping("/role/{id}")
+    @GetMapping("/rol/{id}")
     public String hacerAdmin(ModelMap modelo, @PathVariable String id) {
         try {
             su.hacerAdmin(id);
