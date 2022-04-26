@@ -60,10 +60,12 @@ public class ServicioCliente {
         return rc.getOne(id);
     }
 
+
     @Transactional
     public Cliente buscarPorUsuario(String id) {
         return rc.buscarPorUsuarioId(id);
     }
+
 
     public void validar(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
         if (zonaDeResidencia == null || zonaDeResidencia.trim().isEmpty()) {
