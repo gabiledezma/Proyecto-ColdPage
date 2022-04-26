@@ -114,4 +114,7 @@ public class ServicioProfesional {
         }
     }
 
+    public List<Profesional> buscarPorProfesion(String profesion) {
+        return rp.buscarPorProfesion(profesion);
+    }
 }
