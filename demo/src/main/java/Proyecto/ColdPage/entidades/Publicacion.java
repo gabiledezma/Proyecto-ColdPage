@@ -27,13 +27,12 @@ public class Publicacion {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @OneToMany
-    private List<String> imagen;
-
+    private List<Imagen> imagen;
 
     public Publicacion() {
     }
 
-    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<Comentario> comentarios, Date fecha, List<String> imagen) {
+    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<Comentario> comentarios, Date fecha, List<Imagen> imagen) {
         this.id = id;
         this.usuario = usuario;
         this.titulo = titulo;
@@ -86,11 +85,11 @@ public class Publicacion {
         this.id = id;
     }
 
-    public List<String> getImagen() {
+    public List<Imagen> getImagen() {
         return imagen;
     }
 
-    public void setImagen(List<String> imagen) {
+    public void setImagen(List<Imagen> imagen) {
         this.imagen = imagen;
     }
 

@@ -1,6 +1,7 @@
 package Proyecto.ColdPage.servicios;
 
 import Proyecto.ColdPage.entidades.Cliente;
+import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.repositorios.RepositorioCliente;
 import Proyecto.ColdPage.repositorios.RepositorioUsuario;
@@ -18,7 +19,7 @@ public class ServicioCliente {
     private RepositorioUsuario ru;
 
     @Transactional
-    public Cliente crearCliente(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
+    public Cliente crearCliente(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
 
         validar(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, usuario);
         Cliente cliente = new Cliente(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto);
@@ -28,7 +29,7 @@ public class ServicioCliente {
     }
 
     @Transactional
-    public Cliente modificarCliente(String id, String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+    public Cliente modificarCliente(String id, String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
         validarModificacion(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
         Cliente c = getOne(id);
         if (c == null) {
@@ -67,7 +68,7 @@ public class ServicioCliente {
     }
 
 
-    public void validar(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
+    public void validar(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
         if (zonaDeResidencia == null || zonaDeResidencia.trim().isEmpty()) {
             throw new Exception("La zona de residencia no puede estar vacia");
         }
@@ -80,7 +81,7 @@ public class ServicioCliente {
         if (fechaDeNacimiento == null) {
             throw new Exception("La fecha de nacimiento no puede estar vacía");
         }
-        if (foto == null || foto.trim().isEmpty()) {
+        if (foto == null) {
             throw new Exception("La foto no puede estar vacía");
         }
         if (usuario == null) {
@@ -88,7 +89,7 @@ public class ServicioCliente {
         }
     }
 
-    public void validarModificacion(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+    public void validarModificacion(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
         if (zonaDeResidencia == null || zonaDeResidencia.trim().isEmpty()) {
             throw new Exception("La zona de residencia no puede estar vacia");
         }
@@ -101,7 +102,7 @@ public class ServicioCliente {
         if (fechaDeNacimiento == null) {
             throw new Exception("La fecha de nacimiento no puede estar vacía");
         }
-        if (foto == null || foto.trim().isEmpty()) {
+        if (foto == null) {
             throw new Exception("La foto no puede estar vacía");
         }
         if (perfil == null) {

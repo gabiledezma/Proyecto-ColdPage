@@ -1,5 +1,6 @@
 package Proyecto.ColdPage.servicios;
 
+import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Profesional;
 import Proyecto.ColdPage.entidades.Trabajo;
 import Proyecto.ColdPage.entidades.Usuario;
@@ -17,7 +18,7 @@ public class ServicioProfesional {
     private RepositorioProfesional rp;
     
     @Transactional
-    public Profesional crearProfesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
+    public Profesional crearProfesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
         validar(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
         Profesional profesional = new Profesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto);
         profesional.setUsuario(usuario);
@@ -26,7 +27,7 @@ public class ServicioProfesional {
     }
     
     @Transactional
-    public Profesional modificarProfesional(String id, String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+    public Profesional modificarProfesional(String id, String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
         validarModificacion(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
         Profesional p = getOne(id);
         if (p == null) {
@@ -63,8 +64,10 @@ public class ServicioProfesional {
     public Profesional buscarPorUsuario(String id) {
         return rp.buscarPorUsuarioId(id);
     }
-    
-    public void validar(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
+
+
+    public void validar(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
+
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
@@ -80,15 +83,16 @@ public class ServicioProfesional {
         if (fechaDeNacimiento == null) {
             throw new Exception("La fecha de nacimiento no puede estar vacía");
         }
-        if (foto == null || foto.trim().isEmpty()) {
+        if (foto == null) {
             throw new Exception("La foto no puede estar vacía");
         }
         if (usuario == null) {
             throw new Exception("El usuario no puede estar vacio");
         }
     }
-    
-    public void validarModificacion(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+
+    public void validarModificacion(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
+
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
@@ -104,7 +108,7 @@ public class ServicioProfesional {
         if (fechaDeNacimiento == null) {
             throw new Exception("La fecha de nacimiento no puede estar vacía");
         }
-        if (foto == null || foto.trim().isEmpty()) {
+        if (foto == null) {
             throw new Exception("La foto no puede estar vacía");
         }
         if (perfil == null) {

@@ -21,16 +21,19 @@ public class Comentario {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     private String texto;
-    private String imagen;
+
+    @OneToOne
+    private Imagen foto;
 
     public Comentario() {
     }
 
-    public Comentario(String id, Usuario usuario, Date fecha, String texto) {
+    public Comentario(String id, Usuario usuario, Date fecha, String texto, Imagen foto) {
         this.id = id;
         this.usuario = usuario;
         this.fecha = fecha;
         this.texto = texto;
+        this.foto = foto;
     }
 
     public String getId() {
@@ -65,12 +68,13 @@ public class Comentario {
         this.texto = texto;
     }
 
-    public String getImagen() {
-        return imagen;
+    public Imagen getFoto() {
+        return foto;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setFoto(Imagen foto) {
+        this.foto = foto;
     }
+    
 
 }

@@ -30,13 +30,16 @@ public class Trabajo {
     @Temporal(TemporalType.DATE)
     private Date fecha;
     private Boolean estado;
-    private List<String> fotos;
+    @OneToMany
+    private List<Imagen> fotos;
     // en caso del profesional si necesita ayuda puede generar alertas de trabajo
 
     public Trabajo() {
     }
 
-    public Trabajo(Cliente cliente, List<Profesional> profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado) {
+
+    public Trabajo(Cliente cliente, List<Profesional> profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> fotos) {
+
         this.cliente = cliente;
         this.profesional = profesional;
         this.calificacion = calificacion;
@@ -46,6 +49,7 @@ public class Trabajo {
         this.costo = costo;
         this.fecha = fecha;
         this.estado = estado;
+        this.fotos = fotos;
     }
 
     public String getId() {
@@ -128,12 +132,13 @@ public class Trabajo {
         this.fecha = fecha;
     }
 
-    public List<String> getFotos() {
+    public List<Imagen> getFotos() {
         return fotos;
     }
 
-    public void setFotos(List<String> fotos) {
+    public void setFotos(List<Imagen> fotos) {
         this.fotos = fotos;
     }
+    
 
 }
