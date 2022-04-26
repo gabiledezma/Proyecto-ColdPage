@@ -1,6 +1,7 @@
 package Proyecto.ColdPage.servicios;
 
 import Proyecto.ColdPage.entidades.Comentario;
+import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Publicacion;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.repositorios.RepositorioPublicacion;
@@ -20,7 +21,7 @@ public class ServicioPublicacion {
     private RepositorioUsuario ru;
 
     @Transactional
-    public Publicacion crearPublicacion(Usuario usuario, String titulo, String texto, List<String> imagen) throws Exception {
+    public Publicacion crearPublicacion(Usuario usuario, String titulo, String texto, List<Imagen> imagen) throws Exception {
         validar(titulo, texto, usuario);
         Publicacion p = new Publicacion();
 
@@ -34,7 +35,7 @@ public class ServicioPublicacion {
     }
 
     @Transactional
-    public Publicacion modificarPublicacion(String id, String titulo, String texto, List<String> imagen, Usuario usuario) throws Exception {
+    public Publicacion modificarPublicacion(String id, String titulo, String texto, List<Imagen> imagen, Usuario usuario) throws Exception {
         validarID(id);
         validar(titulo, texto, usuario);
         Publicacion p = rp.getOne(id);
