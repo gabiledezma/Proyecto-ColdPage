@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -21,8 +20,8 @@ public class Trabajo {
     private String id;
     @OneToOne
     private Cliente cliente;
-    @ManyToOne
-    private Profesional profesional;
+    @OneToMany
+    private List<Profesional> profesional;
     private Integer calificacion;
     private String descripcion;
     private String observaciones;
@@ -38,7 +37,9 @@ public class Trabajo {
     public Trabajo() {
     }
 
-    public Trabajo(Cliente cliente, Profesional profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> fotos) {
+
+    public Trabajo(Cliente cliente, List<Profesional> profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> fotos) {
+
         this.cliente = cliente;
         this.profesional = profesional;
         this.calificacion = calificacion;
@@ -75,11 +76,11 @@ public class Trabajo {
         this.cliente = cliente;
     }
 
-    public Profesional getProfesional() {
+    public List<Profesional> getProfesional() {
         return profesional;
     }
 
-    public void setProfesional(Profesional profesional) {
+    public void setProfesional(List<Profesional> profesional) {
         this.profesional = profesional;
     }
 
@@ -139,4 +140,5 @@ public class Trabajo {
         this.fotos = fotos;
     }
     
+
 }

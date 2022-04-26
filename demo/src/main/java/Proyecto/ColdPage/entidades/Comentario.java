@@ -11,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Comentario {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -21,6 +21,7 @@ public class Comentario {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     private String texto;
+
     @OneToOne
     private Imagen foto;
 
@@ -75,4 +76,5 @@ public class Comentario {
         this.foto = foto;
     }
     
+
 }

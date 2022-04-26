@@ -29,7 +29,6 @@ public class Publicacion {
     @OneToMany
     private List<Imagen> imagen;
 
-
     public Publicacion() {
     }
 
