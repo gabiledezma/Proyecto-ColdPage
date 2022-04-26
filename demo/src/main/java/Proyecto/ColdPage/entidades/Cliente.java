@@ -1,11 +1,14 @@
 package Proyecto.ColdPage.entidades;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -18,6 +21,8 @@ public class Cliente {
     private String zonaDeResidencia;
     private String nombre;
     private Long contacto;
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeNacimiento;
     @OneToOne
     private Usuario usuario;
     @OneToMany
@@ -25,17 +30,18 @@ public class Cliente {
     @OneToMany
     private List<Trabajo> trabajos;
     private String foto;
+    private Boolean perfil; // publico true; privado false; por defecto publico;
 
     public Cliente() {
 
     }
 
-    public Cliente(String id, String zonaDeResidencia, String nombre, Long contacto, Usuario usuario) {
-        this.id = id;
+    public Cliente(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, String foto) {
         this.zonaDeResidencia = zonaDeResidencia;
         this.nombre = nombre;
         this.contacto = contacto;
-        this.usuario = usuario;
+        this.fechaDeNacimiento = fechaDeNacimiento;
+        this.foto = foto;
     }
 
     public String getId() {
@@ -100,6 +106,22 @@ public class Cliente {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Date getFechaDeNacimiento() {
+        return fechaDeNacimiento;
+    }
+
+    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
+    }
+
+    public Boolean getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Boolean perfil) {
+        this.perfil = perfil;
     }
 
 }

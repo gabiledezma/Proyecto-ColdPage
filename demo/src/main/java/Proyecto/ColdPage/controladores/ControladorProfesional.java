@@ -1,7 +1,7 @@
 package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Usuario;
-import Proyecto.ColdPage.servicios.ServicioCliente;
+import Proyecto.ColdPage.servicios.ServicioProfesional;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,58 +14,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/cliente")
-public class ControladorCliente {
+@RequestMapping("/profesional")
+public class ControladorProfesional {
 
     @Autowired
-    private ServicioCliente sc;
+    private ServicioProfesional sp;
     @Autowired
     private ServicioUsuario su;
 
     @GetMapping("/registro")
     public String formulario(ModelMap modelo) {
-        return "form-cliente";
+        return "form-profesional";
     }
 
     @PostMapping("/registro")
-    public String guardar(ModelMap modelo, @RequestParam String zonaDeResidencia, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
+    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
         try {
-            sc.crearCliente(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, usuario);
+            sp.crearProfesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
             modelo.put("exito", "Registro exitoso.");
-            return "form-cliente";
+            return "form-profesional";
         } catch (Exception e) {
             modelo.put("error", "Faltó algún dato.");
-            return "form-cliente";
+            return "form-profesional";
         }
     }
 
     @GetMapping("/modificar/{id}") //PATHVARIABLE
     public String modificar(@PathVariable String id, ModelMap modelo) {
-        modelo.put("cliente", sc.getOne(id));
-        return "form-cliente-modif";
+        modelo.put("profesional", sp.getOne(id));
+        return "form-profesional-modif";
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String zonaDeResidencia, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
+    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
         try {
-            sc.modificarCliente(id, zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
-            return "redirect:/cliente";
+            sp.modificarProfesional(id, profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
+            return "redirect:/profesional";
         } catch (Exception e) {
-            modelo.put("cliente", sc.getOne(id));
+            modelo.put("profesional", sp.getOne(id));
             modelo.put("error", "Faltó algún dato.");
-            return "form-cliente-modif";
+            return "form-profesional-modif";
         }
     }
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id) {
         try {
-            sc.eliminarCliente(id);
+            sp.eliminarProfesional(id);
             return "redirect:/index";
         } catch (Exception e) {
             return "redirect:/";
         }
 
     }
-
 }

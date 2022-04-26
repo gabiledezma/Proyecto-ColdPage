@@ -1,11 +1,14 @@
 package Proyecto.ColdPage.entidades;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -20,6 +23,8 @@ public class Profesional {
     private Double promedioCalificacion;
     private String nombre;
     private Long contacto;
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeNacimiento;
     @OneToOne
     private Usuario usuario;
     @OneToMany
@@ -27,18 +32,18 @@ public class Profesional {
     @OneToMany
     private List<Trabajo> trabajos;
     private String foto;
+    private Boolean perfil; // publico true; privado false; por defecto publico;
 
     public Profesional() {
     }
 
-    public Profesional(String id, String profesion, String zonaDeTrabajo, Double promedioCalificacion, String nombre, Long contacto, Usuario usuario) {
-        this.id = id;
+    public Profesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, String foto) {
         this.profesion = profesion;
         this.zonaDeTrabajo = zonaDeTrabajo;
-        this.promedioCalificacion = promedioCalificacion;
         this.nombre = nombre;
         this.contacto = contacto;
-        this.usuario = usuario;
+        this.fechaDeNacimiento = fechaDeNacimiento;
+        this.foto = foto;
     }
 
     public String getId() {
@@ -119,6 +124,22 @@ public class Profesional {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Date getFechaDeNacimiento() {
+        return fechaDeNacimiento;
+    }
+
+    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
+    }
+
+    public Boolean getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Boolean perfil) {
+        this.perfil = perfil;
     }
 
 }
