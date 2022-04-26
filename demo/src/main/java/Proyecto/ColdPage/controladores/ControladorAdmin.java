@@ -18,16 +18,16 @@ public class ControladorAdmin {
     private ServicioUsuario su;
 
     @GetMapping("/")
-    public String dashboard(ModelMap model) {
+    public String listarUsuarios(ModelMap model) {
         model.put("usuarios", su.findAll());
-        return "admin-dashboard";
+        return "list-usuarios";
     }
 
     @GetMapping("/role/{id}")
     public String cambiarRol(ModelMap modelo, @PathVariable String id) {
         try {
             su.cambiarRol(id);
-            modelo.put("", id);
+            modelo.put("usuario", id);
         } catch (Exception e) {
         }
         return "redirect:/admin/";
@@ -37,7 +37,7 @@ public class ControladorAdmin {
     public String hacerAdmin(ModelMap modelo, @PathVariable String id) {
         try {
             su.hacerAdmin(id);
-            modelo.put("", id);
+            modelo.put("admin", id);
         } catch (Exception e) {
         }
         return "redirect:/admin/";

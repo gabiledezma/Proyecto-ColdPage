@@ -82,32 +82,6 @@ public class ServicioUsuario implements UserDetailsService {
         return ru.findByEmail(email);
     }
 
-    @Transactional
-    public void cambiarRol(String id) throws Exception {
-        Optional<Usuario> respuesta = ru.findById(id);
-        if (respuesta.isPresent()) {
-            Usuario usuario = respuesta.get();
-            if (usuario.getRole().equals(Role.CLIENTE)) {
-                usuario.setRole(Role.PROFESIONAL);
-            } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
-                usuario.setRole(Role.CLIENTE);
-            }
-        }
-    }
-
-    @Transactional
-    public void hacerAdmin(String id) throws Exception {
-        Optional<Usuario> respuesta = ru.findById(id);
-        if (respuesta.isPresent()) {
-            Usuario usuario = respuesta.get();
-            if (usuario.getRole().equals(Role.CLIENTE)) {
-                usuario.setRole(Role.ADMIN);
-            } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
-                usuario.setRole(Role.ADMIN);
-            }
-        }
-    }
-
     public void validar(String email, String pw1, String pw2, String role) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
@@ -161,12 +135,28 @@ public class ServicioUsuario implements UserDetailsService {
     }
 
     @Transactional
-    public Usuario buscarUsuario(String Email) {
-        try {
-            return ru.findByEmail(Email);
-        } catch (Exception e) {
-            return null;
+    public void cambiarRol(String id) throws Exception {
+        Optional<Usuario> respuesta = ru.findById(id);
+        if (respuesta.isPresent()) {
+            Usuario usuario = respuesta.get();
+            if (usuario.getRole().equals(Role.CLIENTE)) {
+                usuario.setRole(Role.PROFESIONAL);
+            } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
+                usuario.setRole(Role.CLIENTE);
+            }
         }
     }
 
+    @Transactional
+    public void hacerAdmin(String id) throws Exception {
+        Optional<Usuario> respuesta = ru.findById(id);
+        if (respuesta.isPresent()) {
+            Usuario usuario = respuesta.get();
+            if (usuario.getRole().equals(Role.CLIENTE)) {
+                usuario.setRole(Role.ADMIN);
+            } else if (usuario.getRole().equals(Role.PROFESIONAL)) {
+                usuario.setRole(Role.ADMIN);
+            }
+        }
+    }
 }
