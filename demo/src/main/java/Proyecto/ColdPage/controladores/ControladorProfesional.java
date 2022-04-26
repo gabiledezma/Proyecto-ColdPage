@@ -1,5 +1,6 @@
 package Proyecto.ColdPage.controladores;
 
+import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioProfesional;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
@@ -28,7 +29,7 @@ public class ControladorProfesional {
     }
 
     @PostMapping("/registro")
-    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
+    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Imagen foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
         try {
             sp.crearProfesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
             modelo.put("exito", "Registro exitoso.");
@@ -46,7 +47,7 @@ public class ControladorProfesional {
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
+    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Imagen foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
         try {
             sp.modificarProfesional(id, profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
             return "redirect:/profesional";
