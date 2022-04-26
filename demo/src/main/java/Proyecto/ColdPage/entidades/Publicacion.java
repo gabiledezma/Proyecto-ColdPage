@@ -5,7 +5,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,20 +18,22 @@ public class Publicacion {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @ManyToOne
+    @OneToOne
     private Usuario usuario;
     private String titulo;
     private String texto;
+    @OneToMany
     private List<Comentario> comentarios;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    private List<String> imagen;
+    @OneToMany
+    private List<Imagen> imagen;
 
 
     public Publicacion() {
     }
 
-    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<Comentario> comentarios, Date fecha, List<String> imagen) {
+    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<Comentario> comentarios, Date fecha, List<Imagen> imagen) {
         this.id = id;
         this.usuario = usuario;
         this.titulo = titulo;
@@ -83,11 +86,11 @@ public class Publicacion {
         this.id = id;
     }
 
-    public List<String> getImagen() {
+    public List<Imagen> getImagen() {
         return imagen;
     }
 
-    public void setImagen(List<String> imagen) {
+    public void setImagen(List<Imagen> imagen) {
         this.imagen = imagen;
     }
 

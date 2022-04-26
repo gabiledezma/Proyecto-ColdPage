@@ -31,13 +31,14 @@ public class Profesional {
     private List<Publicacion> publicaciones;
     @OneToMany
     private List<Trabajo> trabajos;
-    private String foto;
+    @OneToOne
+    private Imagen foto;
     private Boolean perfil; // publico true; privado false; por defecto publico;
 
     public Profesional() {
     }
 
-    public Profesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, String foto) {
+    public Profesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
         this.profesion = profesion;
         this.zonaDeTrabajo = zonaDeTrabajo;
         this.nombre = nombre;
@@ -118,11 +119,11 @@ public class Profesional {
         this.trabajos = trabajos;
     }
 
-    public String getFoto() {
+    public Imagen getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(Imagen foto) {
         this.foto = foto;
     }
 

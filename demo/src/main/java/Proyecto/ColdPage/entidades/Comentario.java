@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,20 +16,23 @@ public class Comentario {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @ManyToOne
+    @OneToOne
     private Usuario usuario;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     private String texto;
+    @OneToOne
+    private Imagen foto;
 
     public Comentario() {
     }
 
-    public Comentario(String id, Usuario usuario, Date fecha, String texto) {
+    public Comentario(String id, Usuario usuario, Date fecha, String texto, Imagen foto) {
         this.id = id;
         this.usuario = usuario;
         this.fecha = fecha;
         this.texto = texto;
+        this.foto = foto;
     }
 
     public String getId() {
@@ -63,6 +66,13 @@ public class Comentario {
     public void setTexto(String texto) {
         this.texto = texto;
     }
-    
+
+    public Imagen getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Imagen foto) {
+        this.foto = foto;
+    }
     
 }

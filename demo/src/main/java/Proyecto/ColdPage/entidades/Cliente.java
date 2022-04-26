@@ -29,14 +29,15 @@ public class Cliente {
     private List<Publicacion> publicaciones;
     @OneToMany
     private List<Trabajo> trabajos;
-    private String foto;
+    @OneToOne
+    private Imagen foto;
     private Boolean perfil; // publico true; privado false; por defecto publico;
 
     public Cliente() {
 
     }
 
-    public Cliente(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, String foto) {
+    public Cliente(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
         this.zonaDeResidencia = zonaDeResidencia;
         this.nombre = nombre;
         this.contacto = contacto;
@@ -100,11 +101,11 @@ public class Cliente {
         this.trabajos = trabajos;
     }
 
-    public String getFoto() {
+    public Imagen getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(Imagen foto) {
         this.foto = foto;
     }
 
