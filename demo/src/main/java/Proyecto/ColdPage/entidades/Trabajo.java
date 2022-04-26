@@ -5,7 +5,10 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -15,24 +18,25 @@ public class Trabajo {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @ManyToOne
+    @OneToOne
     private Cliente cliente;
-    @ManyToOne
-    private Profesional profesional;
+    @OneToMany
+    private List<Profesional> profesional;
     private Integer calificacion;
     private String descripcion;
     private String observaciones;
     private String titulo; //trabajo a realizar
     private Integer costo;
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     private Boolean estado;
-    private List <String> fotos;
+    private List<String> fotos;
     // en caso del profesional si necesita ayuda puede generar alertas de trabajo
 
     public Trabajo() {
     }
 
-    public Trabajo(Cliente cliente, Profesional profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado) {
+    public Trabajo(Cliente cliente, List<Profesional> profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado) {
         this.cliente = cliente;
         this.profesional = profesional;
         this.calificacion = calificacion;
@@ -68,11 +72,11 @@ public class Trabajo {
         this.cliente = cliente;
     }
 
-    public Profesional getProfesional() {
+    public List<Profesional> getProfesional() {
         return profesional;
     }
 
-    public void setProfesional(Profesional profesional) {
+    public void setProfesional(List<Profesional> profesional) {
         this.profesional = profesional;
     }
 
@@ -122,6 +126,14 @@ public class Trabajo {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public List<String> getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(List<String> fotos) {
+        this.fotos = fotos;
     }
 
 }

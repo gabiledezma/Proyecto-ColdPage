@@ -5,7 +5,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,13 +18,15 @@ public class Publicacion {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @ManyToOne
+    @OneToOne
     private Usuario usuario;
     private String titulo;
     private String texto;
+    @OneToMany
     private List<Comentario> comentarios;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    @OneToMany
     private List<String> imagen;
 
 

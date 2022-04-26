@@ -23,13 +23,10 @@ public class ServicioPublicacion {
     public Publicacion crearPublicacion(Usuario usuario, String titulo, String texto, List<String> imagen) throws Exception {
         validar(titulo, texto, usuario);
         Publicacion p = new Publicacion();
-
         p.setTitulo(titulo);
         p.setTexto(texto);
         p.setImagen(imagen);
-
         ru.findByEmail(usuario.getEmail());
-
         return rp.save(p);
     }
 
@@ -41,21 +38,18 @@ public class ServicioPublicacion {
         p.setTexto(texto);
         p.setTitulo(titulo);
         p.setImagen(imagen);
-
         return rp.save(p);
-
     }
 
     @Transactional
     public void eliminarPublicacion(String id) throws Exception {
         validarID(id);
         Publicacion p = rp.getOne(id);
-
         rp.delete(p);
     }
-    
+
     @Transactional
-    public Publicacion recibirComentarios(Comentario comentario, String id) throws Exception{
+    public Publicacion recibirComentarios(Comentario comentario, String id) throws Exception {
         validarID(id);
         Publicacion p = rp.getById(id);
         List<Comentario> c = p.getComentarios();
@@ -63,10 +57,9 @@ public class ServicioPublicacion {
         p.setComentarios(c);
         return rp.save(p);
     }
-    
-    public void validarID(String id)throws Exception{
-        if(id == null){
 
+    public void validarID(String id) throws Exception {
+        if (id == null) {
             throw new Exception("No existe un usuario con ese ID");
         }
     }
