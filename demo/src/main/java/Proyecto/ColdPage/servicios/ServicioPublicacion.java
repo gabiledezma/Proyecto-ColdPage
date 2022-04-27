@@ -60,8 +60,8 @@ public class ServicioPublicacion {
     }
 
     public void validarID(String id) throws Exception {
-        if (id == null) {
-            throw new Exception("No existe un usuario con ese ID");
+        if (id == null || id.trim().isEmpty()) {
+            throw new Exception("No existe una publicacion con ese ID");
         }
     }
 
