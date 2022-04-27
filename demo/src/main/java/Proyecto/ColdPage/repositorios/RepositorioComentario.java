@@ -1,7 +1,6 @@
 package Proyecto.ColdPage.repositorios;
 
 import Proyecto.ColdPage.entidades.Comentario;
-import Proyecto.ColdPage.entidades.Publicacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
