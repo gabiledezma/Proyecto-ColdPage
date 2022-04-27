@@ -18,7 +18,8 @@ public class Cliente {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String zonaDeResidencia;
+    @OneToOne
+    private Domicilio zonaDeResidencia;
     private String nombre;
     private Long contacto;
     @Temporal(TemporalType.DATE)
@@ -37,7 +38,7 @@ public class Cliente {
 
     }
 
-    public Cliente(String zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
+    public Cliente(Domicilio zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
         this.zonaDeResidencia = zonaDeResidencia;
         this.nombre = nombre;
         this.contacto = contacto;
@@ -53,11 +54,11 @@ public class Cliente {
         this.id = id;
     }
 
-    public String getZonaDeResidencia() {
+    public Domicilio getZonaDeResidencia() {
         return zonaDeResidencia;
     }
 
-    public void setZonaDeResidencia(String zonaDeResidencia) {
+    public void setZonaDeResidencia(Domicilio zonaDeResidencia) {
         this.zonaDeResidencia = zonaDeResidencia;
     }
 

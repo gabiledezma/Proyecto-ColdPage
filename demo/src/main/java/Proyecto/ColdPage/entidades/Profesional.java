@@ -19,7 +19,8 @@ public class Profesional {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String profesion;
-    private String zonaDeTrabajo;
+    @OneToOne
+    private Domicilio zonaDeTrabajo;
     private Double promedioCalificacion;
     private String nombre;
     private Long contacto;
@@ -38,7 +39,7 @@ public class Profesional {
     public Profesional() {
     }
 
-    public Profesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
+    public Profesional(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
         this.profesion = profesion;
         this.zonaDeTrabajo = zonaDeTrabajo;
         this.nombre = nombre;
@@ -63,11 +64,11 @@ public class Profesional {
         this.profesion = profesion;
     }
 
-    public String getZonaDeTrabajo() {
+    public Domicilio getZonaDeTrabajo() {
         return zonaDeTrabajo;
     }
 
-    public void setZonaDeTrabajo(String zonaDeTrabajo) {
+    public void setZonaDeTrabajo(Domicilio zonaDeTrabajo) {
         this.zonaDeTrabajo = zonaDeTrabajo;
     }
 
