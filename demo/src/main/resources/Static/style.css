@@ -1,0 +1,96 @@
+.formulario{
+    border-style: solid;
+    border-color: rgb(187, 214, 214);
+    border-radius: 5px;
+    width: 450px;
+    margin: auto;
+    margin-top: 100px;
+    padding: 15px;
+    position: relative;
+    left: 50px;
+    font-style: unset;
+  }
+.ladoDerecho{
+    background: url(Imagenderecha.jpeg);
+    opacity: 0.6;
+    background-repeat: no-repeat;
+    border-style: solid;
+    border-color: #81d3e3de;
+    border-radius: 10px;
+    display: flex;
+    width: 50%;
+    height: 650px;
+    float: right;
+    background-size: cover;
+   
+}  
+.fondo{
+    background-color: rgb(255, 255, 255);
+}
+/* .ladointerno{
+    background: url(logo.png);
+    background-repeat: no-repeat;
+    width: 300px;
+    height: 300px;
+    clear: both;
+    background-size: cover;
+    margin: auto;
+    
+}  */
+.ladoIzquierdo{
+    /* background: url(logo.png);
+    background-repeat: no-repeat; */
+    float: left;
+    width: 50%;
+}
+.form-control{
+ opacity: 0.3;
+}
+
+.navegador{
+    background-color: #81d3e3de;
+}
+
+.opaco{
+   opacity: 0.5; 
+   max-width: 500px;
+}
+.comentario1{
+width: 800px;
+height: 30px;
+text-align: left;
+background-color: black;
+color: aliceblue;
+margin: auto;
+margin-top: 10px; 
+padding-top: 5px;
+padding-left: 20px;
+box-sizing: border-box;
+font-weight: bolder;
+}
+.comentario2{
+    width: 800px;
+    height: 100px;
+    margin-top: 0%;
+    text-align: left;
+    background-color: rgb(253, 253, 253);
+    color: rgb(3, 5, 7);
+    margin: auto;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    font-weight: bolder;
+    border: solid black 2px;
+    border-radius: 10px 10px 10px 10px;
+}
+.imagen{
+    max-width: 300px;
+    
+   float: left;
+}
+.imagen2{
+    max-width: 850px;
+    float: right;
+}
