@@ -1,11 +1,13 @@
 package Proyecto.ColdPage.repositorios;
 
 import Proyecto.ColdPage.entidades.Cliente;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 //a
+
 @Repository
 public interface RepositorioCliente extends JpaRepository<Cliente, String> {
 
@@ -14,7 +16,16 @@ public interface RepositorioCliente extends JpaRepository<Cliente, String> {
 
     @Query("SELECT c FROM Cliente c INNER JOIN Usuario u ON c.usuario = u WHERE u.email = :email")
     public Cliente buscarPorEmail(@Param("email") String email);
-    
+
     @Query("SELECT c FROM Cliente c INNER JOIN Usuario u ON c.usuario = u WHERE u.id = :id")
     public Cliente buscarPorIdUsuario(@Param("id") String id);
+
+    @Query("SELECT c FROM Cliente c INNER JOIN Domicilio d ON c.domicilio = d WHERE d.pais = :pais")
+    public List<Cliente> buscarPorPais(@Param("pais") String pais);
+
+    @Query("SELECT c FROM Cliente c INNER JOIN Domicilio d ON c.domicilio = d WHERE d.pais = :pais AND d.provincia = :provincia")
+    public List<Cliente> buscarPorProvincia(@Param("pais") String pais, @Param("provincia") String provincia);
+
+    @Query("SELECT c FROM Cliente c INNER JOIN Domicilio d ON c.domicilio = d WHERE d.pais = :pais AND d.provincia = :provincia AND d.localidad = :localidad")
+    public List<Cliente> buscarPorLocalidad(@Param("pais") String pais, @Param("provincia") String provincia, @Param("localidad") String localidad);
 }

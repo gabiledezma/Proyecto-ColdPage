@@ -19,17 +19,21 @@ public class ServicioProfesional {
     private RepositorioProfesional rp;
 
     @Transactional
-    public Profesional crearProfesional(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
-        validar(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
-        Profesional profesional = new Profesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto);
+    public Profesional crearProfesional(String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
+        Imagen imagen = new Imagen(foto);
+        Domicilio zonaDeTrabajo = new Domicilio(pais, provincia, localidad);
+        validar(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, imagen, usuario);
+        Profesional profesional = new Profesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, imagen);
         profesional.setUsuario(usuario);
         profesional.setPerfil(true);
         return rp.save(profesional);
     }
 
     @Transactional
-    public Profesional modificarProfesional(String id, String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
-        validarModificacion(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
+    public Profesional modificarProfesional(String id, String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+        Imagen imagen = new Imagen(foto);
+        Domicilio zonaDeTrabajo = new Domicilio(pais, provincia, localidad);
+        validarModificacion(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
         Profesional p = getOne(id);
         if (p == null) {
             throw new Exception("No existe un profesional con ese ID");
@@ -39,7 +43,7 @@ public class ServicioProfesional {
         p.setNombre(nombre);
         p.setContacto(contacto);
         p.setFechaDeNacimiento(fechaDeNacimiento);
-        p.setFoto(foto);
+        p.setFoto(imagen);
         p.setPerfil(perfil);
         p.setUsuario(usuario);
         return rp.save(p);
@@ -131,5 +135,17 @@ public class ServicioProfesional {
         double promCalificacion = (int) sumatoria * 1000 / p.getTrabajos().size();
         promCalificacion = (double) promCalificacion / 1000;
         p.setPromedioCalificacion(promCalificacion);
+    }
+
+    public List<Profesional> buscarPorPais(String pais) {
+        return rp.buscarPorPais(pais);
+    }
+
+    public List<Profesional> buscarPorProvincia(String pais, String provincia) {
+        return rp.buscarPorProvincia(pais, provincia);
+    }
+
+    public List<Profesional> buscarPorLocalidad(String pais, String provincia, String localidad) {
+        return rp.buscarPorLocalidad(pais, provincia, localidad);
     }
 }
