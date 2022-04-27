@@ -1,5 +1,6 @@
 package Proyecto.ColdPage.servicios;
 
+import Proyecto.ColdPage.entidades.Domicilio;
 import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Profesional;
 import Proyecto.ColdPage.entidades.Trabajo;
@@ -13,21 +14,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ServicioProfesional {
-    
+
     @Autowired
     private RepositorioProfesional rp;
-    
+
     @Transactional
-    public Profesional crearProfesional(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
+    public Profesional crearProfesional(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
         validar(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
         Profesional profesional = new Profesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto);
         profesional.setUsuario(usuario);
         profesional.setPerfil(true);
         return rp.save(profesional);
     }
-    
+
     @Transactional
-    public Profesional modificarProfesional(String id, String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
+    public Profesional modificarProfesional(String id, String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
         validarModificacion(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
         Profesional p = getOne(id);
         if (p == null) {
@@ -43,35 +44,34 @@ public class ServicioProfesional {
         p.setUsuario(usuario);
         return rp.save(p);
     }
-    
+
     @Transactional
     public void eliminarProfesional(String id) {
         Profesional p = getOne(id);
         rp.delete(p);
     }
-    
+
     @Transactional
     public List<Profesional> findAll() {
         return rp.findAll();
     }
-    
+
     @Transactional
     public Profesional getOne(String id) {
         return rp.getOne(id);
     }
-    
+
     @Transactional
     public Profesional buscarPorUsuario(String id) {
         return rp.buscarPorUsuarioId(id);
     }
 
-
-    public void validar(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
+    public void validar(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
-        if (zonaDeTrabajo == null || zonaDeTrabajo.trim().isEmpty()) {
+        if (zonaDeTrabajo == null) {
             throw new Exception("La zona de trabajo no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -91,12 +91,12 @@ public class ServicioProfesional {
         }
     }
 
-    public void validarModificacion(String profesion, String zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
+    public void validarModificacion(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
-        if (zonaDeTrabajo == null || zonaDeTrabajo.trim().isEmpty()) {
+        if (zonaDeTrabajo == null) {
             throw new Exception("La zona de trabajo no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -118,11 +118,11 @@ public class ServicioProfesional {
             throw new Exception("El usuario no puede estar vacio");
         }
     }
-    
+
     public List<Profesional> buscarPorProfesion(String profesion) {
         return rp.buscarPorProfesion(profesion);
     }
-    
+
     public void obtenerCalificacion(Profesional p) {
         int sumatoria = 0;
         for (Trabajo trabajo : p.getTrabajos()) {
