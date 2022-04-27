@@ -1,7 +1,6 @@
 package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Domicilio;
-import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioDomicilio;
 import Proyecto.ColdPage.servicios.ServicioImagen;
@@ -36,17 +35,15 @@ public class ControladorProfesional {
     }
 
     @PostMapping("/registro")
-    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam Domicilio zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Imagen foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
+    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
         try {
-            sp.crearProfesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
+            sp.crearProfesional(profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, usuario);
             modelo.put("domicilios", sd.findAll());
-            modelo.put("imagenes", si.findAll());
             modelo.put("usuarios", su.findAll());
             modelo.put("exito", "Registro exitoso.");
             return "form-profesional";
         } catch (Exception e) {
             modelo.put("domicilios", sd.findAll());
-            modelo.put("imagenes", si.findAll());
             modelo.put("usuarios", su.findAll());
             modelo.put("error", "Faltó algún dato.");
             return "form-profesional";
@@ -56,23 +53,20 @@ public class ControladorProfesional {
     @GetMapping("/modificar/{id}") //PATHVARIABLE
     public String modificar(@PathVariable String id, ModelMap modelo) {
         modelo.put("domicilios", sd.findAll());
-        modelo.put("imagenes", si.findAll());
         modelo.put("usuarios", su.findAll());
         modelo.put("profesional", sp.getOne(id));
         return "form-profesional-modif";
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam Domicilio zonaDeTrabajo, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam Imagen foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
+    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
         try {
-            sp.modificarProfesional(id, profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
+            sp.modificarProfesional(id, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
             modelo.put("domicilios", sd.findAll());
-            modelo.put("imagenes", si.findAll());
             modelo.put("usuarios", su.findAll());
             return "redirect:/profesional";
         } catch (Exception e) {
             modelo.put("domicilios", sd.findAll());
-            modelo.put("imagenes", si.findAll());
             modelo.put("usuarios", su.findAll());
             modelo.put("profesional", sp.getOne(id));
             modelo.put("error", "Faltó algún dato.");

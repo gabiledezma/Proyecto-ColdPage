@@ -6,6 +6,7 @@ import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.repositorios.RepositorioCliente;
 import Proyecto.ColdPage.repositorios.RepositorioUsuario;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,21 @@ public class ServicioCliente {
     private RepositorioUsuario ru;
 
     @Transactional
-    public Cliente crearCliente(Domicilio zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
-
-        validar(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, usuario);
-        Cliente cliente = new Cliente(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto);
+    public Cliente crearCliente(String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
+        Imagen imagen = new Imagen(foto);
+        Domicilio zonaDeResidencia = new Domicilio(pais, provincia, localidad);
+        validar(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, imagen, usuario);
+        Cliente cliente = new Cliente(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, imagen);
         cliente.setUsuario(usuario);
         cliente.setPerfil(true);
         return rc.save(cliente);
     }
 
     @Transactional
-    public Cliente modificarCliente(String id, Domicilio zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
-        validarModificacion(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
+    public Cliente modificarCliente(String id, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+        Imagen imagen = new Imagen(foto);
+        Domicilio zonaDeResidencia = new Domicilio(pais, provincia, localidad);
+        validarModificacion(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
         Cliente c = getOne(id);
         if (c == null) {
             throw new Exception("No existe un cliente con esa ID");
@@ -40,7 +44,7 @@ public class ServicioCliente {
         c.setNombre(nombre);
         c.setContacto(contacto);
         c.setFechaDeNacimiento(fechaDeNacimiento);
-        c.setFoto(foto);
+        c.setFoto(imagen);
         c.setUsuario(usuario);
         c.setPerfil(perfil);
         return rc.save(c);
@@ -109,6 +113,26 @@ public class ServicioCliente {
         }
         if (usuario == null) {
             throw new Exception("El usuario no puede estar vacio");
+        }
+    }
+
+    public List<Cliente> buscarPorPais(String pais) {
+        return rc.buscarPorPais(pais);
+    }
+
+    public List<Cliente> buscarPorProvincia(String pais, String provincia) {
+        return rc.buscarPorProvincia(pais, provincia);
+    }
+
+    public List<Cliente> buscarPorLocalidad(String pais, String provincia, String localidad) {
+        return rc.buscarPorLocalidad(pais, provincia, localidad);
+    }
+
+    public void convertirImagenes(List<String> imagenes) {
+        List<Imagen> fotos = new ArrayList<Imagen>();
+        for (String imagen : imagenes) {
+            Imagen i = new Imagen(imagen);
+            fotos.add(i);
         }
     }
 

@@ -5,10 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
-
 @Entity
 public class Imagen {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -18,8 +17,8 @@ public class Imagen {
     public Imagen() {
     }
 
-    public Imagen(String id, String nombre) {
-        this.id = id;
+    public Imagen(String nombre) {
+
         this.url = nombre;
     }
 
@@ -38,7 +37,5 @@ public class Imagen {
     public void setNombre(String nombre) {
         this.url = nombre;
     }
-    
-    
-    
+
 }
