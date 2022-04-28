@@ -32,18 +32,20 @@ public class Publicacion {
     public Publicacion() {
     }
 
-    public Publicacion(String id, Usuario usuario, String titulo, String texto, List<Comentario> comentarios, Date fecha, List<Imagen> imagen) {
-        this.id = id;
+    public Publicacion(Usuario usuario, String titulo, String texto, Date fecha) {
         this.usuario = usuario;
         this.titulo = titulo;
         this.texto = texto;
-        this.comentarios = comentarios;
         this.fecha = fecha;
-        this.imagen = imagen;
     }
 
-    
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -77,12 +79,12 @@ public class Publicacion {
         this.comentarios = comentarios;
     }
 
-    public String getId() {
-        return id;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public List<Imagen> getImagen() {
@@ -93,11 +95,4 @@ public class Publicacion {
         this.imagen = imagen;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 }

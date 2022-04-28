@@ -6,7 +6,6 @@ import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.repositorios.RepositorioCliente;
 import Proyecto.ColdPage.repositorios.RepositorioUsuario;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,15 @@ public class ServicioCliente {
 
     @Autowired
     private RepositorioCliente rc;
+    @Autowired
     private RepositorioUsuario ru;
 
     @Transactional
     public Cliente crearCliente(String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
         Imagen imagen = new Imagen(foto);
-        Domicilio zonaDeResidencia = new Domicilio(pais, provincia, localidad);
-        validar(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, imagen, usuario);
-        Cliente cliente = new Cliente(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, imagen);
+        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
+        validar(domicilio, nombre, contacto, fechaDeNacimiento, imagen, usuario);
+        Cliente cliente = new Cliente(domicilio, nombre, contacto, fechaDeNacimiento, imagen);
         cliente.setUsuario(usuario);
         cliente.setPerfil(true);
         return rc.save(cliente);
@@ -34,13 +34,13 @@ public class ServicioCliente {
     @Transactional
     public Cliente modificarCliente(String id, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
         Imagen imagen = new Imagen(foto);
-        Domicilio zonaDeResidencia = new Domicilio(pais, provincia, localidad);
-        validarModificacion(zonaDeResidencia, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
+        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
+        validarModificacion(domicilio, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
         Cliente c = getOne(id);
         if (c == null) {
             throw new Exception("No existe un cliente con esa ID");
         }
-        c.setZonaDeResidencia(zonaDeResidencia);
+        c.setDomicilio(domicilio);
         c.setNombre(nombre);
         c.setContacto(contacto);
         c.setFechaDeNacimiento(fechaDeNacimiento);
@@ -71,8 +71,8 @@ public class ServicioCliente {
         return rc.buscarPorUsuarioId(id);
     }
 
-    public void validar(Domicilio zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
-        if (zonaDeResidencia == null) {
+    public void validar(Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
+        if (domicilio == null) {
             throw new Exception("La zona de residencia no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -92,8 +92,8 @@ public class ServicioCliente {
         }
     }
 
-    public void validarModificacion(Domicilio zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
-        if (zonaDeResidencia == null) {
+    public void validarModificacion(Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
+        if (domicilio == null) {
             throw new Exception("La zona de residencia no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -127,13 +127,4 @@ public class ServicioCliente {
     public List<Cliente> buscarPorLocalidad(String pais, String provincia, String localidad) {
         return rc.buscarPorLocalidad(pais, provincia, localidad);
     }
-
-    public void convertirImagenes(List<String> imagenes) {
-        List<Imagen> fotos = new ArrayList<Imagen>();
-        for (String imagen : imagenes) {
-            Imagen i = new Imagen(imagen);
-            fotos.add(i);
-        }
-    }
-
 }

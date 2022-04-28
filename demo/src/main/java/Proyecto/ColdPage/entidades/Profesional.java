@@ -20,7 +20,7 @@ public class Profesional {
     private String id;
     private String profesion;
     @OneToOne
-    private Domicilio zonaDeTrabajo;
+    private Domicilio domicilio;
     private Double promedioCalificacion;
     private String nombre;
     private Long contacto;
@@ -41,7 +41,7 @@ public class Profesional {
 
     public Profesional(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
         this.profesion = profesion;
-        this.zonaDeTrabajo = zonaDeTrabajo;
+        this.domicilio = zonaDeTrabajo;
         this.nombre = nombre;
         this.contacto = contacto;
         this.fechaDeNacimiento = fechaDeNacimiento;
@@ -64,12 +64,12 @@ public class Profesional {
         this.profesion = profesion;
     }
 
-    public Domicilio getZonaDeTrabajo() {
-        return zonaDeTrabajo;
+    public Domicilio getDomicilio() {
+        return domicilio;
     }
 
-    public void setZonaDeTrabajo(Domicilio zonaDeTrabajo) {
-        this.zonaDeTrabajo = zonaDeTrabajo;
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
     }
 
     public Double getPromedioCalificacion() {
@@ -94,6 +94,14 @@ public class Profesional {
 
     public void setContacto(Long contacto) {
         this.contacto = contacto;
+    }
+
+    public Date getFechaDeNacimiento() {
+        return fechaDeNacimiento;
+    }
+
+    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
     public Usuario getUsuario() {
@@ -126,14 +134,6 @@ public class Profesional {
 
     public void setFoto(Imagen foto) {
         this.foto = foto;
-    }
-
-    public Date getFechaDeNacimiento() {
-        return fechaDeNacimiento;
-    }
-
-    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
-        this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
     public Boolean getPerfil() {

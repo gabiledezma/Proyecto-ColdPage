@@ -21,9 +21,9 @@ public class ServicioProfesional {
     @Transactional
     public Profesional crearProfesional(String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
         Imagen imagen = new Imagen(foto);
-        Domicilio zonaDeTrabajo = new Domicilio(pais, provincia, localidad);
-        validar(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, imagen, usuario);
-        Profesional profesional = new Profesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, imagen);
+        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
+        validar(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, usuario);
+        Profesional profesional = new Profesional(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen);
         profesional.setUsuario(usuario);
         profesional.setPerfil(true);
         return rp.save(profesional);
@@ -32,14 +32,14 @@ public class ServicioProfesional {
     @Transactional
     public Profesional modificarProfesional(String id, String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
         Imagen imagen = new Imagen(foto);
-        Domicilio zonaDeTrabajo = new Domicilio(pais, provincia, localidad);
-        validarModificacion(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
+        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
+        validarModificacion(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
         Profesional p = getOne(id);
         if (p == null) {
             throw new Exception("No existe un profesional con ese ID");
         }
         p.setProfesion(profesion);
-        p.setZonaDeTrabajo(zonaDeTrabajo);
+        p.setDomicilio(domicilio);
         p.setNombre(nombre);
         p.setContacto(contacto);
         p.setFechaDeNacimiento(fechaDeNacimiento);
@@ -70,12 +70,12 @@ public class ServicioProfesional {
         return rp.buscarPorUsuarioId(id);
     }
 
-    public void validar(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
+    public void validar(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
-        if (zonaDeTrabajo == null) {
+        if (domicilio == null) {
             throw new Exception("La zona de trabajo no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -95,12 +95,12 @@ public class ServicioProfesional {
         }
     }
 
-    public void validarModificacion(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
+    public void validarModificacion(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
-        if (zonaDeTrabajo == null) {
+        if (domicilio == null) {
             throw new Exception("La zona de trabajo no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -148,4 +148,19 @@ public class ServicioProfesional {
     public List<Profesional> buscarPorLocalidad(String pais, String provincia, String localidad) {
         return rp.buscarPorLocalidad(pais, provincia, localidad);
     }
+//    public List<Profesional> buscarCalificacionMayorA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
+//
+//    public List<Profesional> buscarCalificacionMenorA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
+//
+//    public List<Profesional> buscarCalificacionMayorOIgualA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
+//
+//    public List<Profesional> buscarCalificacionMenorOIgualA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
 }

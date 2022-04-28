@@ -17,9 +17,8 @@ public class Imagen {
     public Imagen() {
     }
 
-    public Imagen(String nombre) {
-
-        this.url = nombre;
+    public Imagen(String url) {
+        this.url = url;
     }
 
     public String getId() {

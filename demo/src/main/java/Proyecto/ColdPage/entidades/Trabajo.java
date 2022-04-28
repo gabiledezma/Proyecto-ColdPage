@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -20,8 +21,8 @@ public class Trabajo {
     private String id;
     @OneToOne
     private Cliente cliente;
-    @OneToMany
-    private List<Profesional> profesional;
+    @ManyToOne
+    private Profesional profesional;
     private Integer calificacion;
     private String descripcion;
     private String observaciones;
@@ -37,19 +38,12 @@ public class Trabajo {
     public Trabajo() {
     }
 
-
-    public Trabajo(Cliente cliente, List<Profesional> profesional, Integer calificacion, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> fotos) {
-
+    public Trabajo(Cliente cliente, String descripcion, String titulo, Date fecha, Boolean estado) {
         this.cliente = cliente;
-        this.profesional = profesional;
-        this.calificacion = calificacion;
         this.descripcion = descripcion;
-        this.observaciones = observaciones;
         this.titulo = titulo;
-        this.costo = costo;
         this.fecha = fecha;
         this.estado = estado;
-        this.fotos = fotos;
     }
 
     public String getId() {
@@ -60,14 +54,6 @@ public class Trabajo {
         this.id = id;
     }
 
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
     public Cliente getCliente() {
         return cliente;
     }
@@ -76,11 +62,11 @@ public class Trabajo {
         this.cliente = cliente;
     }
 
-    public List<Profesional> getProfesional() {
+    public Profesional getProfesional() {
         return profesional;
     }
 
-    public void setProfesional(List<Profesional> profesional) {
+    public void setProfesional(Profesional profesional) {
         this.profesional = profesional;
     }
 
@@ -132,6 +118,14 @@ public class Trabajo {
         this.fecha = fecha;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public List<Imagen> getFotos() {
         return fotos;
     }
@@ -139,6 +133,6 @@ public class Trabajo {
     public void setFotos(List<Imagen> fotos) {
         this.fotos = fotos;
     }
-    
 
+   
 }
