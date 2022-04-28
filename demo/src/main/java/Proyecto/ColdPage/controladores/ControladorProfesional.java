@@ -1,9 +1,7 @@
 package Proyecto.ColdPage.controladores;
 
-import Proyecto.ColdPage.entidades.Domicilio;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioDomicilio;
-import Proyecto.ColdPage.servicios.ServicioImagen;
 import Proyecto.ColdPage.servicios.ServicioProfesional;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
 import java.util.Date;
@@ -26,11 +24,11 @@ public class ControladorProfesional {
     private ServicioUsuario su;
     @Autowired
     private ServicioDomicilio sd;
-    @Autowired
-    private ServicioImagen si;
 
     @GetMapping("/registro")
     public String formulario(ModelMap modelo) {
+        modelo.put("domicilios", sd.findAll());
+        modelo.put("usuarios", su.findAll());
         return "form-profesional";
     }
 
