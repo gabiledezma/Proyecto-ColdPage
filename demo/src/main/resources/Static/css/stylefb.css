@@ -43,6 +43,9 @@ body{
     border-radius: 7px;
     box-shadow: 1px 1px 10px rgba(117, 116, 116, .219);
 } */
+h4{
+    text-align: center;
+}
 .posicion{
     position: relative;
     right: 500px;
@@ -192,7 +195,8 @@ body{
 .navegador{
     background-color: #8cb6f0;
 }
-.linea
+
+.izquierda
 {
-    display: inline-block;
+    position: left;
 }

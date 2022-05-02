@@ -32,7 +32,7 @@ public class ControladorUsuario {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/login";
+        return "redirect:/index";
     }
 
     @GetMapping("/editar")
