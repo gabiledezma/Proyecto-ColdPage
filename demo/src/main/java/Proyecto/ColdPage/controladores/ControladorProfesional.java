@@ -26,10 +26,10 @@ public class ControladorProfesional {
     private ServicioDomicilio sd;
 
     @GetMapping("/registro")
-    public String formulario(ModelMap modelo) {
+    public String registro(ModelMap modelo) {
         modelo.put("domicilios", sd.findAll());
         modelo.put("usuarios", su.findAll());
-        return "form-profesional";
+        return "rprofesional";
     }
 
     @PostMapping("/registro")
@@ -44,7 +44,7 @@ public class ControladorProfesional {
             modelo.put("domicilios", sd.findAll());
             modelo.put("usuarios", su.findAll());
             modelo.put("error", "Faltó algún dato.");
-            return "form-profesional";
+            return "rprofesional";
         }
     }
 

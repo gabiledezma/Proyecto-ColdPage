@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Error</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        
+        <nav th:replace="/fragments/navbar :: nav"></nav>
+
+        <div class="container text-center p-3">
+            <div class="row mt-5">
+                <div class="col">
+                    <div class="display-1 text-center m-3" style="font-size: 124px;font-weight: bold" th:text="${codigo}">
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <div class="display-1 text-center m-3" th:text="${error}">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+</html>
