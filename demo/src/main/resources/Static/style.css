@@ -1,4 +1,4 @@
-*
+/**
 {
     margin: 0;
     padding: 0;
@@ -31,7 +31,7 @@ body{
 .form * {
     display: block;
 }
-/* 
+ 
 .form{
     max-width: 400px;
     padding: 1rem;
@@ -42,7 +42,7 @@ body{
     background-color: #fff;
     border-radius: 7px;
     box-shadow: 1px 1px 10px rgba(117, 116, 116, .219);
-} */
+} 
 .posicion{
     position: relative;
     right: 500px;
@@ -53,7 +53,7 @@ body{
     margin-top: 120px;
     position: relative;
     left: 150px;
-    /* margin: 2rem auto; */
+     margin: 2rem auto; 
     background-color: #fff;
     border-radius: 7px;
     box-shadow: 1px 1px 10px rgba(117, 116, 116, .219);
@@ -195,4 +195,4 @@ body{
 .linea
 {
     display: inline-block;
-}
+}*/
