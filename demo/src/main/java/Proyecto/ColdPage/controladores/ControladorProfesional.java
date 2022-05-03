@@ -25,24 +25,24 @@ public class ControladorProfesional {
     @Autowired
     private ServicioDomicilio sd;
 
-    @GetMapping("/registro")
-    public String registro(ModelMap modelo) {
+    @GetMapping("/registro/{id}")
+    public String registro(ModelMap modelo, @PathVariable String id) {
+        modelo.put("usuario", su.getOne(id));
         modelo.put("domicilios", sd.findAll());
-        modelo.put("usuarios", su.findAll());
         return "rprofesional";
     }
 
-    @PostMapping("/registro")
-    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
+    @PostMapping("/registro/{id}")
+    public String guardar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Usuario usuario) {
         try {
             sp.crearProfesional(profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, usuario);
+            modelo.put("usuario", su.getOne(id));
             modelo.put("domicilios", sd.findAll());
-            modelo.put("usuarios", su.findAll());
             modelo.put("exito", "Registro exitoso.");
             return "form-profesional";
         } catch (Exception e) {
             modelo.put("domicilios", sd.findAll());
-            modelo.put("usuarios", su.findAll());
+            modelo.put("usuario", su.getOne(id));
             modelo.put("error", "Faltó algún dato.");
             return "rprofesional";
         }

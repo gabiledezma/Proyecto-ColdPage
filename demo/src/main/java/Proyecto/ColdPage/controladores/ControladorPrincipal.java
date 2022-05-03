@@ -35,9 +35,11 @@ public class ControladorPrincipal {
             System.out.println(e.getMessage());
         }
         if (u.getRole().equals(Role.CLIENTE)) {
-            return "redirect/cliente/registro"; // 
+            String id = "redirect/cliente/registro/" + u.getId();
+            return "´" + id + "´"; // 
         } else if (u.getRole().equals(Role.PROFESIONAL)) {
-            return "redirect:/profesional/registro"; // 
+            String id = "redirect/cliente/registro/" + u.getId();
+            return "´" + id + "´"; // 
         } else {
             return "redirect:/index";
         }
