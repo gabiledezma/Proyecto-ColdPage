@@ -12,6 +12,74 @@
   </head>
 
 <body>
+      <nav th:replace="/fragments/navbar :: nav"></nav>
+    <form th:action="@{/profesional/resgistro}" class="form-profesional" method="POST" >
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Nombre</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+          <!-- <div id="emailHelp" class="form-text">.</div> -->
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"> Telefono</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese El numero de contacto" >
+        </div>
+        <div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Profesión</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Su profesión" >
+          </div>
+        </div>
+       
+          <div>
+           <div class="mb-3">
+          <label for="exampleInputPassword1"  class="form-label">Fecha De nacimiento:</label>
+          <input type="date" class="form-control" id="start" name="trip-start"
+                 value="1960-01-01"
+                 min="1960-01-01" max="2030-12-31">
+          </div>
+        </div>
+
+        <div>
+          <label for="exampleInputEmail1" class="form-label">Pais</label>
+          <select class="form-select" aria-label="Default select example">
+          <option selected>--</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        </div>
+
+
+        <div>
+          <label for="exampleInputEmail1" class="form-label">Provincia</label>
+          <select class="form-select" aria-label="Default select example">
+          <option selected>--</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        </div>
+
+
+        <div>
+          <label for="exampleInputEmail1" class="form-label">Localidad</label>
+          <select class="form-select" aria-label="Default select example">
+          <option selected>--</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        </div>
+        <div>
+          <label for="exampleInputEmail1" class="form-label">Ingresa una foto:</label>
+         <div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile02">
+          <label class="input-group-text" for="inputGroupFile02">Subir</label>
+        </div> 
+        </div>
+        
+        
+      </form>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

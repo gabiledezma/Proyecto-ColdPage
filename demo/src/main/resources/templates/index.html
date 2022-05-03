@@ -78,7 +78,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form th:action="@{/}" method="POST" class="form">
+                        <form th:action="@{/usuario/registro}" method="POST" class="form">
                             <input type="text" name="email" placeholder="Correo electronico">
                             <input type="password" name="pw1" placeholder="Contraseña" >
                             <input type="password" name="pw2" placeholder="Repetir Contraseña" >
@@ -88,7 +88,7 @@
                                 <option value="PROFESIONAL">Profesional</option>
                             </select> 
                             <div>
-                                <button type="submit" class="btn btn-primary">Registrarse</button>
+                                <a class="btn btn-primary" th:href="@{/profesional/registro}" >Registrarse</a>
                             </div>
                         </form>
                     </div>
