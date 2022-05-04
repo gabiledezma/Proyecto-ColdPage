@@ -39,13 +39,12 @@ public class Profesional {
     public Profesional() {
     }
 
-    public Profesional(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
+    public Profesional(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento ) {
         this.profesion = profesion;
         this.domicilio = zonaDeTrabajo;
         this.nombre = nombre;
         this.contacto = contacto;
         this.fechaDeNacimiento = fechaDeNacimiento;
-        this.foto = foto;
     }
 
     public String getId() {

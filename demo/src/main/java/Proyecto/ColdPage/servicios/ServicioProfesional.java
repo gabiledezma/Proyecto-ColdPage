@@ -21,25 +21,39 @@ public class ServicioProfesional {
     private ServicioUsuario su;
 
     @Transactional
-    public Profesional crearProfesional(String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, String email) throws Exception {
-        Imagen imagen = new Imagen(foto);
-        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
-        validar(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, email);
-        Profesional profesional = new Profesional(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen);
+    public Profesional crearProfesional(String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, String fechaDeNacimiento, String email) throws Exception {
         Usuario u = su.buscarPorEmail(email);
+        System.out.println(u);
         if (u == null) {
             throw new Exception("No existe un usuario con ese email");
         }
+        String anio = fechaDeNacimiento.substring(0, 4);
+        String mes = fechaDeNacimiento.substring(5, 7);
+        String dia = fechaDeNacimiento.substring(8, 10);
+        int anioInt = Integer.parseInt(anio);
+        int mesInt = Integer.parseInt(mes);
+        int diaInt = Integer.parseInt(dia);
+        Date fecha = new Date(anioInt - 1900, mesInt - 1, diaInt);
+        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
+        validar(profesion, domicilio, nombre, contacto, fecha, email);
+        Profesional profesional = new Profesional(profesion, domicilio, nombre, contacto, fecha);
         profesional.setUsuario(u);
         profesional.setPerfil(true);
         return rp.save(profesional);
     }
 
     @Transactional
-    public Profesional modificarProfesional(String id, String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+    public Profesional modificarProfesional(String id, String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, String fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
         Imagen imagen = new Imagen(foto);
         Domicilio domicilio = new Domicilio(pais, provincia, localidad);
-        validarModificacion(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
+        String anio = fechaDeNacimiento.substring(0, 4);
+        String mes = fechaDeNacimiento.substring(5, 7);
+        String dia = fechaDeNacimiento.substring(8, 10);
+        int anioInt = Integer.parseInt(anio);
+        int mesInt = Integer.parseInt(mes);
+        int diaInt = Integer.parseInt(dia);
+        Date fecha = new Date(anioInt - 1900, mesInt - 1, diaInt);
+        validarModificacion(profesion, domicilio, nombre, contacto, fecha, imagen, perfil, usuario);
         Profesional p = getOne(id);
         if (p == null) {
             throw new Exception("No existe un profesional con ese ID");
@@ -48,7 +62,7 @@ public class ServicioProfesional {
         p.setDomicilio(domicilio);
         p.setNombre(nombre);
         p.setContacto(contacto);
-        p.setFechaDeNacimiento(fechaDeNacimiento);
+        p.setFechaDeNacimiento(fecha);
         p.setFoto(imagen);
         p.setPerfil(perfil);
         p.setUsuario(usuario);
@@ -76,7 +90,7 @@ public class ServicioProfesional {
         return rp.buscarPorUsuarioId(id);
     }
 
-    public void validar(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, String email) throws Exception {
+    public void validar(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, String email) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
@@ -92,9 +106,6 @@ public class ServicioProfesional {
         }
         if (fechaDeNacimiento == null) {
             throw new Exception("La fecha de nacimiento no puede estar vacía");
-        }
-        if (foto == null) {
-            throw new Exception("La foto no puede estar vacía");
         }
         if (email == null || email.trim().isEmpty()) {
             throw new Exception("El email no puede estar vacio");

@@ -27,19 +27,17 @@ public class ControladorProfesional {
 
     @GetMapping("/registro")
     public String registro(ModelMap modelo) {
-        modelo.put("domicilios", sd.findAll());
         return "rprofesional";
     }
 
     @PostMapping("/registro")
-    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam String email) {
+    public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String fechaDeNacimiento, @RequestParam String email) {
         try {
-            sp.crearProfesional(profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, email);
-            modelo.put("domicilios", sd.findAll());
+
+            sp.crearProfesional(profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, email);
             modelo.put("exito", "Registro exitoso.");
-            return "form-profesional";
+            return "redirect:/";
         } catch (Exception e) {
-            modelo.put("domicilios", sd.findAll());
             modelo.put("error", "Faltó algún dato.");
             return "rprofesional";
         }
@@ -54,7 +52,7 @@ public class ControladorProfesional {
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam Date fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
+    public String modificar(ModelMap modelo, @PathVariable String id, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String foto, @RequestParam String fechaDeNacimiento, @RequestParam Boolean perfil, @RequestParam Usuario usuario) {
         try {
             sp.modificarProfesional(id, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
             modelo.put("domicilios", sd.findAll());
