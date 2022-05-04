@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ public class ControladorPrincipal {
     }
 
     @PostMapping("/")
-    public String registro(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role) {
+    public String registro(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, @PathVariable String id) {
         Usuario u = new Usuario();
         try {
             u = su.crearUsuario(email, pw1, pw2, role);
@@ -35,11 +36,9 @@ public class ControladorPrincipal {
             System.out.println(e.getMessage());
         }
         if (u.getRole().equals(Role.CLIENTE)) {
-            String id = "redirect/cliente/registro/" + u.getId();
-            return "´" + id + "´"; // 
+            return "redirect:/cliente/registro"; // 
         } else if (u.getRole().equals(Role.PROFESIONAL)) {
-            String id = "redirect/cliente/registro/" + u.getId();
-            return "´" + id + "´"; // 
+            return "redirect:/profesional/registro"; // 
         } else {
             return "redirect:/index";
         }

@@ -17,14 +17,20 @@ public class ServicioProfesional {
 
     @Autowired
     private RepositorioProfesional rp;
+    @Autowired
+    private ServicioUsuario su;
 
     @Transactional
-    public Profesional crearProfesional(String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Usuario usuario) throws Exception {
+    public Profesional crearProfesional(String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, String email) throws Exception {
         Imagen imagen = new Imagen(foto);
         Domicilio domicilio = new Domicilio(pais, provincia, localidad);
-        validar(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, usuario);
+        validar(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, email);
         Profesional profesional = new Profesional(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen);
-        profesional.setUsuario(usuario);
+        Usuario u = su.buscarPorEmail(email);
+        if (u == null) {
+            throw new Exception("No existe un usuario con ese email");
+        }
+        profesional.setUsuario(u);
         profesional.setPerfil(true);
         return rp.save(profesional);
     }
@@ -70,7 +76,7 @@ public class ServicioProfesional {
         return rp.buscarPorUsuarioId(id);
     }
 
-    public void validar(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
+    public void validar(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, String email) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
@@ -90,8 +96,8 @@ public class ServicioProfesional {
         if (foto == null) {
             throw new Exception("La foto no puede estar vacía");
         }
-        if (usuario == null) {
-            throw new Exception("El usuario no puede estar vacio");
+        if (email == null || email.trim().isEmpty()) {
+            throw new Exception("El email no puede estar vacio");
         }
     }
 
