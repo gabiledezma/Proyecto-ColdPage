@@ -35,7 +35,7 @@ public class ControladorPrincipal {
             System.out.println(e.getMessage());
         }
         if (u.getRole().equals(Role.CLIENTE)) {
-            return "redirect/cliente/registro"; // 
+            return "redirect:/cliente/registro"; // 
         } else if (u.getRole().equals(Role.PROFESIONAL)) {
             return "redirect:/profesional/registro"; // 
         } else {
