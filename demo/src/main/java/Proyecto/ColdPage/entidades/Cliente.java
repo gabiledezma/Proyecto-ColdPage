@@ -19,7 +19,7 @@ public class Cliente {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @OneToOne
-    private Domicilio zonaDeResidencia;
+    private Domicilio domicilio;
     private String nombre;
     private Long contacto;
     @Temporal(TemporalType.DATE)
@@ -39,7 +39,7 @@ public class Cliente {
     }
 
     public Cliente(Domicilio zonaDeResidencia, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto) {
-        this.zonaDeResidencia = zonaDeResidencia;
+        this.domicilio = zonaDeResidencia;
         this.nombre = nombre;
         this.contacto = contacto;
         this.fechaDeNacimiento = fechaDeNacimiento;
@@ -54,12 +54,12 @@ public class Cliente {
         this.id = id;
     }
 
-    public Domicilio getZonaDeResidencia() {
-        return zonaDeResidencia;
+    public Domicilio getDomicilio() {
+        return domicilio;
     }
 
-    public void setZonaDeResidencia(Domicilio zonaDeResidencia) {
-        this.zonaDeResidencia = zonaDeResidencia;
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
     }
 
     public String getNombre() {

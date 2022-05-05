@@ -13,21 +13,21 @@ public class ServicioImagen {
 
     @Autowired
     private RepositorioImagen ri;
-    
+
     @Transactional
-    public Imagen agregarImagen(String url){
+    public Imagen agregarImagen(String url) {
         Imagen i = new Imagen();
-        
+
         i.setNombre(url);
-        
-        return ri.save(i);   
+
+        return ri.save(i);
     }
-    
+
     @Transactional
-    public void eliminarImagen(String id){
-        
+    public void eliminarImagen(String id) {
+
         Imagen i = ri.getById(id);
-        
+
         ri.delete(i);
     }
     
@@ -36,10 +36,15 @@ public class ServicioImagen {
         return ri.findAll();
     }
 
-            
-    public void validar(String id)throws Exception{
+    public void validar(String id) throws Exception {
         if (id == null || id.trim().isEmpty()) {
             throw new Exception("No existe una imagen con este ID");
         }
     }
+  
+    @Transactional
+    public List<Imagen> findAll() {
+        return ri.findAll();
+    }
+
 }

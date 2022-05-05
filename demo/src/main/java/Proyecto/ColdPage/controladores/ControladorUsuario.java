@@ -1,6 +1,7 @@
 package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Usuario;
+import Proyecto.ColdPage.enums.Role;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,26 @@ public class ControladorUsuario {
     private ServicioUsuario su;
 
     @GetMapping("/registro")
-    public String registrarse() {
+    public String registro() {
         return "registro";
     }
 
     @PostMapping("/registro")
-    public String guardarUsuario(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role) {
+    public String registro(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role) {
+        Usuario u = new Usuario();
         try {
-
-            Usuario u = su.crearUsuario(email, pw1, pw2, role);
+            u = su.crearUsuario(email, pw1, pw2, role);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/login";
+        if (u.getRole().equals(Role.CLIENTE)) {
+            return "redirect:/cliente/registro"; // 
+        } else if (u.getRole().equals(Role.PROFESIONAL)) {
+            return "redirect:/profesional/registro"; // 
+        } else {
+            return "redirect:/index";
+        }
+        
     }
 
     @GetMapping("/editar")
@@ -42,9 +50,7 @@ public class ControladorUsuario {
             model.put("usuario", u);
         } catch (Exception e) {
         }
-
         return "editar-perfil";
-
     }
 
     @PostMapping("/editar")

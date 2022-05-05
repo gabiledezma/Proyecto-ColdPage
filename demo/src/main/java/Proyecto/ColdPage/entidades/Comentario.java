@@ -28,8 +28,7 @@ public class Comentario {
     public Comentario() {
     }
 
-    public Comentario(String id, Usuario usuario, Date fecha, String texto, Imagen foto) {
-        this.id = id;
+    public Comentario(Usuario usuario, Date fecha, String texto, Imagen foto) {
         this.usuario = usuario;
         this.fecha = fecha;
         this.texto = texto;
@@ -75,6 +74,5 @@ public class Comentario {
     public void setFoto(Imagen foto) {
         this.foto = foto;
     }
-    
 
 }

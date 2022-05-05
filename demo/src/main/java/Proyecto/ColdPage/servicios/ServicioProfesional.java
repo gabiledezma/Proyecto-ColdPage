@@ -17,29 +17,39 @@ public class ServicioProfesional {
 
     @Autowired
     private RepositorioProfesional rp;
+    @Autowired
+    private ServicioUsuario su;
 
     @Transactional
-    public Profesional crearProfesional(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
-        validar(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, usuario);
-        Profesional profesional = new Profesional(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto);
-        profesional.setUsuario(usuario);
+    public Profesional crearProfesional(String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, String email) throws Exception {
+        Imagen imagen = new Imagen(foto);
+        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
+        validar(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, email);
+        Profesional profesional = new Profesional(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen);
+        Usuario u = su.buscarPorEmail(email);
+        if (u == null) {
+            throw new Exception("No existe un usuario con ese email");
+        }
+        profesional.setUsuario(u);
         profesional.setPerfil(true);
         return rp.save(profesional);
     }
 
     @Transactional
-    public Profesional modificarProfesional(String id, String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
-        validarModificacion(profesion, zonaDeTrabajo, nombre, contacto, fechaDeNacimiento, foto, perfil, usuario);
+    public Profesional modificarProfesional(String id, String profesion, String pais, String provincia, String localidad, String nombre, Long contacto, Date fechaDeNacimiento, String foto, Boolean perfil, Usuario usuario) throws Exception {
+        Imagen imagen = new Imagen(foto);
+        Domicilio domicilio = new Domicilio(pais, provincia, localidad);
+        validarModificacion(profesion, domicilio, nombre, contacto, fechaDeNacimiento, imagen, perfil, usuario);
         Profesional p = getOne(id);
         if (p == null) {
             throw new Exception("No existe un profesional con ese ID");
         }
         p.setProfesion(profesion);
-        p.setZonaDeTrabajo(zonaDeTrabajo);
+        p.setDomicilio(domicilio);
         p.setNombre(nombre);
         p.setContacto(contacto);
         p.setFechaDeNacimiento(fechaDeNacimiento);
-        p.setFoto(foto);
+        p.setFoto(imagen);
         p.setPerfil(perfil);
         p.setUsuario(usuario);
         return rp.save(p);
@@ -66,12 +76,12 @@ public class ServicioProfesional {
         return rp.buscarPorUsuarioId(id);
     }
 
-    public void validar(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Usuario usuario) throws Exception {
+    public void validar(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, String email) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
-        if (zonaDeTrabajo == null) {
+        if (domicilio == null) {
             throw new Exception("La zona de trabajo no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -86,17 +96,17 @@ public class ServicioProfesional {
         if (foto == null) {
             throw new Exception("La foto no puede estar vacía");
         }
-        if (usuario == null) {
-            throw new Exception("El usuario no puede estar vacio");
+        if (email == null || email.trim().isEmpty()) {
+            throw new Exception("El email no puede estar vacio");
         }
     }
 
-    public void validarModificacion(String profesion, Domicilio zonaDeTrabajo, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
+    public void validarModificacion(String profesion, Domicilio domicilio, String nombre, Long contacto, Date fechaDeNacimiento, Imagen foto, Boolean perfil, Usuario usuario) throws Exception {
 
         if (profesion == null || profesion.trim().isEmpty()) {
             throw new Exception("La profesion no puede estar vacía");
         }
-        if (zonaDeTrabajo == null) {
+        if (domicilio == null) {
             throw new Exception("La zona de trabajo no puede estar vacia");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -132,4 +142,31 @@ public class ServicioProfesional {
         promCalificacion = (double) promCalificacion / 1000;
         p.setPromedioCalificacion(promCalificacion);
     }
+
+    public List<Profesional> buscarPorPais(String pais) {
+        return rp.buscarPorPais(pais);
+    }
+
+    public List<Profesional> buscarPorProvincia(String pais, String provincia) {
+        return rp.buscarPorProvincia(pais, provincia);
+    }
+
+    public List<Profesional> buscarPorLocalidad(String pais, String provincia, String localidad) {
+        return rp.buscarPorLocalidad(pais, provincia, localidad);
+    }
+//    public List<Profesional> buscarCalificacionMayorA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
+//
+//    public List<Profesional> buscarCalificacionMenorA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
+//
+//    public List<Profesional> buscarCalificacionMayorOIgualA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
+//
+//    public List<Profesional> buscarCalificacionMenorOIgualA(String promedioCalificacion) {
+//        return rp.buscarCalificacionMayorA(promedioCalificacion);
+//    }
 }
