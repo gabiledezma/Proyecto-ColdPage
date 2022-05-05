@@ -30,19 +30,16 @@ public class ServicioImagen {
         
         ri.delete(i);
     }
+    
+    @Transactional
+    public List<Imagen> findAll() {
+        return ri.findAll();
+    }
+
             
     public void validar(String id)throws Exception{
         if (id == null || id.trim().isEmpty()) {
             throw new Exception("No existe una imagen con este ID");
         }
     }
-  
-    @Autowired
-    private RepositorioImagen ri;
-
-    @Transactional
-    public List<Imagen> findAll() {
-        return ri.findAll();
-    }
-
 }
