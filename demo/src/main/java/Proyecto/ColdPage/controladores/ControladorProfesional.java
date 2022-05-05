@@ -4,7 +4,6 @@ import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioDomicilio;
 import Proyecto.ColdPage.servicios.ServicioProfesional;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,7 +32,6 @@ public class ControladorProfesional {
     @PostMapping("/registro")
     public String guardar(ModelMap modelo, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam Long contacto, @RequestParam String fechaDeNacimiento, @RequestParam String email) {
         try {
-
             sp.crearProfesional(profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, email);
             modelo.put("exito", "Registro exitoso.");
             return "redirect:/";

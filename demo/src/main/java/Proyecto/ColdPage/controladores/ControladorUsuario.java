@@ -40,7 +40,6 @@ public class ControladorUsuario {
         } else {
             return "redirect:/index";
         }
-        
     }
 
     @GetMapping("/editar")

@@ -13,7 +13,6 @@
     <body>
         <nav th:replace="/fragments/navbar :: nav"></nav>
         <form th:action="@{/profesional/registro}" class="form-profesional" method="POST" >
-            <!--<input hidden th:value="${usuario.id}" name="id">-->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Ingrese nuevamente su email" name="email">
