@@ -1,6 +1,7 @@
 package Proyecto.ColdPage.repositorios;
 
 import Proyecto.ColdPage.entidades.Comentario;
+import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Publicacion;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
