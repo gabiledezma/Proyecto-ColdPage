@@ -21,24 +21,22 @@ public class ServicioPublicacion {
     private RepositorioUsuario ru;
 
     @Transactional
-    public Publicacion crearPublicacion(Usuario usuario, String titulo, String texto, List<Imagen> imagen) throws Exception {
+    public Publicacion crearPublicacion(Usuario usuario, String titulo, String texto) throws Exception {
         validar(titulo, texto, usuario);
         Publicacion p = new Publicacion();
         p.setTitulo(titulo);
         p.setTexto(texto);
-        p.setImagen(imagen);
         ru.findByEmail(usuario.getEmail());
         return rp.save(p);
     }
 
     @Transactional
-    public Publicacion modificarPublicacion(String id, String titulo, String texto, List<Imagen> imagen, Usuario usuario) throws Exception {
+    public Publicacion modificarPublicacion(String id, String titulo, String texto, Usuario usuario) throws Exception {
         validarID(id);
         validar(titulo, texto, usuario);
         Publicacion p = rp.getOne(id);
         p.setTexto(texto);
         p.setTitulo(titulo);
-        p.setImagen(imagen);
         return rp.save(p);
     }
 
@@ -57,6 +55,26 @@ public class ServicioPublicacion {
         c.add(comentario);
         p.setComentarios(c);
         return rp.save(p);
+    }
+    
+    @Transactional
+    public Publicacion recibirImagen(Imagen imagen, String id)throws Exception{
+        validarID(id);
+        Publicacion p = rp.getById(id);
+        List<Imagen> i = p.getImagen();
+        i.add(imagen);
+        p.setImagen(i);
+        return rp.save(p);
+    }
+    
+    @Transactional
+    public void listarComentarios(String id){
+        rp.listarComentarios(id);
+    }
+    
+    @Transactional
+    public List<Publicacion> listarPublicaciones(){
+        return rp.findAll();
     }
 
     public void validarID(String id) throws Exception {
