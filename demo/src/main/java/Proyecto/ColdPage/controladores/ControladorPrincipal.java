@@ -1,13 +1,11 @@
 package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Usuario;
-import Proyecto.ColdPage.enums.Role;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,26 +21,23 @@ public class ControladorPrincipal {
     public String index(@RequestParam(required = false) String login, ModelMap model) {
         if (login != null) {
             model.put("exito", "Logueado con exito");
+            
         }
         return "index";
     }
 
     @PostMapping("/")
-    public String registro(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, @PathVariable String id) {
-        Usuario u = new Usuario();
+    public String registro(ModelMap modelo, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad) {
         try {
-            u = su.crearUsuario(email, pw1, pw2, role);
+            Usuario u = su.crearUsuario(email, pw1, pw2, role, nombre, contacto, fechaDeNacimiento, pais, provincia, localidad);
+            modelo.put("exito", "Registro exitoso.");
+            return "redirect:/";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        if (u.getRole().equals(Role.CLIENTE)) {
-            return "redirect:/cliente/registro"; // 
-        } else if (u.getRole().equals(Role.PROFESIONAL)) {
-            return "redirect:/profesional/registro"; // 
-        } else {
-            return "redirect:/index";
-        }
+            modelo.put("error", "Faltó algún dato.");
+            return "registro";
 
+        }
     }
 
     @GetMapping("/login")

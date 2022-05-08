@@ -1,7 +1,6 @@
 package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Usuario;
-import Proyecto.ColdPage.enums.Role;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +25,15 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/registro")
-    public String registro(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role) {
-        Usuario u = new Usuario();
+    public String registro(ModelMap modelo, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad) {
         try {
-            u = su.crearUsuario(email, pw1, pw2, role);
+            Usuario u = su.crearUsuario(email, pw1, pw2, role, nombre, contacto, fechaDeNacimiento, pais, provincia, localidad);
+            modelo.put("exito", "Registro exitoso.");
+            return "redirect:/";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        if (u.getRole().equals(Role.CLIENTE)) {
-            return "redirect:/cliente/registro"; // 
-        } else if (u.getRole().equals(Role.PROFESIONAL)) {
-            return "redirect:/profesional/registro"; // 
-        } else {
-            return "redirect:/index";
+            modelo.put("error", "Faltó algún dato.");
+            return "registro";
         }
     }
 
@@ -53,9 +48,9 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/editar")
-    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model) {
+    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String foto, @RequestParam String perfil) {
         try {
-            Usuario u = su.modificarUsuario(id, email, pw1, pw2, role);
+            Usuario u = su.modificarUsuario(id, email, pw1, pw2, role, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, perfil);
             model.put("exito", "Usuario modificado con exito");
             redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
         } catch (Exception e) {

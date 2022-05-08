@@ -38,6 +38,7 @@ and open the template in the editor.
                 <thead>
                     <tr>
                         <th scope="col">Email</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Rol</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -45,6 +46,7 @@ and open the template in the editor.
                 <tbody th:each="usuario : ${usuarios}"> 
                     <tr>
                         <td th:text="${usuario.email}"></td>
+                        <td th:text="${usuario.nombre}"></td>
                         <td th:text="${usuario.role}"></td>
                         <td>
                             <a th:href= "@{/admin/rol/__${usuario.id}__}"><i class="fas fa-feather-alt"></i></a>

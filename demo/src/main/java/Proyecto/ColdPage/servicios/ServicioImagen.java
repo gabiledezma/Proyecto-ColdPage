@@ -30,7 +30,7 @@ public class ServicioImagen {
 
         ri.delete(i);
     }
-    
+
     @Transactional
     public List<Imagen> findAll() {
         return ri.findAll();
@@ -40,11 +40,6 @@ public class ServicioImagen {
         if (id == null || id.trim().isEmpty()) {
             throw new Exception("No existe una imagen con este ID");
         }
-    }
-  
-    @Transactional
-    public List<Imagen> findAll() {
-        return ri.findAll();
     }
 
 }
