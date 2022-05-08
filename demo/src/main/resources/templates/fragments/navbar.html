@@ -14,13 +14,7 @@
                     <a class="nav-link" th:href="@{/usuario/registro}">Registrarse</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL')">
-                    <a class="nav-link" th:href="@{/usuario/editar}">Configuracion de Seguridad</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('PROFESIONAL')">
-                    <a class="nav-link" th:href="@{/profesional/modificar}">Editar Perfil</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
-                    <a class="nav-link" th:href="@{/cliente/modificar}">Editar Perfil</a>
+                    <a class="nav-link" th:href="@{/usuario/editar}">Editar Perfil</a>             
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/admin/}">Lista de Usuarios</a>
@@ -30,6 +24,9 @@
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
+                </li>
+               <!-- <li class="navbar-brand" sec:authorize="isAuthenticated()" th:text="${usuario.nombre}">-->
+
                 </li>
             </ul>
         </div>
