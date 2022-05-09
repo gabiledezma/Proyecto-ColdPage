@@ -20,9 +20,9 @@ public class Trabajo {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @OneToOne
-    private Cliente cliente;
+    private Usuario cliente;
     @ManyToOne
-    private Profesional profesional;
+    private Usuario profesional;
     private Integer calificacion;
     private String descripcion;
     private String observaciones;
@@ -38,7 +38,7 @@ public class Trabajo {
     public Trabajo() {
     }
 
-    public Trabajo(Cliente cliente, String descripcion, String titulo, Date fecha, Boolean estado) {
+    public Trabajo(Usuario cliente, String descripcion, String titulo, Date fecha, Boolean estado) {
         this.cliente = cliente;
         this.descripcion = descripcion;
         this.titulo = titulo;
@@ -54,19 +54,19 @@ public class Trabajo {
         this.id = id;
     }
 
-    public Cliente getCliente() {
+    public Usuario getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Usuario cliente) {
         this.cliente = cliente;
     }
 
-    public Profesional getProfesional() {
+    public Usuario getProfesional() {
         return profesional;
     }
 
-    public void setProfesional(Profesional profesional) {
+    public void setProfesional(Usuario profesional) {
         this.profesional = profesional;
     }
 
@@ -134,5 +134,4 @@ public class Trabajo {
         this.fotos = fotos;
     }
 
-   
 }

@@ -200,3 +200,18 @@ h4{
 {
     position: left;
 }
+.form-profesional{
+    margin-left: 500px;
+    box-sizing: border-box;
+    width: 30%;
+    border: solid #5ba1cd 10px;
+    padding:5px;
+}
+.botoncliente{
+    position:  relative;
+    left: 145px;
+}
+.botonprofesional{
+    position:  relative;
+    left: 140px;
+}

@@ -20,19 +20,21 @@ public class ControladorUsuario {
     private ServicioUsuario su;
 
     @GetMapping("/registro")
-    public String registrarse() {
+    public String registro() {
         return "registro";
     }
 
     @PostMapping("/registro")
-    public String guardarUsuario(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role) {
+    public String registro(ModelMap modelo, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad) {
         try {
-
-            Usuario u = su.crearUsuario(email, pw1, pw2, role);
+            Usuario u = su.crearUsuario(email, pw1, pw2, role, nombre, contacto, fechaDeNacimiento, pais, provincia, localidad);
+            modelo.put("exito", "Registro exitoso.");
+            return "redirect:/";
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            modelo.put("error", "Faltó algún dato.");
+            return "registro";
         }
-        return "redirect:/index";
     }
 
     @GetMapping("/editar")
@@ -42,15 +44,13 @@ public class ControladorUsuario {
             model.put("usuario", u);
         } catch (Exception e) {
         }
-
         return "editar-perfil";
-
     }
 
     @PostMapping("/editar")
-    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model) {
+    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String foto, @RequestParam String perfil) {
         try {
-            Usuario u = su.modificarUsuario(id, email, pw1, pw2, role);
+            Usuario u = su.modificarUsuario(id, email, pw1, pw2, role, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, perfil);
             model.put("exito", "Usuario modificado con exito");
             redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
         } catch (Exception e) {

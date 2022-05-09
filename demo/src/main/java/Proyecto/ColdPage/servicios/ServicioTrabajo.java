@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Proyecto.ColdPage.servicios;
 
 import Proyecto.ColdPage.entidades.Cliente;
@@ -16,15 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author Fran
- */
 @Service
 public class ServicioTrabajo {
 
     @Autowired
     private RepositorioTrabajo rt;
+
 
     @Transactional
     public Trabajo crearTrabajo(Cliente cliente, Profesional profesional, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> imagenes) throws Exception {
