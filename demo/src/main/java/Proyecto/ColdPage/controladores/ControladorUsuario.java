@@ -1,7 +1,9 @@
 package Proyecto.ColdPage.controladores;
 
+import Proyecto.ColdPage.entidades.Trabajo;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,9 +66,12 @@ public class ControladorUsuario {
     public String perfil(ModelMap model, HttpSession session) {
         try {
             Usuario u = (Usuario) session.getAttribute("usuariosession");
-           // u.setPromedioCalificacion(su.obtenerCalificacion(u));
             model.put("usuario", u);
+            u.setPromedioCalificacion(su.obtenerCalificacion(u));
+            model.put("publicaciones", u.getPublicaciones());
+            model.put("trabajos", u.getTrabajos());
         } catch (Exception e) {
+
         }
         return "perfil";
     }

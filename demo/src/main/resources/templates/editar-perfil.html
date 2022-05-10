@@ -39,15 +39,17 @@
                 <div class="mb-3">
                     <label>Email</label> <br><input type="email" th:value="${usuario.email}" class="form-control" name="email" placeholder="Email">
                 </div><br>
-
                 <div class="mb-3">
-                    <label>Contraseña</label> <br><input type="password" class="form-control" name="pw1" placeholder="Contraseña" required>
+                    <label>Nombre</label> <br><input type="text" class="form-control" name="nombre" placeholder="Nombre">
                 </div><br>
-
                 <div class="mb-3">
-                    <label>Repetir Contraseña</label> <br><input type="password" class="form-control" name="pw2" placeholder="Contraseña" required>
+                    <label>Telefono</label> <br><input type="text" class="form-control" name="contacto" placeholder="Telefono">
                 </div><br>
-
+                <div class="mb-3">
+                    <label for="fechaDeNacimiento"  class="form-label">Fecha De nacimiento:</label>
+                    <input type="date" class="form-control" id="start" name="fechaDeNacimiento"
+                           min="1950-01-01" max="2030-12-31">
+                </div> <br>
                 <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
                     <label>Profesion</label> <br><input type="text" class="form-control" name="profesion" placeholder="Profesion">
                 </div>
@@ -304,17 +306,6 @@
                     <label>Localidad</label> <br><input type="text" class="form-control" name="localidad" placeholder="Localidad">
                 </div><br>
                 <div class="mb-3">
-                    <label>Nombre</label> <br><input type="text" class="form-control" name="nombre" placeholder="Nombre">
-                </div><br>
-                <div class="mb-3">
-                    <label>Telefono</label> <br><input type="text" class="form-control" name="contacto" placeholder="Telefono">
-                </div><br>
-                <div class="mb-3">
-                    <label for="fechaDeNacimiento"  class="form-label">Fecha De nacimiento:</label>
-                    <input type="date" class="form-control" id="start" name="fechaDeNacimiento"
-                           min="1950-01-01" max="2030-12-31">
-                </div> <br>
-                <div class="mb-3">
                     <label for="foto" class="form-label">Ingresa una foto:</label>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="foto" placeholder="URL de la foto">
@@ -330,7 +321,17 @@
                         <option value="PUBLICO">Publico</option>
                         <option value="PRIVADO">Privado</option>
                     </select> 
-                </div>
+                </div><br>
+                <div class="mb-3">
+                    <h5>Para confirmar los cambios escriba o cambie su contraseña: </h5>
+                </div><br>
+                <div class="mb-3">
+                    <label>Contraseña</label> <br><input type="password" class="form-control" name="pw1" placeholder="Contraseña" required>
+                </div><br>
+
+                <div class="mb-3">
+                    <label>Repetir Contraseña</label> <br><input type="password" class="form-control" name="pw2" placeholder="Contraseña" required>
+                </div><br>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary"> Actualizar Datos </button>
                 </div>
