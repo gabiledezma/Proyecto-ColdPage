@@ -20,7 +20,6 @@ public class Publicacion {
     private String id;
     @OneToOne
     private Usuario usuario;
-    private String titulo;
     private String texto;
     @OneToMany
     private List<Comentario> comentarios;
@@ -32,9 +31,8 @@ public class Publicacion {
     public Publicacion() {
     }
 
-    public Publicacion(Usuario usuario, String titulo, String texto, Date fecha) {
+    public Publicacion(Usuario usuario, String texto, Date fecha) {
         this.usuario = usuario;
-        this.titulo = titulo;
         this.texto = texto;
         this.fecha = fecha;
     }
@@ -53,14 +51,6 @@ public class Publicacion {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
     }
 
     public String getTexto() {

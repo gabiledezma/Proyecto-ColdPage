@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -21,16 +20,16 @@ public class Trabajo {
     private String id;
     @OneToOne
     private Usuario cliente;
-    @ManyToOne
+    @OneToOne
     private Usuario profesional;
-    private Integer calificacion;
+    private Integer calificacion; // la da el cliente al finalizar
     private String descripcion;
-    private String observaciones;
+    private String observaciones; //detalles que ve el cliente al finalizar
     private String titulo; //trabajo a realizar
     private Integer costo;
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    private Boolean estado;
+    private Boolean estado; //terminado o no
     @OneToMany
     private List<Imagen> fotos;
     // en caso del profesional si necesita ayuda puede generar alertas de trabajo

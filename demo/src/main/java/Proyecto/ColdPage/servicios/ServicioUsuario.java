@@ -24,10 +24,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
 public class ServicioUsuario implements UserDetailsService {
-
+    
     @Autowired
     private RepositorioUsuario ru;
-
+    
     @Transactional
     public Usuario crearUsuario(String email, String pw1, String pw2, String role, String nombre, String contacto, String fechaDeNacimiento, String pais, String provincia, String localidad) throws Exception {
         try {
@@ -55,6 +55,10 @@ public class ServicioUsuario implements UserDetailsService {
             String domicilio = localidad + ", " + provincia + ", " + pais;
             usuario.setDomicilio(domicilio);
             usuario.setPerfil(true); // publico
+            usuario.setFoto(null);
+            usuario.setPromedioCalificacion((double) 0);
+            usuario.setPublicaciones(null);
+            usuario.setTrabajos(null);
             return ru.save(usuario);
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -125,31 +129,31 @@ public class ServicioUsuario implements UserDetailsService {
                 u.setPerfil(false);
             }
         }
-
+        
         return ru.save(u);
     }
-
+    
     @Transactional
     public void eliminarUsuario(String id) {
         Usuario u = getOne(id);
         ru.delete(u);
     }
-
+    
     @Transactional
     public List<Usuario> findAll() {
         return ru.findAll();
     }
-
+    
     @Transactional
     public Usuario getOne(String id) {
         return ru.getOne(id);
     }
-
+    
     @Transactional
     public Usuario buscarPorEmail(String email) {
         return ru.findByEmail(email);
     }
-
+    
     public void validar(String email, String pw1, String pw2, String role, String nombre, String contacto, String fechaDeNacimiento, String pais, String provincia, String localidad) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
@@ -184,9 +188,9 @@ public class ServicioUsuario implements UserDetailsService {
         if (localidad == null || localidad.trim().isEmpty()) {
             throw new Exception("La localidad no puede estar vacia");
         }
-
+        
     }
-
+    
     public void validarPassword(String pw1, String pw2) throws Exception {
         if (pw1 == null || pw2 == null || pw1.isEmpty() || pw2.isEmpty()) {
             throw new Exception("Las contraseñas no pueden estar vacias");
@@ -195,7 +199,7 @@ public class ServicioUsuario implements UserDetailsService {
             throw new Exception("Las contraseñas no coinciden");
         }
     }
-
+    
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = ru.findByEmail(email);
@@ -213,7 +217,7 @@ public class ServicioUsuario implements UserDetailsService {
             return null;
         }
     }
-
+    
     @Transactional
     public void cambiarRol(String id) throws Exception {
         Optional<Usuario> respuesta = ru.findById(id);
@@ -226,7 +230,7 @@ public class ServicioUsuario implements UserDetailsService {
             }
         }
     }
-
+    
     @Transactional
     public void hacerAdmin(String id) throws Exception {
         Optional<Usuario> respuesta = ru.findById(id);
@@ -239,19 +243,23 @@ public class ServicioUsuario implements UserDetailsService {
             }
         }
     }
-
+    
     public List<Usuario> buscarPorProfesion(String profesion) {
         return ru.buscarPorProfesion(profesion);
     }
-
+    
     public double obtenerCalificacion(Usuario u) {
         int sumatoria = 0;
-        for (Trabajo trabajo : u.getTrabajos()) {
-            sumatoria = sumatoria + trabajo.getCalificacion();
+        if (u.getTrabajos().size() == 0) {
+            return 0;
+        } else {
+            for (Trabajo trabajo : u.getTrabajos()) {
+                sumatoria = sumatoria + trabajo.getCalificacion();
+            }
+            double promCalificacion = (int) sumatoria * 1000 / u.getTrabajos().size();
+            promCalificacion = (double) promCalificacion / 1000;
+            return promCalificacion;
         }
-        double promCalificacion = (int) sumatoria * 1000 / u.getTrabajos().size();
-        promCalificacion = (double) promCalificacion / 1000;
-        return promCalificacion;
     }
-
+    
 }
