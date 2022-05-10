@@ -71,7 +71,7 @@ public class ControladorUsuario {
             model.put("publicaciones", u.getPublicaciones());
             model.put("trabajos", u.getTrabajos());
         } catch (Exception e) {
-
+   
         }
         return "perfil";
     }

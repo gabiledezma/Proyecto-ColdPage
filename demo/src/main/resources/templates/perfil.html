@@ -21,15 +21,15 @@
                 <h3>Nombre</h3>
                 <p th:text="${usuario.nombre}"> </p>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" th:if="${usuario.perfil}">
                 <h3>Fecha de Nacimiento</h3>
                 <p th:text="${usuario.fechaDeNacimiento}"> </p>
             </div >
-            <div class="mb-3">
+            <div class="mb-3" th:if="${usuario.perfil}">
                 <h3>Domicilio</h3>
                 <p th:text="${usuario.domicilio}"> </p>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" th:if="${usuario.perfil}">
                 <h3>Telefono</h3>
                 <p th:text="${usuario.contacto}"> </p>
             </div>
@@ -44,7 +44,7 @@
                 <p th:text="${usuario.promedioCalificacion}"> </p>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3" th:if="${usuario.perfil}">
                 <h3>Publicaciones</h3>
                 <div th:if="${publicaciones}==null">
                     <p>Aun no hay publicaciones</p>
@@ -57,7 +57,7 @@
 
                 </div>
             </div>
-            <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')" >
+            <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')" th:if="${usuario.perfil}">
                 <h3>Trabajos</h3>
                 <div th:if="${trabajos}==null">
                     <p>Aun no hay trabajos realizados</p>
