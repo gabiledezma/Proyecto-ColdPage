@@ -1,9 +1,8 @@
 package Proyecto.ColdPage.servicios;
 
-import Proyecto.ColdPage.entidades.Cliente;
 import Proyecto.ColdPage.entidades.Imagen;
-import Proyecto.ColdPage.entidades.Profesional;
 import Proyecto.ColdPage.entidades.Trabajo;
+import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.repositorios.RepositorioTrabajo;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +18,7 @@ public class ServicioTrabajo {
 
 
     @Transactional
-    public Trabajo crearTrabajo(Cliente cliente, Profesional profesional, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> imagenes) throws Exception {
+    public Trabajo crearTrabajo(Usuario cliente, Usuario profesional, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> imagenes) throws Exception {
         validar(descripcion, observaciones, titulo, costo, fecha, estado);
         Trabajo t = new Trabajo();
         t.setTitulo(titulo);
@@ -39,10 +38,10 @@ public class ServicioTrabajo {
     }
 
     @Transactional
-    public Trabajo modificarTrabajo(String id, Cliente cliente, Profesional profesional, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> imagenes) throws Exception {
+    public Trabajo modificarTrabajo(String id, Usuario cliente, Usuario profesional, String descripcion, String observaciones, String titulo, Integer costo, Date fecha, Boolean estado, List<Imagen> imagenes) throws Exception {
         validarID(id);
         validar(descripcion, observaciones, titulo, costo, fecha, estado);
-        Trabajo t = rt.getOne(id);
+        Trabajo t = rt.getById(id);
         t.setTitulo(titulo);
         t.setDescripcion(descripcion);
         t.setObservaciones(observaciones);
@@ -62,7 +61,7 @@ public class ServicioTrabajo {
     @Transactional
     public void eliminarTrabajo(String id) throws Exception {
         validarID(id);
-        Trabajo t = rt.getOne(id);
+        Trabajo t = rt.getById(id);
         rt.delete(t);
     }
 

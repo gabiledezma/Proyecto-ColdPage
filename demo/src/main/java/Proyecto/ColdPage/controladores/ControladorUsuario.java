@@ -57,6 +57,17 @@ public class ControladorUsuario {
             model.put("error", e.getMessage());
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/usuario/editar";
+        return "redirect:/usuario/perfil";
+    }
+
+    @GetMapping("/perfil")
+    public String perfil(ModelMap model, HttpSession session) {
+        try {
+            Usuario u = (Usuario) session.getAttribute("usuariosession");
+           // u.setPromedioCalificacion(su.obtenerCalificacion(u));
+            model.put("usuario", u);
+        } catch (Exception e) {
+        }
+        return "perfil";
     }
 }
