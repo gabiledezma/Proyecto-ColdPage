@@ -21,9 +21,9 @@ public class ControladorPrincipal {
     public String index(@RequestParam(required = false) String login, ModelMap model) {
         if (login != null) {
             model.put("exito", "Logueado con exito");
-            
+
         }
-        return "index";
+        return "pagina";
     }
 
     @PostMapping("/")
@@ -48,6 +48,8 @@ public class ControladorPrincipal {
         if (logout != null) {
             model.put("logout", "Desconectado correctamente");
         }
-        return "redirect:/usuario/registro";
+        return "login";
     }
+
+    // vistas index y pagina deben fusionarse, debe aparecer todo en la misma, si el usuario inicio sesion se muestra la pagina sino se muestra el login
 }
