@@ -19,6 +19,18 @@ public class ControladorUsuario {
     @Autowired
     private ServicioUsuario su;
 
+    @GetMapping("/")
+    public String index(@RequestParam(required = false) String login, ModelMap model, HttpSession session) {
+        try {
+            Usuario u = (Usuario) session.getAttribute("usuariosession");
+            model.put("usuario", u);
+            model.put("exito", "Logueado con exito");
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+        }
+        return "index";
+    }
+
     @GetMapping("/registro")
     public String registro() {
         return "registro";

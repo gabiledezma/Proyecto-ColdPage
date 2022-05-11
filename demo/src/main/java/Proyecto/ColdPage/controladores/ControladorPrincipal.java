@@ -2,6 +2,7 @@ package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,11 +19,12 @@ public class ControladorPrincipal {
     private ServicioUsuario su;
 
     @GetMapping("/")//localhost:8080/
-    public String index(@RequestParam(required = false) String login, ModelMap model) {
+    public String index(@RequestParam(required = false) String login, ModelMap model, HttpSession session) {
         if (login != null) {
             model.put("exito", "Logueado con exito");
-            
         }
+        Usuario u = (Usuario) session.getAttribute("usuariosession");
+        model.put("usuario", u);
         return "index";
     }
 
@@ -48,6 +50,8 @@ public class ControladorPrincipal {
         if (logout != null) {
             model.put("logout", "Desconectado correctamente");
         }
-        return "redirect:/usuario/registro";
+        return "index";
     }
+
+    // vistas index y pagina deben fusionarse, debe aparecer todo en la misma, si el usuario inicio sesion se muestra la pagina sino se muestra el login
 }
