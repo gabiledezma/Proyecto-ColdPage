@@ -1,0 +1,64 @@
+.form{
+    font-family: inherit;
+    font-size: 100%;
+    width: 400px;
+    height: 160px;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    z-index: inherit;
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 1px 1px 10px rgba(117, 116, 116, .219);
+}
+
+.input-description{
+    height: 100px;
+}
+
+.input-sueldo{
+    height: 20px;
+}
+
+.form-trabajo{
+    font-family: inherit;
+    font-size: 100%;
+    width: 430px;
+    height: 300px;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    z-index: inherit;
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 1px 1px 10px rgba(117, 116, 116, .219);
+}
+
+.form-trabajo button{
+    width: 50%;
+    margin-left: 202px;
+    background-color: #226fdc;
+    color: #fff;
+    padding: .9rem .3rem;
+    border-radius: 6px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    
+}
+
+.form-trabajo button a{
+    text-decoration: none;
+    color: rgb(247, 248, 249);
+    font-weight: 600;
+    font-size: 17px;
+}
+
+
+
+
+
+
