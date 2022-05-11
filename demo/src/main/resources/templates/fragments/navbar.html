@@ -1,23 +1,23 @@
 <!-- barra navegadora -->
 <nav class="navbar navbar-expand-lg navbar-light navegador">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">ColdPage</a>
+        <a class="navbar-brand" th:href="@{/usuario/perfil}">ColdPage</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/}">Inicio</a> <!-- cambiar ruta a futuro feed-->
+                    <a class="nav-link active" aria-current="page" th:href="@{/usuario/perfil}">Inicio</a> <!-- cambiar ruta a futuro feed-->
                 </li>  
-                <li class="nav-item" sec:authorize="!hasAnyRole('ADMIN','CLIENTE','PROFESIONAL')">
-                    <a class="nav-link" th:href="@{/usuario/registro}">Registrarse</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL')">
-                    <a class="nav-link" th:href="@{/usuario/editar}">Editar Perfil</a>             
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/usuario/perfil}" th:text="${usuario.nombre}"></a>
                 </li>
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/admin/}">Lista de Usuarios</a>
+                </li>
+                <li class="nav-item" sec:authorize="!hasAnyRole('ADMIN','CLIENTE','PROFESIONAL')">
+                    <a class="nav-link" th:href="@{/usuario/registro}">Registrarse</a>
                 </li>
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/}">Iniciar Sesión</a>
@@ -25,9 +25,7 @@
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/usuario/perfil}">Mi Perfil</a>
-                </li>
+               
                 <!-- <li class="navbar-brand" sec:authorize="isAuthenticated()" th:text="${usuario.nombre}">
  
                  </li>-->
