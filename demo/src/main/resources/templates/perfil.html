@@ -2,8 +2,13 @@
 <html>
     <head>
         <title>Mi Perfil</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <link rel="stylesheet" href="../../css/stylefb.css">
+        <link rel="shortcut icon" href = "img/browser_seeker_icon_220709.png" >
+        <link rel="shortcut icon" href = "../img/favicon.jpg" >
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -12,10 +17,79 @@
             />
     </head>
     <body>
-        <nav th:replace="/fragments/navbar :: nav"></nav>
-        <div class="container m-5">
+        <nav class="navbar navbar-expand-lg navbar-light navegador">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/}">ColdPage</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/}">Inicio</a> <!-- cambiar ruta a futuro feed-->
+                        </li>   
+                        <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL')">
+                            <a class="nav-link" th:href="@{/usuario/editar}">Editar Perfil</a>             
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL','ADMIN')">
+                            <a class="nav-link" th:href="@{/usuario/cambiarPassword}">Cambiar Contraseña</a>             
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container m-5 mb-3">
+
+            <div th:if="${exito}!=null" class="card text-white bg-success mb-3" >
+                <div class="card-body">
+                    <h5 class="card-title">Exito</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+            <div th:if="${error}!=null" class="card text-white bg-danger mb-3" >
+                <div class="card-body">
+                    <h5 class="card-title">Error</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
             <h1>Mi Perfil</h1>
-            <div >
+            <div class="mb-3">
+                <div class="mb-3" >
+                    <h3>Foto</h3>
+<!--
+                    <img src="../../img/hombre.jpg" class="img-thumbnail" alt="foto de perfil">
+                    <div>
+
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" id="inputGroupFile02">
+                            <label class="input-group-text" for="inputGroupFile02">Subir</label>
+                        </div> 
+                    </div>
+-->
+                    <img th:src="@{ /img/ + ${usuario.foto}}" class="img-thumbnail rounded float-left" th:alt="${usuario.foto}">
+                </div>
+                <form th:action="@{/usuario/editarFoto}" method="POST">
+                    <input hidden th:value="${usuario.id}" name="id">
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Ingresa una foto:</label>
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" name="foto" placeholder="URL de la foto">
+                        </div> 
+                    </div>
+                    <div class="mb-3 ">
+                        <button type="submit" class="btn btn-warning">Cambiar Foto</button>
+                    </div>
+                </form>
+                <form th:action="@{/usuario/eliminarFoto}" method="POST">
+                    <input hidden th:value="${usuario.id}" name="id">
+                    <input hidden th:value="null" name="foto">
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-danger me-md-2">Eliminar Foto</button>
+                    </div>
+                </form>
             </div>
             <div class="mb-3">
                 <h3>Nombre</h3>

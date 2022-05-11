@@ -24,10 +24,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
 public class ServicioUsuario implements UserDetailsService {
-    
+
     @Autowired
     private RepositorioUsuario ru;
-    
+
     @Transactional
     public Usuario crearUsuario(String email, String pw1, String pw2, String role, String nombre, String contacto, String fechaDeNacimiento, String pais, String provincia, String localidad) throws Exception {
         try {
@@ -66,94 +66,97 @@ public class ServicioUsuario implements UserDetailsService {
         }
     }
 
-    // si el usuario devuelve los valores en null es porque no los quiere modificar
     @Transactional
-    public Usuario modificarUsuario(String id, String email, String pw1, String pw2, String role, String profesion, String pais, String provincia, String localidad, String nombre, String contacto, String fechaDeNacimiento, String foto, String perfil) throws Exception {
+    public Usuario modificarUsuario(String id, String email, String pw1, String role, String profesion, String pais, String provincia, String localidad, String nombre, String contacto, String fechaDeNacimiento, String foto, String perfil) throws Exception {
         Usuario u = getOne(id);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (u == null) {
             throw new Exception("No existe un usuario con esa ID");
         }
-        if (email == null || email.trim().isEmpty()) {
-            u.setEmail(u.getEmail());
-        } else {
-            u.setEmail(email);
-        }
-        validarPassword(pw1, pw2);
-        u.setPassword(encoder.encode(pw1));
-        u.setRole(u.getRole());
-        if (profesion == null || profesion.trim().isEmpty()) {
-            u.setProfesion(u.getProfesion());
-        } else {
-            u.setProfesion(profesion);
-        }
-        if (localidad == null || localidad.trim().isEmpty() || provincia == null || provincia.trim().isEmpty() || pais == null || pais.trim().isEmpty()) {
-            u.setDomicilio(u.getDomicilio());
-        } else {
-            String domicilio = localidad + ", " + provincia + ", " + pais;
-            u.setDomicilio(domicilio);
-        }
-        if (nombre == null || nombre.trim().isEmpty()) {
-            u.setNombre(u.getNombre());
-        } else {
-            u.setNombre(nombre);
-        }
-        if (contacto == null || contacto.trim().isEmpty()) {
-            u.setContacto(u.getContacto());
-        } else {
-            u.setContacto(contacto);
-        }
-        if (fechaDeNacimiento == null || fechaDeNacimiento.trim().isEmpty()) {
-            u.setFechaDeNacimiento(u.getFechaDeNacimiento());
-        } else {
-            String anio = fechaDeNacimiento.substring(0, 4);
-            String mes = fechaDeNacimiento.substring(5, 7);
-            String dia = fechaDeNacimiento.substring(8, 10);
-            int anioInt = Integer.parseInt(anio);
-            int mesInt = Integer.parseInt(mes);
-            int diaInt = Integer.parseInt(dia);
-            Date fecha = new Date(anioInt - 1900, mesInt - 1, diaInt);
-            u.setFechaDeNacimiento(fecha);
-        }
-        if (foto == null || foto.trim().isEmpty()) {
-            u.setFoto(u.getFoto());
-        } else {
-            u.setFoto(foto);
-        }
-        if (perfil == null || perfil.trim().isEmpty()) {
-            u.setPerfil(u.getPerfil());
-        } else {
-            if (perfil.equals("PUBLICO")) {
-                u.setPerfil(true);
-            } else if (perfil.equals("PRIVADO")) {
-                u.setPerfil(false);
+        if (encoder.matches(pw1, u.getPassword())) {
+            if (email == null || email.trim().isEmpty()) {
+                u.setEmail(u.getEmail());
+            } else {
+                u.setEmail(email);
             }
+            if (pw1 == null || pw1.trim().isEmpty()) {
+                throw new Exception("Las contraseña no pueden estar vacia");
+            }
+            u.setRole(u.getRole());
+            if (profesion == null || profesion.trim().isEmpty()) {
+                u.setProfesion(u.getProfesion());
+            } else {
+                u.setProfesion(profesion);
+            }
+            if (localidad == null || localidad.trim().isEmpty() || provincia == null || provincia.trim().isEmpty() || pais == null || pais.trim().isEmpty()) {
+                u.setDomicilio(u.getDomicilio());
+            } else {
+                String domicilio = localidad + ", " + provincia + ", " + pais;
+                u.setDomicilio(domicilio);
+            }
+            if (nombre == null || nombre.trim().isEmpty()) {
+                u.setNombre(u.getNombre());
+            } else {
+                u.setNombre(nombre);
+            }
+            if (contacto == null || contacto.trim().isEmpty()) {
+                u.setContacto(u.getContacto());
+            } else {
+                u.setContacto(contacto);
+            }
+            if (fechaDeNacimiento == null || fechaDeNacimiento.trim().isEmpty()) {
+                u.setFechaDeNacimiento(u.getFechaDeNacimiento());
+            } else {
+                String anio = fechaDeNacimiento.substring(0, 4);
+                String mes = fechaDeNacimiento.substring(5, 7);
+                String dia = fechaDeNacimiento.substring(8, 10);
+                int anioInt = Integer.parseInt(anio);
+                int mesInt = Integer.parseInt(mes);
+                int diaInt = Integer.parseInt(dia);
+                Date fecha = new Date(anioInt - 1900, mesInt - 1, diaInt);
+                u.setFechaDeNacimiento(fecha);
+            }
+            if (foto == null || foto.trim().isEmpty()) {
+                u.setFoto(u.getFoto());
+            } else {
+                u.setFoto(foto);
+            }
+            if (perfil == null || perfil.trim().isEmpty()) {
+                u.setPerfil(u.getPerfil());
+            } else {
+                if (perfil.equals("PUBLICO")) {
+                    u.setPerfil(true);
+                } else if (perfil.equals("PRIVADO")) {
+                    u.setPerfil(false);
+                }
+            }
+        } else {
+            throw new Exception("Las contraseñas no coinciden");
         }
-        
         return ru.save(u);
     }
-    
+
     @Transactional
     public void eliminarUsuario(String id) {
         Usuario u = getOne(id);
         ru.delete(u);
     }
-    
+
     @Transactional
     public List<Usuario> findAll() {
         return ru.findAll();
     }
-    
+
     @Transactional
     public Usuario getOne(String id) {
         return ru.getOne(id);
     }
-    
+
     @Transactional
     public Usuario buscarPorEmail(String email) {
         return ru.findByEmail(email);
     }
-    
+
     public void validar(String email, String pw1, String pw2, String role, String nombre, String contacto, String fechaDeNacimiento, String pais, String provincia, String localidad) throws Exception {
         if (email == null || email.isEmpty()) {
             throw new Exception("Email no puede estar vacio");
@@ -188,9 +191,9 @@ public class ServicioUsuario implements UserDetailsService {
         if (localidad == null || localidad.trim().isEmpty()) {
             throw new Exception("La localidad no puede estar vacia");
         }
-        
+
     }
-    
+
     public void validarPassword(String pw1, String pw2) throws Exception {
         if (pw1 == null || pw2 == null || pw1.isEmpty() || pw2.isEmpty()) {
             throw new Exception("Las contraseñas no pueden estar vacias");
@@ -199,7 +202,7 @@ public class ServicioUsuario implements UserDetailsService {
             throw new Exception("Las contraseñas no coinciden");
         }
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = ru.findByEmail(email);
@@ -217,7 +220,7 @@ public class ServicioUsuario implements UserDetailsService {
             return null;
         }
     }
-    
+
     @Transactional
     public void cambiarRol(String id) throws Exception {
         Optional<Usuario> respuesta = ru.findById(id);
@@ -230,7 +233,7 @@ public class ServicioUsuario implements UserDetailsService {
             }
         }
     }
-    
+
     @Transactional
     public void hacerAdmin(String id) throws Exception {
         Optional<Usuario> respuesta = ru.findById(id);
@@ -243,11 +246,11 @@ public class ServicioUsuario implements UserDetailsService {
             }
         }
     }
-    
+
     public List<Usuario> buscarPorProfesion(String profesion) {
         return ru.buscarPorProfesion(profesion);
     }
-    
+
     public double obtenerCalificacion(Usuario u) {
         int sumatoria = 0;
         if (u.getTrabajos().size() == 0) {
@@ -261,5 +264,45 @@ public class ServicioUsuario implements UserDetailsService {
             return promCalificacion;
         }
     }
-    
+
+    public Usuario subirFoto(String id, String foto) {
+        Usuario u = getOne(id);
+        if (foto == null || foto.trim().isEmpty()) {
+            u.setFoto(u.getFoto());
+        } else {
+            u.setFoto(foto);
+        }
+        return ru.save(u);
+    }
+
+    public Usuario eliminarFoto(String id) {
+        Usuario u = getOne(id);
+        u.setFoto(null);
+        return ru.save(u);
+    }
+
+    public Usuario cambiarPrivacidad(String id) {
+        Usuario u = getOne(id);
+        if (u.getPerfil() == true) {
+            u.setPerfil(false);
+        } else if (u.getPerfil() == false) {
+            u.setPerfil(true);
+        }
+        return ru.save(u);
+    }
+
+    public Usuario cambiarPassword(String id, String nueva1, String nueva2, String anterior) throws Exception {
+        Usuario u = getOne(id);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (u == null) {
+            throw new Exception("No existe un usuario con esa ID");
+        }
+        if (encoder.matches(anterior, u.getPassword())) {
+            validarPassword(nueva1, nueva2);
+            u.setPassword(encoder.encode(nueva1));
+        } else {
+            throw new Exception("Las contraseñas no coinciden");
+        }
+        return ru.save(u);
+    }
 }

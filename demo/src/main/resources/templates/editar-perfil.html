@@ -33,25 +33,26 @@
                 </div>
             </div>
 
-            <form th:action="@{/usuario/editar}" method="POST" enctype="multipart/form-data"> <!-- en caso de error borrar enctype-->
+            <form th:action="@{/usuario/editar}" method="POST" > 
                 <input hidden th:value="${usuario.id}" name="id">
                 <input hidden th:value="${usuario.role}" name="role">
                 <div class="mb-3">
                     <label>Email</label> <br><input type="email" th:value="${usuario.email}" class="form-control" name="email" placeholder="Email">
                 </div><br>
                 <div class="mb-3">
-                    <label>Nombre</label> <br><input type="text" class="form-control" name="nombre" placeholder="Nombre">
+                    <label>Nombre</label> <br><input type="text" th:value="${usuario.nombre}" class="form-control" name="nombre" placeholder="Nombre">
                 </div><br>
                 <div class="mb-3">
-                    <label>Telefono</label> <br><input type="text" class="form-control" name="contacto" placeholder="Telefono">
+                    <label>Telefono</label> <br><input type="text" th:value="${usuario.contacto}" class="form-control" name="contacto" placeholder="Telefono">
                 </div><br>
                 <div class="mb-3">
                     <label for="fechaDeNacimiento"  class="form-label">Fecha De nacimiento:</label>
                     <input type="date" class="form-control" id="start" name="fechaDeNacimiento"
+                           th:value="${usuario.fechaDeNacimiento}"
                            min="1950-01-01" max="2030-12-31">
                 </div> <br>
                 <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
-                    <label>Profesion</label> <br><input type="text" class="form-control" name="profesion" placeholder="Profesion">
+                    <label>Profesion</label> <br><input type="text" th:value="${usuario.profesion}" class="form-control" name="profesion" placeholder="Profesion">
                 </div>
                 <div class="mb-3" sec:authorize="hasRole('CLIENTE')">
                     <input hidden th:value="${usuario.profesion}" name="profesion">
@@ -308,7 +309,7 @@
                 <div class="mb-3">
                     <label for="foto" class="form-label">Ingresa una foto:</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="foto" placeholder="URL de la foto">
+                        <input type="text" th:value="${usuario.foto}" class="form-control" name="foto" placeholder="URL de la foto">
                         <!--
                          <input th:value="${usuario.foto}" type="text" class="form-control" name="foto" placeholder="URL de la foto">
                         -->
@@ -318,19 +319,15 @@
                     <label for="perfil" class="form-label">Perfil</label><br>
                     <select name="perfil" class="form-select" aria-label="Default select example">
                         <option selected="opcion">Elegir opción</option>
-                        <option value="PUBLICO">Publico</option>
+                        <option value="PUBLICO">Público</option>
                         <option value="PRIVADO">Privado</option>
                     </select> 
                 </div><br>
                 <div class="mb-3">
-                    <h5>Para confirmar los cambios escriba o cambie su contraseña: </h5>
+                    <h5>Para confirmar los cambios escriba su contraseña: </h5>
                 </div><br>
                 <div class="mb-3">
                     <label>Contraseña</label> <br><input type="password" class="form-control" name="pw1" placeholder="Contraseña" required>
-                </div><br>
-
-                <div class="mb-3">
-                    <label>Repetir Contraseña</label> <br><input type="password" class="form-control" name="pw2" placeholder="Contraseña" required>
                 </div><br>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary"> Actualizar Datos </button>
@@ -338,7 +335,15 @@
             </form>
 
         </div>
-
+        <footer>
+            <div class="mb-3">
+                <a th:href="@{/usuario/cambiarPassword}" >
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-warning me-md-2">Cambiar Contraseña</button>
+                    </div>
+                </a>
+            </div><br>
+        </footer>
 
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -48,6 +48,6 @@ public class ControladorPrincipal {
         if (logout != null) {
             model.put("logout", "Desconectado correctamente");
         }
-        return "index";
+        return "redirect:/usuario/registro";
     }
 }
