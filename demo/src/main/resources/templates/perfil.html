@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title>Mi Perfil</title>
         <meta charset="UTF-8" />
@@ -9,155 +9,131 @@
         <link rel="stylesheet" href="../../css/stylefb.css">
         <link rel="shortcut icon" href = "img/browser_seeker_icon_220709.png" >
         <link rel="shortcut icon" href = "../img/favicon.jpg" >
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-            crossorigin="anonymous"
-            />
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light navegador">
-            <div class="container-fluid">
-                <a class="navbar-brand" th:href="@{/}">ColdPage</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" th:href="@{/}">Inicio</a> <!-- cambiar ruta a futuro feed-->
-                        </li>   
-                        <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL')">
-                            <a class="nav-link" th:href="@{/usuario/editar}">Editar Perfil</a>             
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL','ADMIN')">
-                            <a class="nav-link" th:href="@{/usuario/cambiarPassword}">Cambiar Contraseña</a>             
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL')">
-                            <form th:action="@{/usuario/cambiarPrivacidad}" method="POST" > 
-                                <input hidden th:value="${usuario.id}" name="id">
-                                <button type="submit" class="nav-link">Cambiar Privacidad</button>
-                            </form>
-                        </li>
-
-
-                        <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
-                        </li>
-                    </ul>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light navegador">
+                <div class="container-fluid">
+                    <a class="navbar-brand" th:href="@{/usuario/}">ColdPage</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{/usuario/}">Inicio</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" th:href="@{#}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Editar Perfil</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" th:href="@{/usuario/editar}">Editar</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/usuario/cambiarPassword}">Cambiar Contraseña</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/usuario/editarFoto}">Editar Foto de Perfil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="dropdown-item">
+                                            <form th:action="@{/usuario/cambiarPrivacidad}" method="POST" > 
+                                                <input hidden th:value="${usuario.id}" name="id">
+                                                <button type="submit" >Cambiar Privacidad</button>
+                                            </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-        <div class="container m-5 mb-3">
-
-            <div th:if="${exito}!=null" class="card text-white bg-success mb-3" >
-                <div class="card-body">
-                    <h5 class="card-title">Exito</h5>
-                    <p class="card-text" th:text="${exito}"></p>
+            </nav>
+        </header>
+        <section class=" m-5">
+            <section>
+                <div th:if="${exito}!=null" class="card text-white bg-success mb-3" >
+                    <div class="card-body">
+                        <h5 class="card-title">Exito</h5>
+                        <p class="card-text" th:text="${exito}"></p>
+                    </div>
                 </div>
-            </div>
-            <div th:if="${error}!=null" class="card text-white bg-danger mb-3" >
-                <div class="card-body">
-                    <h5 class="card-title">Error</h5>
-                    <p class="card-text" th:text="${error}"></p>
+                <div th:if="${error}!=null" class="card text-white bg-danger mb-3" >
+                    <div class="card-body">
+                        <h5 class="card-title">Error</h5>
+                        <p class="card-text" th:text="${error}"></p>
+                    </div>
                 </div>
-            </div>
+            </section>
             <h1>Mi Perfil</h1>
+
             <div class="mb-3">
                 <div class="mb-3" >
                     <h3>Foto</h3>
-                    <!--
-                                        <img src="../../img/hombre.jpg" class="img-thumbnail" alt="foto de perfil">
-                                        <div>
-                    
-                                            <div class="input-group mb-3">
-                                                <input type="file" class="form-control" id="inputGroupFile02">
-                                                <label class="input-group-text" for="inputGroupFile02">Subir</label>
-                                            </div> 
-                                        </div>
-                    -->
-                    <img th:src="@{/img/+${usuario.foto}}" class="img-thumbnail rounded float-left" th:alt="${usuario.foto}">
-                </div>
-                <form th:action="@{/usuario/editarFoto}" method="POST">
-                    <input hidden th:value="${usuario.id}" name="id">
-                    <div class="mb-3">
-                        <label for="foto" class="form-label">Ingresa una foto:</label>
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" name="foto" placeholder="URL de la foto">
-                        </div> 
-                    </div>
-                    <div class="mb-3 ">
-                        <button type="submit" class="btn btn-warning">Cambiar Foto</button>
-                    </div>
-                </form>
-                <form th:action="@{/usuario/eliminarFoto}" method="POST">
-                    <input hidden th:value="${usuario.id}" name="id">
-                    <input hidden th:value="null" name="foto">
-                    <div class="mb-3">
-                        <button type="submit" class="btn btn-danger me-md-2">Eliminar Foto</button>
-                    </div>
-                </form>
-            </div>
-            <div class="mb-3">
-                <h3>Nombre</h3>
-                <p th:text="${usuario.nombre}"> </p>
-            </div>
-            <div class="mb-3" th:if="${usuario.perfil}">
-                <h3>Fecha de Nacimiento</h3>
-                <p th:text="${usuario.fechaDeNacimiento}"> </p>
-            </div >
-            <div class="mb-3" th:if="${usuario.perfil}">
-                <h3>Domicilio</h3>
-                <p th:text="${usuario.domicilio}"> </p>
-            </div>
-            <div class="mb-3" th:if="${usuario.perfil}">
-                <h3>Telefono</h3>
-                <p th:text="${usuario.contacto}"> </p>
-            </div>
-
-            <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
-                <h3>Profesion</h3>
-                <p th:text="${usuario.profesion}"> </p>
-            </div>
-
-            <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
-                <h3>Calificacion</h3>
-                <p th:text="${usuario.promedioCalificacion}"> </p>
-            </div>
-
-            <div class="mb-3" th:if="${usuario.perfil}">
-                <h3>Publicaciones</h3>
-                <div th:if="${publicaciones}==null">
-                    <p>Aun no hay publicaciones</p>
-                </div>
-
-                <div th:each="publicacion : ${publicaciones}"> 
-                    <div class="mb-3">
-                        <h4 th:text="${publicacion.texto}"></h4>
-                    </div>
-
-                </div>
-            </div>
-            <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')" th:if="${usuario.perfil}">
-                <h3>Trabajos</h3>
-                <div th:if="${trabajos}==null">
-                    <p>Aun no hay trabajos realizados</p>
-                </div>
-
-                <div th:each="trabajo : ${trabajos}"> 
-                    <div class="mb-3">
-                        <h4 th:text="${trabajo.titulo}"></h4>
-                    </div>
-
+                    <!--<img class="bd-placeholder-img card-img-top" th:src="${usuario.foto}" style="width: auto; height: 60px;">-->
+                    <img th:src="@{${usuario.foto}}" class="img-thumbnail rounded float-left" th:alt="${usuario.foto}" style="width: 100px; height: 100px;">
                 </div>
             </div>
 
+            <section>
+                <div class="mb-3">
+                    <h3>Nombre</h3>
+                    <p th:text="${usuario.nombre}"> </p>
+                </div>
+                <div class="mb-3" th:if="${usuario.perfil}">
+                    <h3>Fecha de Nacimiento</h3>
+                    <p th:text="${usuario.fechaDeNacimiento}"> </p>
+                </div >
+                <div class="mb-3" th:if="${usuario.perfil}">
+                    <h3>Domicilio</h3>
+                    <p th:text="${usuario.domicilio}"> </p>
+                </div>
+                <div class="mb-3" th:if="${usuario.perfil}">
+                    <h3>Telefono</h3>
+                    <p th:text="${usuario.contacto}"> </p>
+                </div>
 
-        </div>
+                <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
+                    <h3>Profesion</h3>
+                    <p th:text="${usuario.profesion}"> </p>
+                </div>
+
+                <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
+                    <h3>Calificacion</h3>
+                    <p th:text="${usuario.promedioCalificacion}"> </p>
+                </div>
+
+                <div class="mb-3" th:if="${usuario.perfil}">
+                    <h3>Publicaciones</h3>
+                    <div th:if="${publicaciones}==null">
+                        <p>Aun no hay publicaciones</p>
+                    </div>
+
+                    <div th:each="publicacion : ${publicaciones}"> 
+                        <div class="mb-3">
+                            <h4 th:text="${publicacion.texto}"></h4>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')" th:if="${usuario.perfil}">
+                    <h3>Trabajos</h3>
+                    <div th:if="${trabajos}==null">
+                        <p>Aun no hay trabajos realizados</p>
+                    </div>
+
+                    <div th:each="trabajo : ${trabajos}"> 
+                        <div class="mb-3">
+                            <h4 th:text="${trabajo.titulo}"></h4>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+        </section>
 
 
-
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
