@@ -137,7 +137,7 @@ public class ControladorUsuario {
     }
     /*
     este metodo se debe hacer en conjunto con alerta de modificar privacidad
-    
+    */
     @PostMapping("/cambiarPrivacidad")
     public String cambiarPrivacidad(@RequestParam String id, RedirectAttributes redirectAttributes, ModelMap model) {
         try {
@@ -148,7 +148,7 @@ public class ControladorUsuario {
             model.put("error", e.getMessage());
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "index";
+        return "redirect:/usuario/perfil";
     }
-     */
+     
 }

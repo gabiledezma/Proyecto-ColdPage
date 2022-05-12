@@ -34,6 +34,14 @@
                         <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL','ADMIN')">
                             <a class="nav-link" th:href="@{/usuario/cambiarPassword}">Cambiar Contraseña</a>             
                         </li>
+                        <li class="nav-item" sec:authorize="hasAnyRole('CLIENTE','PROFESIONAL')">
+                            <form th:action="@{/usuario/cambiarPrivacidad}" method="POST" > 
+                                <input hidden th:value="${usuario.id}" name="id">
+                                <button type="submit" class="nav-link">Cambiar Privacidad</button>
+                            </form>
+                        </li>
+
+
                         <li class="nav-item" sec:authorize="isAuthenticated()">
                             <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
                         </li>
@@ -59,17 +67,17 @@
             <div class="mb-3">
                 <div class="mb-3" >
                     <h3>Foto</h3>
-<!--
-                    <img src="../../img/hombre.jpg" class="img-thumbnail" alt="foto de perfil">
-                    <div>
-
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02">
-                            <label class="input-group-text" for="inputGroupFile02">Subir</label>
-                        </div> 
-                    </div>
--->
-                    <img th:src="@{ /img/ + ${usuario.foto}}" class="img-thumbnail rounded float-left" th:alt="${usuario.foto}">
+                    <!--
+                                        <img src="../../img/hombre.jpg" class="img-thumbnail" alt="foto de perfil">
+                                        <div>
+                    
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile02">
+                                                <label class="input-group-text" for="inputGroupFile02">Subir</label>
+                                            </div> 
+                                        </div>
+                    -->
+                    <img th:src="@{/img/+${usuario.foto}}" class="img-thumbnail rounded float-left" th:alt="${usuario.foto}">
                 </div>
                 <form th:action="@{/usuario/editarFoto}" method="POST">
                     <input hidden th:value="${usuario.id}" name="id">
