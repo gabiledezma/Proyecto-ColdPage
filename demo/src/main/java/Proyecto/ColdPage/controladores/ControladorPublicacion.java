@@ -1,7 +1,6 @@
 package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Comentario;
-import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Publicacion;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioPublicacion;
@@ -35,7 +34,7 @@ public class ControladorPublicacion {
     }
 
     @PostMapping("/crear/imagen")
-    public String ingresarImagen(ModelMap model, @RequestParam Imagen imagen, @RequestParam String id) throws Exception {
+    public String ingresarImagen(ModelMap model, @RequestParam String imagen, @RequestParam String id) throws Exception {
         sp.recibirImagen(imagen, id);
         return "registro.html";
     }

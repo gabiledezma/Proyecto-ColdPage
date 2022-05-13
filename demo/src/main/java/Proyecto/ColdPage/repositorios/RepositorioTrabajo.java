@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface RepositorioTrabajo extends JpaRepository<Trabajo, String>{
     
     @Query("SELECT t FROM Trabajo t WHERE t.calificacion = :calificacion")
-    public List<Trabajo> findByCalificacion(@Param("calificacion") Integer calificacion);
+    public List<Trabajo> findByCalificacion(@Param("calificacion") String calificacion);
 
 }

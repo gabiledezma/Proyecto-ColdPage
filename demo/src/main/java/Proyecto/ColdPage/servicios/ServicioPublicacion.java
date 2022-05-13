@@ -1,7 +1,6 @@
 package Proyecto.ColdPage.servicios;
 
 import Proyecto.ColdPage.entidades.Comentario;
-import Proyecto.ColdPage.entidades.Imagen;
 import Proyecto.ColdPage.entidades.Publicacion;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.repositorios.RepositorioPublicacion;
@@ -56,12 +55,10 @@ public class ServicioPublicacion {
     }
 
     @Transactional
-    public Publicacion recibirImagen(Imagen imagen, String id) throws Exception {
+    public Publicacion recibirImagen(String imagen, String id) throws Exception {
         validarID(id);
         Publicacion p = rp.getById(id);
-        List<Imagen> i = p.getImagen();
-        i.add(imagen);
-        p.setImagen(i);
+        p.setImagen(imagen);
         return rp.save(p);
     }
 

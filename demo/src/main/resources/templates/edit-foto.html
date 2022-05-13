@@ -80,12 +80,6 @@
                 <form th:action="@{/usuario/editarFoto}" method="POST">
                     <input hidden th:value="${usuario.id}" name="id">
                     <div class="mb-3">
-
-                        <div class="mb-3">
-                            <label for="foto" class="form-label">Ingresa una foto desde este equipo:</label>
-                            <br>
-                            <input type="file" class="form-control" name="fotofile" placeholder="URL de la foto">
-                        </div> 
                         <div class="mb-3">
                             <label for="foto" class="form-label">o Ingresa una foto desde una URL:</label>
                             <br>

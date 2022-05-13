@@ -25,8 +25,7 @@ public class Publicacion {
     private List<Comentario> comentarios;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    @OneToMany
-    private List<Imagen> imagen;
+    private String imagen;
 
     public Publicacion() {
     }
@@ -77,11 +76,11 @@ public class Publicacion {
         this.fecha = fecha;
     }
 
-    public List<Imagen> getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(List<Imagen> imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 

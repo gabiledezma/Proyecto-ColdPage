@@ -60,9 +60,9 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/editar")
-    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String fotofile, @RequestParam String fotourl, @RequestParam String perfil) {
+    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String fotourl, @RequestParam String perfil) {
         try {
-            Usuario u = su.modificarUsuario(id, email, pw1, role, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, fotofile, fotourl, perfil);
+            Usuario u = su.modificarUsuario(id, email, pw1, role, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, fotourl, perfil);
             model.put("exito", "Usuario modificado con exito");
             redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
         } catch (Exception e) {
@@ -98,9 +98,9 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/editarFoto")
-    public String editarFoto(@RequestParam String id, @RequestParam String fotofile, @RequestParam String fotourl, RedirectAttributes redirectAttributes, ModelMap model) {
+    public String editarFoto(@RequestParam String id, @RequestParam String fotourl, RedirectAttributes redirectAttributes, ModelMap model) {
         try {
-            Usuario u = su.subirFoto(id, fotofile, fotourl);
+            Usuario u = su.subirFoto(id, fotourl);
             model.put("exito", "Foto modificada con exito");
             redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
         } catch (Exception e) {

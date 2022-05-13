@@ -94,6 +94,9 @@
                 <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
                     <h3>Profesion</h3>
                     <p th:text="${usuario.profesion}"> </p>
+                    <div th:if="${usuario.profesion}==null">
+                        <p>Aun no hay una profesion registrada</p>
+                    </div>
                 </div>
 
                 <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
