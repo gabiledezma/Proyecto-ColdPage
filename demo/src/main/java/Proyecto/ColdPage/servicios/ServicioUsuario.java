@@ -67,7 +67,7 @@ public class ServicioUsuario implements UserDetailsService {
     }
 
     @Transactional
-    public Usuario modificarUsuario(String id, String email, String pw1, String role, String profesion, String pais, String provincia, String localidad, String nombre, String contacto, String fechaDeNacimiento, String foto, String perfil) throws Exception {
+    public Usuario modificarUsuario(String id, String email, String pw1, String role, String profesion, String pais, String provincia, String localidad, String nombre, String contacto, String fechaDeNacimiento, String fotofile, String fotourl, String perfil) throws Exception {
         Usuario u = getOne(id);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (u == null) {
@@ -116,10 +116,12 @@ public class ServicioUsuario implements UserDetailsService {
                 Date fecha = new Date(anioInt - 1900, mesInt - 1, diaInt);
                 u.setFechaDeNacimiento(fecha);
             }
-            if (foto == null || foto.trim().isEmpty()) {
+            if ((fotofile == null || fotofile.trim().isEmpty()) && (fotourl == null || fotourl.trim().isEmpty())) {
                 u.setFoto(u.getFoto());
-            } else {
-                u.setFoto(foto);
+            } else if ((fotofile != null || !fotofile.trim().isEmpty()) && (fotourl == null || fotourl.trim().isEmpty())) {
+                u.setFoto(fotofile);
+            } else if ((fotofile == null || fotofile.trim().isEmpty()) && (fotourl != null || !fotourl.trim().isEmpty())) {
+                u.setFoto(fotourl);
             }
             if (perfil == null || perfil.trim().isEmpty()) {
                 u.setPerfil(u.getPerfil());
@@ -265,12 +267,14 @@ public class ServicioUsuario implements UserDetailsService {
         }
     }
 
-    public Usuario subirFoto(String id, String foto) {
+    public Usuario subirFoto(String id, String fotofile, String fotourl) {
         Usuario u = getOne(id);
-        if (foto == null || foto.trim().isEmpty()) {
+        if ((fotofile == null || fotofile.trim().isEmpty()) && (fotourl == null || fotourl.trim().isEmpty())) {
             u.setFoto(u.getFoto());
-        } else {
-            u.setFoto(foto);
+        } else if ((fotofile != null || !fotofile.trim().isEmpty()) && (fotourl == null || fotourl.trim().isEmpty())) {
+            u.setFoto(fotofile);
+        } else if ((fotofile == null || fotofile.trim().isEmpty()) && (fotourl != null || !fotourl.trim().isEmpty())) {
+            u.setFoto(fotourl);
         }
         return ru.save(u);
     }

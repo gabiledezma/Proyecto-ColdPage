@@ -60,9 +60,9 @@ public class ControladorUsuario {
     }
 
     @PostMapping("/editar")
-    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String foto, @RequestParam String perfil) {
+    public String editarPerfil(@RequestParam String id, @RequestParam String email, @RequestParam String pw1, @RequestParam String role, RedirectAttributes redirectAttributes, ModelMap model, @RequestParam String profesion, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String fotofile, @RequestParam String fotourl, @RequestParam String perfil) {
         try {
-            Usuario u = su.modificarUsuario(id, email, pw1, role, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, foto, perfil);
+            Usuario u = su.modificarUsuario(id, email, pw1, role, profesion, pais, provincia, localidad, nombre, contacto, fechaDeNacimiento, fotofile, fotourl, perfil);
             model.put("exito", "Usuario modificado con exito");
             redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
         } catch (Exception e) {
@@ -86,10 +86,21 @@ public class ControladorUsuario {
         return "perfil";
     }
 
-    @PostMapping("/editarFoto")
-    public String editarFoto(@RequestParam String id, @RequestParam String foto, RedirectAttributes redirectAttributes, ModelMap model) {
+    @GetMapping("/editarFoto")
+    public String editarFoto(ModelMap model, HttpSession session) {
         try {
-            Usuario u = su.subirFoto(id, foto);
+            Usuario u = (Usuario) session.getAttribute("usuariosession");
+            model.put("usuario", u);
+        } catch (Exception e) {
+
+        }
+        return "edit-foto";
+    }
+
+    @PostMapping("/editarFoto")
+    public String editarFoto(@RequestParam String id, @RequestParam String fotofile, @RequestParam String fotourl, RedirectAttributes redirectAttributes, ModelMap model) {
+        try {
+            Usuario u = su.subirFoto(id, fotofile, fotourl);
             model.put("exito", "Foto modificada con exito");
             redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
         } catch (Exception e) {
@@ -135,9 +146,10 @@ public class ControladorUsuario {
         }
         return "redirect:/usuario/perfil";
     }
+
     /*
     este metodo se debe hacer en conjunto con alerta de modificar privacidad
-    
+     */
     @PostMapping("/cambiarPrivacidad")
     public String cambiarPrivacidad(@RequestParam String id, RedirectAttributes redirectAttributes, ModelMap model) {
         try {
@@ -148,7 +160,7 @@ public class ControladorUsuario {
             model.put("error", e.getMessage());
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "index";
+        return "redirect:/usuario/perfil";
     }
-     */
+
 }
