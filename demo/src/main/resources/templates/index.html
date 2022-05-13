@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="" />
         <link rel="stylesheet" href="../../css/stylefb.css">
+        <link rel="stylesheet" href="../../css/stylefb2.css">
+        <link rel="stylesheet" href="../../css/toolstyle.css">
+       
         <link rel="shortcut icon" href = "img/browser_seeker_icon_220709.png" >
         <link rel="shortcut icon" href = "../img/favicon.jpg" >
         <title>ColdPage</title>
@@ -37,10 +40,7 @@
                                 </li>
                                 <li class="nav-item" sec:authorize="isAuthenticated()">
                                     <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
-                                </li>
-                                <li class="nav-item" sec:authorize="isAuthenticated()">
-                                    <a class="nav-link" th:href="#" id="btn">Publicaciones</a>
-                                </li>
+                                </li>                             
                             </ul>
                         </div>
                     </div>
@@ -412,7 +412,7 @@
                                     <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
                                 </li>
                                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                                    <a class="nav-link" th:href="@{#}" id="btn">Publicaciones</a>
+                                    <a class="nav-link" href="#" id="btn">Publicaciones</a>
                                 </li>
                             </ul>
                         </div>
@@ -430,12 +430,13 @@
                     <p class="card-text" th:text="${logout}"></p>
                 </div>
             </div>
-            <div class="form" id="ct-publicacion">
+            <div class="form-publicacion" style="display: block;" id="ct-publicacion">
                 <form class="">
                     <div class="col-12">
                         <label for="inputAddress2" class="form-label"></label>
-                        <input type="text" class="form-control" id="-" placeholder="¿Que desea publicar?">
+                        <input type="text" class="form-control" placeholder="¿Que desea publicar?">
                     </div>
+                    <br>
                     <button type="submit">Publicar</button>
                 </form>
             </div>
@@ -444,17 +445,17 @@
                 <form class="">
                     <div class="col-12">
                         <label for="inputAddress2" class="form-label"></label>
-                        <input type="text" class="form-control" id="-" placeholder="Titulo del trabajo que ofrecera">
+                        <input type="text" class="form-control"  placeholder="Titulo del trabajo que ofrecera">
                     </div>
                     <div class="col-12">
                         <label for="inputAddress2" class="form-label"></label>
-                        <input type="text" class="form-control input-description" id="-" placeholder="Descripcion del trabajo">
+                        <input type="text" class="form-control input-description" placeholder="Descripcion del trabajo">
                     </div>
                     <br>
                     <button type="submit">Publicar</button>
                 </form>
             </div>
-            <div id="ct-publicaciones">
+            <div id="ct-publicaciones" style="display: block;">
                 <section id="principal">
                     <section id="publicaciones">
                         <article class="post">
@@ -593,5 +594,27 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script>
+         document.getElementById('btn').onclick =   function() {
+    var element = document.getElementById('ct-trabajo');
+    var element2 = document.getElementById('ct-publicacion');
+    var element3 = document.getElementById('ct-trabajos');
+    var element4 = document.getElementById('ct-publicaciones');
+  if (element.style.display === 'none') {
+    element.style.display = 'block';
+    element3.style.display = 'block';
+    element2.style.display = 'none';
+    element4.style.display = 'none';
+    document.getElementById('btn').innerText = 'Publicacion';
+  } else {
+    element.style.display = 'none';
+    element3.style.display = 'none';
+    element2.style.display = 'block';
+    element4.style.display = 'block';
+    document.getElementById('btn').innerText = 'Trabajo';
+  }
+}
+        </script>
+            
     </body>
 </html>

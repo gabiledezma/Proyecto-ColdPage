@@ -1,8 +1,8 @@
-.form{
+.form-publicacion{
     font-family: inherit;
     font-size: 100%;
     width: 400px;
-    height: 160px;
+    height: 170px;
     padding: 1rem;
     margin-left: auto;
     margin-right: auto;
@@ -57,7 +57,26 @@
     font-size: 17px;
 }
 
+.form-publicacion button{
+    width: 50%;
+    margin-left: 185px;
+    background-color: #226fdc;
+    color: #fff;
+    padding: .9rem .3rem;
+    border-radius: 6px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    
+}
 
+.form-publicacion button a{
+    text-decoration: none;
+    color: rgb(247, 248, 249);
+    font-weight: 600;
+    font-size: 17px;
+}
 
 
 
