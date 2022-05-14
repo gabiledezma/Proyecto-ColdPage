@@ -60,8 +60,41 @@ h4{
     background-color: #fff;
     border-radius: 7px;
     box-shadow: 1px 1px 10px rgba(117, 116, 116, .219);
+    background-color: rgb(51,51,51,0.602); 
 }
 
+.form3 input[type="text"],
+.form3 input[type="password"],
+.form3 input[type="submit"]{    
+    padding: 1rem;
+    width: 100%;
+    margin-bottom: 10px;
+    outline-color: #1877f2 ;
+    border: solid thin #dddfe2;
+    font-family: inherit;
+    font-size: 17px;
+    text-align: left;
+     background-color: rgb(51,51,51,0.602); 
+} 
+.formregistro{
+ padding: 1rem;
+ width: 100%;
+ margin-bottom: 10px;
+ outline-color: #1877f2 ;
+ border: solid thin #dddfe2;
+ font-family: inherit;
+ font-size: 17px;
+ text-align: left;
+ position: center;
+}
+.formres{
+    width: 400px;
+    position: relative;
+    left: 30px
+}
+.colormodal{
+    background-color: #68a6e3
+}
 .form input[type="text"],
 .form input[type="password"],
 .form input[type="submit"] {
@@ -198,9 +231,13 @@ h4{
 
 .izquierda
 {
-    position: left;
+    position: relative;
+    left: 130px;
 }
-
+.izquierda2{
+   position: relative;
+    left: 160px;  
+}
 
 .buscar
 {
@@ -339,3 +376,28 @@ h4{
     color: orange;
   }
   
+  /*colorfondo*/
+.css-selector {
+    background: linear-gradient(304deg, #d3e1f0, #68a6e3, #353b41, #68a6e3);
+    background-size: 800% 800%;
+
+    -webkit-animation: AnimationName 33s ease infinite;
+    -moz-animation: AnimationName 33s ease infinite;
+    animation: AnimationName 33s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
