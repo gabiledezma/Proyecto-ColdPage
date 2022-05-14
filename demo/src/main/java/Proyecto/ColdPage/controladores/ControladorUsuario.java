@@ -1,12 +1,19 @@
 package Proyecto.ColdPage.controladores;
 
+import Proyecto.ColdPage.entidades.Trabajo;
 import Proyecto.ColdPage.entidades.Usuario;
+import Proyecto.ColdPage.repositorios.RepositorioPublicacion;
+import Proyecto.ColdPage.repositorios.RepositorioTrabajo;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,11 +25,31 @@ public class ControladorUsuario {
 
     @Autowired
     private ServicioUsuario su;
+    @Autowired
+    private RepositorioTrabajo rt;
+    @Autowired
+    private RepositorioPublicacion rp;
 
     @GetMapping("/")
     public String index(@RequestParam(required = false) String login, ModelMap model, HttpSession session) {
         try {
             Usuario u = (Usuario) session.getAttribute("usuariosession");
+            List<Trabajo> trabajos = rt.findAll();
+            if (trabajos.size() == 0) {
+                Trabajo t = new Trabajo();
+                Usuario aux = new Usuario();
+                aux.setNombre("Ejemplo");
+                t.setCliente(aux);
+                t.setTitulo("Ejemplo titulo");
+                Date fecha = new Date();
+                t.setFecha(fecha);
+                t.setDescripcion("Ejemplo descripcion");
+            }
+            List<Usuario> clientes = su.findAll();
+            model.put("clientes", clientes);
+            model.put("trabajos", trabajos);
+            //List<Publicacion> publicaciones = rp.findAll();
+            //model.put("publicaciones", publicaciones);
             model.put("usuario", u);
             model.put("exito", "Logueado con exito");
         } catch (Exception e) {
@@ -79,11 +106,39 @@ public class ControladorUsuario {
             model.put("usuario", u);
             u.setPromedioCalificacion(su.obtenerCalificacion(u));
             model.put("publicaciones", u.getPublicaciones());
-            model.put("trabajos", u.getTrabajos());
+            List<Trabajo> trabajos = rt.findAll();
+            List<Trabajo> trabajosCliente = new ArrayList();
+            List<Trabajo> trabajosProfesional = new ArrayList();
+            for (Trabajo trabajo : trabajos) {
+                if (trabajo.getCliente().getId() == u.getId()) {
+                    trabajosCliente.add(trabajo);
+                }
+                if (trabajo.getProfesional().getId() == u.getId()) {
+                    trabajosProfesional.add(trabajo);
+                }
+            }
+            model.put("trabajosCliente", trabajosCliente);
+            model.put("trabajosProfesional", trabajosProfesional);
         } catch (Exception e) {
 
         }
         return "perfil";
+    }
+
+    @GetMapping("/perfil/{id}")
+    public String perfil(ModelMap model, HttpSession session, @PathVariable String id) {
+        try {
+            Usuario sesion = (Usuario) session.getAttribute("usuariosession");
+            Usuario u = su.getOne(id);
+            model.put("usuario", u);
+            model.put("sesion", sesion);
+            u.setPromedioCalificacion(su.obtenerCalificacion(u));
+            model.put("publicaciones", u.getPublicaciones());
+            model.put("trabajos", u.getTrabajos());
+        } catch (Exception e) {
+
+        }
+        return "perfil2";
     }
 
     @GetMapping("/editarFoto")

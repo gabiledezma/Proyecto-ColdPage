@@ -1,9 +1,11 @@
 package Proyecto.ColdPage.entidades;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,11 +26,13 @@ public class Trabajo {
     private String descripcion;
     private String observaciones; //detalles que ve el cliente al finalizar
     private String titulo; //trabajo a realizar
-    private Integer costo;
+    private Integer costo;//costo final
     @Temporal(TemporalType.DATE)
     private Date fecha;
     private Boolean estado; //// true terminado, false sin terminar
     private String foto;
+    @OneToMany
+    private List<Comentario> candidatos;
     // en caso del profesional si necesita ayuda puede generar alertas de trabajo
 
     public Trabajo() {
@@ -125,6 +129,14 @@ public class Trabajo {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public List<Comentario> getCandidatos() {
+        return candidatos;
+    }
+
+    public void setCandidatos(List<Comentario> candidatos) {
+        this.candidatos = candidatos;
     }
 
 }

@@ -1,9 +1,12 @@
 package Proyecto.ColdPage.controladores;
 
+import Proyecto.ColdPage.entidades.Comentario;
 import Proyecto.ColdPage.entidades.Trabajo;
 import Proyecto.ColdPage.entidades.Usuario;
+import Proyecto.ColdPage.repositorios.RepositorioTrabajo;
 import Proyecto.ColdPage.servicios.ServicioTrabajo;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,17 +26,26 @@ public class ControladorTrabajo {
     private ServicioTrabajo st;
     @Autowired
     private ServicioUsuario su;
+    @Autowired
+    private RepositorioTrabajo rt;
 
     @PostMapping("/guardar")
-    public String crearTrabajo(ModelMap modelo, @RequestParam String id, @RequestParam String titulo, @RequestParam String descripcion, String foto) {
+    public String crearTrabajo(ModelMap modelo, HttpSession session, RedirectAttributes redirectAttributes, @RequestParam String id, @RequestParam String titulo, @RequestParam String descripcion, String foto) { // id del usuario
         try {
+            Usuario u = (Usuario) session.getAttribute("usuariosession");
+            modelo.put("usuario", u);
             Trabajo t = st.crearTrabajo(id, titulo, descripcion, foto);
+            List<Trabajo> trabajos = u.getTrabajos();
+            trabajos.add(t);
+            u.setTrabajos(trabajos);
             modelo.put("exito", "creacion exitosa.");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
+            return "redirect:/usuario/";
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             modelo.put("error", "Faltó algún dato.");
-            return "redirect:/";
+            return "redirect:/usuario/";
         }
     }
 
@@ -47,20 +59,7 @@ public class ControladorTrabajo {
             model.put("error", e.getMessage());
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/";
-    }
-
-    @PostMapping("/cambiarPrivacidad")
-    public String cambiarPrivacidad(@RequestParam String id, RedirectAttributes redirectAttributes, ModelMap model) {
-        try {
-            Usuario u = su.cambiarPrivacidad(id);
-            model.put("exito", "Usuario modificado con exito");
-            redirectAttributes.addFlashAttribute("exito", "Usuario modificado con exito");
-        } catch (Exception e) {
-            model.put("error", e.getMessage());
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-        }
-        return "redirect:/usuario/perfil";
+        return "redirect:/usuario/";
     }
 
     @PostMapping("/eliminar")
@@ -70,6 +69,61 @@ public class ControladorTrabajo {
         } catch (Exception e) {
 
         }
-        return "redirect:/";
+        return "redirect:/usuario/";
     }
+
+    @PostMapping("/aplicar")
+    public String postularse(@RequestParam String id, @RequestParam String candidato, @RequestParam String texto, RedirectAttributes redirectAttributes, ModelMap model) {
+        try {
+            Trabajo t = st.agregarCandidato(id, candidato, texto);
+            model.put("exito", "Usuario postulado con exito");
+            redirectAttributes.addFlashAttribute("exito", "Usuario postulado con exito");
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/usuario/";
+    }
+
+    @GetMapping("/elegirProfesional/{id}")
+    public String elegirProfesional(ModelMap model, HttpSession session, @PathVariable String id) { //id del trabajo
+        try {
+            Usuario u = (Usuario) session.getAttribute("usuariosession");
+            model.put("usuario", u);
+            Trabajo t = rt.getById(id);
+            model.put("trabajo", t);
+            List<Comentario> candidatos = t.getCandidatos();
+            model.put("candidatos", candidatos);
+        } catch (Exception e) {
+
+        }
+        return "list-profesionales";
+    }
+
+    @PostMapping("/elegirProfesional/{id}")
+    public String elegirProfesional(@RequestParam String id, @RequestParam String profesional, RedirectAttributes redirectAttributes, ModelMap model) { // id = id del trabajo; profesional = comentario donde se encuentran el profesional y el costo
+        try {
+            Trabajo t = st.elegirProfesionalYCosto(id, profesional);
+            model.put("exito", "Profesional elegido con exito");
+            redirectAttributes.addFlashAttribute("exito", "Trabajo modificado con exito");
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/usuario/";
+    }
+    
+    @PostMapping("/recibirCalificacion")
+    public String recibirCalificacion(@RequestParam String id, @RequestParam String estrellas, RedirectAttributes redirectAttributes, ModelMap model) { // id = id del trabajo; 
+        try {
+            Trabajo t = st.recibirCalificacion(id, estrellas);
+            model.put("exito", "Calificacion asignada con exito");
+            redirectAttributes.addFlashAttribute("exito", "Trabajo modificado con exito");
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/usuario/";
+    }
+
 }

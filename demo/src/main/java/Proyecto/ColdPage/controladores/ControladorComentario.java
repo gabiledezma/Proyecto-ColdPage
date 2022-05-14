@@ -1,8 +1,6 @@
 package Proyecto.ColdPage.controladores;
 
-import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioComentario;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,8 +17,8 @@ public class ControladorComentario {
     private ServicioComentario sc;
     
     @PostMapping("/crear")
-    public String crearComentario(ModelMap model, @RequestParam String texto, @RequestParam Usuario usuario, @RequestParam Date fecha) throws Exception{
-        sc.crearComentario(texto, usuario, fecha);
+    public String crearComentario(ModelMap model, @RequestParam String texto, @RequestParam String usuario) throws Exception{
+        sc.crearComentario(texto, usuario);
         return "registro.html";
     }
     
@@ -31,8 +29,8 @@ public class ControladorComentario {
     }
     
     @PostMapping("/modificar")
-    public String modificarComentario(ModelMap model, @RequestParam String id, @RequestParam String texto) throws Exception{
-        sc.modificarComentario(id, texto);
+    public String modificarComentario(ModelMap model, @RequestParam String id, @RequestParam String texto, @RequestParam String foto) throws Exception{
+        sc.modificarComentario(id, texto, foto);
         return"registro.html";
     }
 }

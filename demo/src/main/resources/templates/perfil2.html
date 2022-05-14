@@ -34,7 +34,7 @@
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="dropdown-item">
                                         <form th:action="@{/usuario/cambiarPrivacidad}" method="POST" > 
-                                            <input hidden th:value="${usuario.id}" name="id">
+                                            <input hidden th:value="${sesion.id}" name="id">
                                             <button type="submit" >Cambiar Privacidad</button>
                                         </form>
                                     </li>
@@ -91,7 +91,7 @@
                     <p th:text="${usuario.contacto}"> </p>
                 </div>
 
-                <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
+                <div class="mb-3" th:if="${usuario.role==('PROFESIONAL')}">
                     <h3>Profesion</h3>
                     <p th:text="${usuario.profesion}"> </p>
                     <div th:if="${usuario.profesion}==null">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3" sec:authorize="hasRole('PROFESIONAL')">
+                <div class="mb-3" th:if="${usuario.role==('PROFESIONAL')}">
                     <h3>Calificacion</h3>
                     <p th:text="${usuario.promedioCalificacion}"> </p>
                 </div>
@@ -117,18 +117,16 @@
 
                     </div>
                 </div>
-                <div sec:authorize="hasRole('PROFESIONAL')">
-                    <div class="mb-3"  th:if="${usuario.perfil}">
-                        <h3>Trabajos</h3>
-                            <div th:each="trabajo : ${trabajosCliente}">
-                                <h4 th:text="${trabajo.titulo}"></h4>
-                                <h4 th:text="${trabajo.descripcion}"></h4>
-                            </div>
-                        </div>
-                        <div th:if="${trabajos}==null">
-                            <p>Aun no hay trabajos realizados</p>
-                        </div>
+                <div class="mb-3" th:if="${usuario.role==('PROFESIONAL')}" th:if="${usuario.perfil}">
+                    <h3>Trabajos</h3>
+                    <div th:if="${trabajos}==null">
+                        <p>Aun no hay trabajos realizados</p>
+                    </div>
 
+                    <div th:each="trabajo : ${trabajos}"> 
+                        <div class="mb-3">
+                            <h4 th:text="${trabajo.titulo}"></h4>
+                        </div>
 
                     </div>
                 </div>
