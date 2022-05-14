@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="estilos/stylefb2.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColdPage</title>
+</head>
+<body>
+  <!-- barra navegadora,esta no va -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light-navegador">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">ColdPage</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/registrar.html">Registrar</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/login.html">Iniciar Sesion</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- seccion post -->
+    <section id="principal">
+        
+        <section id="publicaciones">
+            <article class="post">
+                <a href="#" class="enlace-post"><h2 class="titulo-post">Titulo de la oferta</h2></a>
+                <!-- <img src="img/cafe.jpg" class="img-post" alt=""> -->
+
+                <p>
+                    <strong>Por: </strong> <span class="datos-publicaciones"> Usuario/Profesional </span>
+                    &nbsp; &nbsp; 
+                    <strong>Fecha: </strong> <span class="datos-publicaciones"> colocar la fecha </span>
+                    &nbsp; &nbsp; 
+                    <strong>Rango de Sueldo: </strong> <span class="datos-publicaciones"> $sueldo </span>
+                     &nbsp; &nbsp;
+                    <strong> Calificacion: </strong> <span class="datos-publicaciones clasificacion">
+                             <!-- calificacion estrella -->
+                              <input id="radio1" type="radio" name="estrellas" value="5"><!--
+                              --><label for="radio1">★</label><!--
+                              --><input id="radio2" type="radio" name="estrellas" value="4"><!--
+                              --><label for="radio2">★</label><!--
+                              --><input id="radio3" type="radio" name="estrellas" value="3"><!--
+                              --><label for="radio3">★</label><!--
+                              --><input id="radio4" type="radio" name="estrellas" value="2"><!--
+                              --><label for="radio4">★</label><!--
+                              --><input id="radio5" type="radio" name="estrellas" value="1"><!--
+                              --><label for="radio5">★</label>
+                        </span>    
+                </p>
+                <p class="parrafo-post">Aca va la descripcion de la oferta de trabajo!Aca va la descripcion de la oferta de trabajo!Aca va la descripcion de la oferta de trabajo!Aca va la descripcion de la oferta de trabajo!Aca va la descripcion de la oferta de trabajo!Aca va la descripcion de la oferta de trabajo!Aca va la descripcion de la oferta de trabajo! </p>
+                <span type="button" class="btn btn-primary num-comentarios" data-bs-toggle="modal" data-bs-target= "#exampleModal">Contactar</span>
+                <!-- modal/ventana emergente -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Solicitar Trabajo </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form class="form parrafo-post">
+                          <input type="text" placeholder="Tiempo Estimado del Trabajo">
+                          <input type="password" placeholder="Costo del Trabajo" >
+                          <p class="modal-title parrafo-post" id="exampleModalLabel">Aumenta las probabilidades de que vean tu perfil
+                          Comparte tu perfil completo con el anunciante del empleo.</p> <br>
+                         <a class="parrafo-post" href="">«Cambia los ajustes en cualquier momento desde la configuración de editar perfil»</a> 
+                      </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary num-comentarios" data-bs-toggle="modal" data-bs-target= "#exampleModal">Aplicar</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- fin modal/ventana emergente -->
+            </article>
+
+            <div id="paginacion">
+                <p>Anteriores Publicaciones &nbsp; &nbsp; <a href="" class="enlace-paginacion">Siguientes Publicaciones</a> </p>
+            </div>
+
+
+        </section>
+
+        <section id="sidebar"></section>
+
+    </section>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+</body>
+</html>

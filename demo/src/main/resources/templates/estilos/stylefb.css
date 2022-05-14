@@ -210,11 +210,14 @@ h4{
 /*     -------------- contenido principal --------------*/
 
 #principal{
-    width: 100%;
+    width: 80%;
     height: auto;
     /* overflow: hidden; */
     border: 1px none;
-    margin: 10px auto;
+    /* margin: 10px auto; */
+    /* margin-left: auto;
+    margin-right: auto; */
+    margin: 30px 50px 30px 350px;
 }
 
 #publicaciones{
@@ -334,3 +337,4 @@ h4{
   input[type="radio"]:checked ~ label {
     color: orange;
   }
+  

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -20,17 +19,17 @@ public class Trabajo {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @OneToOne
-    private Cliente cliente;
-    @ManyToOne
-    private Profesional profesional;
-    private Integer calificacion;
+    private Usuario cliente;
+    @OneToOne
+    private Usuario profesional;
+    private Integer calificacion; // la da el cliente al finalizar
     private String descripcion;
-    private String observaciones;
+    private String observaciones; //detalles que ve el cliente al finalizar
     private String titulo; //trabajo a realizar
     private Integer costo;
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    private Boolean estado;
+    private Boolean estado; //terminado o no
     @OneToMany
     private List<Imagen> fotos;
     // en caso del profesional si necesita ayuda puede generar alertas de trabajo
@@ -38,7 +37,7 @@ public class Trabajo {
     public Trabajo() {
     }
 
-    public Trabajo(Cliente cliente, String descripcion, String titulo, Date fecha, Boolean estado) {
+    public Trabajo(Usuario cliente, String descripcion, String titulo, Date fecha, Boolean estado) {
         this.cliente = cliente;
         this.descripcion = descripcion;
         this.titulo = titulo;
@@ -54,19 +53,19 @@ public class Trabajo {
         this.id = id;
     }
 
-    public Cliente getCliente() {
+    public Usuario getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Usuario cliente) {
         this.cliente = cliente;
     }
 
-    public Profesional getProfesional() {
+    public Usuario getProfesional() {
         return profesional;
     }
 
-    public void setProfesional(Profesional profesional) {
+    public void setProfesional(Usuario profesional) {
         this.profesional = profesional;
     }
 
@@ -134,5 +133,4 @@ public class Trabajo {
         this.fotos = fotos;
     }
 
-   
 }

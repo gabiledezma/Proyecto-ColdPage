@@ -1,13 +1,12 @@
 package Proyecto.ColdPage.controladores;
 
 import Proyecto.ColdPage.entidades.Usuario;
-import Proyecto.ColdPage.enums.Role;
 import Proyecto.ColdPage.servicios.ServicioUsuario;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,29 +19,27 @@ public class ControladorPrincipal {
     private ServicioUsuario su;
 
     @GetMapping("/")//localhost:8080/
-    public String index(@RequestParam(required = false) String login, ModelMap model) {
+    public String index(@RequestParam(required = false) String login, ModelMap model, HttpSession session) {
         if (login != null) {
             model.put("exito", "Logueado con exito");
         }
+        Usuario u = (Usuario) session.getAttribute("usuariosession");
+        model.put("usuario", u);
         return "index";
     }
 
     @PostMapping("/")
-    public String registro(@RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, @PathVariable String id) {
-        Usuario u = new Usuario();
+    public String registro(ModelMap modelo, @RequestParam String email, @RequestParam String pw1, @RequestParam String pw2, @RequestParam String role, @RequestParam String nombre, @RequestParam String contacto, @RequestParam String fechaDeNacimiento, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad) {
         try {
-            u = su.crearUsuario(email, pw1, pw2, role);
+            Usuario u = su.crearUsuario(email, pw1, pw2, role, nombre, contacto, fechaDeNacimiento, pais, provincia, localidad);
+            modelo.put("exito", "Registro exitoso.");
+            return "redirect:/";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        if (u.getRole().equals(Role.CLIENTE)) {
-            return "redirect:/cliente/registro"; // 
-        } else if (u.getRole().equals(Role.PROFESIONAL)) {
-            return "redirect:/profesional/registro"; // 
-        } else {
-            return "redirect:/index";
-        }
+            modelo.put("error", "Faltó algún dato.");
+            return "registro";
 
+        }
     }
 
     @GetMapping("/login")
@@ -55,4 +52,5 @@ public class ControladorPrincipal {
         }
         return "index";
     }
+  // vistas index y pagina deben fusionarse, debe aparecer todo en la misma, si el usuario inicio sesion se muestra la pagina sino se muestra el login
 }
