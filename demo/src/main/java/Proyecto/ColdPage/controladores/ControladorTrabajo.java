@@ -34,7 +34,7 @@ public class ControladorTrabajo {
         try {
             Usuario u = (Usuario) session.getAttribute("usuariosession");
             modelo.put("usuario", u);
-            Trabajo t = st.crearTrabajo(id, titulo, descripcion, foto);
+            Trabajo t = st.crearTrabajo(u.getId(), titulo, descripcion, foto);
             List<Trabajo> trabajos = u.getTrabajos();
             trabajos.add(t);
             u.setTrabajos(trabajos);
@@ -45,7 +45,7 @@ public class ControladorTrabajo {
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             modelo.put("error", "Faltó algún dato.");
-            return "redirect:/usuario/";
+            return "redirect:/usuario/#";
         }
     }
 

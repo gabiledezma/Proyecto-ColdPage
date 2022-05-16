@@ -431,10 +431,11 @@
                 </div>
             </div>
             <div class="form-publicacion" style="display: block;" id="ct-publicacion">
-                <form class="">
+                <form class="" th:action="@{/publicacion/crear}" method="POST">
+                    <input hidden th:value="${usuario.id}" name="id">
                     <div class="col-12">
                         <label for="inputAddress2" class="form-label"></label>
-                        <input type="text" class="form-control" placeholder="¿Que desea publicar?">
+                        <input type="text" class="form-control" name="texto" placeholder="¿Que desea publicar?">
                     </div>
                     <br>
                     <button type="submit">Publicar</button>

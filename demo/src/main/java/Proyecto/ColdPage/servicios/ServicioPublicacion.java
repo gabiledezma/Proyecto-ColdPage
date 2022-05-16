@@ -24,7 +24,7 @@ public class ServicioPublicacion {
         validar(texto, usuario);
         Publicacion p = new Publicacion();
         p.setTexto(texto);
-        ru.findByEmail(usuario.getEmail());
+        p.setUsuario(usuario);
         return rp.save(p);
     }
 

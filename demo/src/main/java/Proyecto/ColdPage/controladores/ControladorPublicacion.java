@@ -4,7 +4,9 @@ import Proyecto.ColdPage.entidades.Comentario;
 import Proyecto.ColdPage.entidades.Publicacion;
 import Proyecto.ColdPage.entidades.Usuario;
 import Proyecto.ColdPage.servicios.ServicioPublicacion;
+import Proyecto.ColdPage.servicios.ServicioUsuario;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +21,9 @@ public class ControladorPublicacion {
 
     @Autowired
     private ServicioPublicacion sp;
+    
+    @Autowired
+    private ServicioUsuario su;
 
     @GetMapping("/lista")
     public String listPublicacion(ModelMap model) {
@@ -28,9 +33,11 @@ public class ControladorPublicacion {
     }
 
     @PostMapping("/crear")
-    public String crearPublicacion(ModelMap model, @RequestParam Usuario usuario, @RequestParam String titulo, @RequestParam String texto) throws Exception {
-        sp.crearPublicacion(usuario, texto);
-        return "registro.html";
+    public String crearPublicacion(ModelMap model,HttpSession session,@RequestParam String id,  @RequestParam String texto) throws Exception {
+        Usuario u = session.getAttribute('UsuarioSession');
+        sp.crearPublicacion(u, texto);
+        
+        return "index";
     }
 
     @PostMapping("/crear/imagen")
